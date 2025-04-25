@@ -1,0 +1,76 @@
+* {
+  margin: 0;                      /* Сброс стандартных отступов */
+  padding: 0;                     /* Сброс стандартных паддингов */
+  box-sizing: border-box;         /* Правильный расчет размеров элементов */
+  transition: all 0.3s ease;      /* Плавные переходы для анимаций */
+}
+:root {
+  /* Цвета для светлой темы */
+  --primary-light: #ededed;       /* Основной фон */
+  --secondary-light: #ffffff;     /* Вторичный фон (карточки, хедер) */
+  --text-light: #333333;          /* Цвет текста */
+  --accent-light: #007bff;        /* Акцентный цвет (кнопки, заголовки) */
+  
+  /* Текущие используемые переменные (по умолчанию светлая тема) */
+  --primary: var(--primary-light);
+  --secondary: var(--secondary-light);
+  --text: var(--text-light);
+  --accent: var(--accent-light);
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif; /* Современный шрифт */
+  background-color: #f0f0f0;         /* Динамический фон через переменные */
+  color: var(--text);                  /* Динамический цвет текста */
+  line-height: 1.7;                    /* Удобочитаемый межстрочный интервал */
+}
+
+/* Анимация появления карточек */
+@keyframes card-entrance {
+  from {
+      opacity: 0;                   /* Начальная прозрачность */
+      transform: translateY(20px);   /* Начальное положение */
+  }
+  to {
+      opacity: 1;                    /* Конечная прозрачность */
+      transform: translateY(0);      /* Конечное положение */
+  }
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  main {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  code {
+    font-style: bold;
+  }
+  th, td {
+    padding: 0.8rem;
+    font-size: 0.9em;
+  }
+  .article-container {
+    /* Уменьшенные отступы и адаптивная ширина */
+    margin: 1px;
+    /* Меньшие внутренние отступы */
+    padding: 1rem;
+  }
+  .article-title {
+    /* Уменьшенный размер шрифта */
+    font-size: 1.5rem;
+  }
+  .posts-grid {
+    grid-template-columns: 1fr;    /* Одна колонка на малых экранах */
+  }
+  .scroll-top {
+    right: 15px;
+    bottom: -50px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  .scroll-top.visible {
+    bottom: 15px;
+  }
+}
