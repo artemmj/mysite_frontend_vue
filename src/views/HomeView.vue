@@ -59,7 +59,7 @@ const articles = ref([
   },
   {
       id: 3,
-      link: "html/django_jwt_auth.html",
+      filename: "django_setup_jwt_auth.html",
       title: "Django Setup JWT authentication",
       date: "25 Марта 2025",
       tags: "Django, Auth, JWT",
