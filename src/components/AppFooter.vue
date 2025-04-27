@@ -16,6 +16,7 @@ export default {
 <style lang="scss" scoped>
 .footer {
   background: var(--secondary);       /* Фон из переменных */
+  border: 0.01rem solid;
   text-align: center;                /* Выравнивание по центру */
   padding: 2rem;                     /* Внутренние отступы */
   margin-top: 4rem;                  /* Отступ сверху */

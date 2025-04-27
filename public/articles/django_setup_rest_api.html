@@ -13,9 +13,9 @@ pip freeze -l > requirements.txt
 django-admin startproject project_name</code></pre>
 <h3 class="section-title">Конфигурация БД и другие настройки</h3>
 <p>Желательно вынести настройки в отдельную директорию, чтобы settings.py файл не жирел.</p>
-<div class="text-block">
-<div class="file-path">settings.py</div>
-<pre><code class="lang-python">SECRET_KEY = os.environ.get('SECRET_KEY', default='key')
+<pre><code class="lang-python"># settings.py
+
+SECRET_KEY = os.environ.get('SECRET_KEY', default='key')
 BASE_DIR = os.path.join(os.path.dirname(__file__), '..', '..', '..')
 DEBUG = os.environ.get('DEBUG') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default='0.0.0.0').split(' ')
@@ -30,11 +30,10 @@ DATABASES = {
     'PORT': 5432,
   }
 }</code></pre>
-</div>
 <h3 class="section-title">Docker-конфигурация</h3>
-<div class="text-block">
-<div class="file-path">Dockerfile</div>
-<pre><code class="lang-docker">FROM python:3.13-slim
+<pre><code class="lang-docker"># Dockerfile
+
+FROM python:3.13-slim
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
@@ -44,10 +43,9 @@ COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 COPY ./project /project</code></pre>
-</div>
-<div class="text-block">
-<div class="file-path">docker-compose.yaml</div>
-<pre><code class="lang-docker">version: "3"
+<pre><code class="lang-docker"># docker-compose.yaml
+
+version: "3"
 
 services:
     app:
@@ -74,40 +72,36 @@ services:
             - ./.env.dev
         volumes:
             - ./volumes/db/data:/var/lib/postgresql/data</code></pre>
-</div>
 <h3 class="section-title">Настройки окружения</h3>
-<div class="text-block">
-<div class="file-path">.env.dev</div>
-<pre><code class="lang-python">SECRET_KEY=key
+<pre><code class="lang-python"># env.dev
+
+SECRET_KEY=key
 DEBUG=False
 ALLOWED_HOSTS=localhost 127.0.0.1
 
 POSTGRES_NAME=postgres
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres</code></pre>
-</div>
 <h3 class="section-title">Настройка статики и Swagger</h3>
-<div class="text-block">
-<div class="file-path">urls.py</div>
-<pre><code class="lang-py">from django.conf import settings
+<pre><code class="lang-py"># urls.py
+
+from django.conf import settings
 from django.conf.urls.static import static
 
 path('api/', include(('api.urls', 'api_v1')))
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)</code></pre>
-</div>
-<div class="text-block">
-<div class="file-path">settings.py</div>
-<pre><code class="lang-py">STATIC_URL = '/static/'
+<pre><code class="lang-py"># settings.py
+
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')</code></pre>
-</div>
 <p>В отдельной директории api создать urls.py</p>
-<div class="text-block">
-<div class="file-path">urls.py</div>
-<pre><code class="lang-py">from django.urls import include, path
+<pre><code class="lang-py"># urls.py
+
+from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions, routers
@@ -130,11 +124,10 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc'), name='schema-redoc'),
     path('', include((router.urls, 'api-root')), name='api-root'),
 ]</code></pre>
-</div>
 <h3 class="section-title">CORS</h3>
-<div class="text-block">
-<div class="file-path">settings.py</div>
-<pre><code class="lang-py">installed_apps = {
+<pre><code class="lang-py"># settings.py
+
+installed_apps = {
     ...
     corsheaders,
     ...
@@ -156,4 +149,3 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
     'access-control-allow-origin',
 )</code></pre>
-</div>

@@ -22,8 +22,8 @@ export default {
 .posts-grid {
   margin-top: 20px;
   display: grid;                                                /* CSS Grid раскладка */
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));  /* Адаптивные колонки */
-  gap: 13px;                                                     /* Расстояние между карточками */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  /* Адаптивные колонки */
+  gap: 1rem;                                                     /* Расстояние между карточками */
 }
 .short-content {
   color: black;
