@@ -137,4 +137,22 @@ pre[class*="language-"] {
   font-size: 0.8rem;
   border-radius: 5px;  /* Закругленные углы */
 }
+@media (max-width: 768px) {
+  #app {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  .article-container {
+    /* Уменьшенные отступы и адаптивная ширина */
+    margin: 1px;
+    /* Меньшие внутренние отступы */
+    padding: 1rem;
+  }
+  .article-container ol {
+    columns: 2;
+    margin-left: 20px;
+    -webkit-columns: 2;
+    -moz-columns: 2;
+  }
+}
 </style>

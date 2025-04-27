@@ -71,4 +71,10 @@ onMounted(async () => {
 .scroll-top:active {
   transform: scale(0.95);
 }
+@media (max-width: 768px) {
+  #app {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+}
 </style>

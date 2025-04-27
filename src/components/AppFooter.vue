@@ -15,7 +15,6 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  border-style: dotted;
   background: var(--secondary);       /* Фон из переменных */
   text-align: center;                /* Выравнивание по центру */
   padding: 2rem;                     /* Внутренние отступы */
