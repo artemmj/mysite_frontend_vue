@@ -23,9 +23,9 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', default='0.0.0.0').split(' ')
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': environ.get('POSTGRES_NAME'),
-    'USER': environ.get('POSTGRES_USER'),
-    'PASSWORD': environ.get('POSTGRES_PASSWORD'),
+    'NAME': os.environ.get('POSTGRES_NAME'),
+    'USER': os.environ.get('POSTGRES_USER'),
+    'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
     'HOST': 'db',
     'PORT': 5432,
   }
@@ -37,7 +37,7 @@ FROM python:3.13-slim
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
-RUN apt update && apt upgrade -y && apt install postgresql gcc python3-dev musl-dev -y
+RUN apt-get update -y && apt-get upgrade -y && apt-get install postgresql gcc python3-dev musl-dev -y
 WORKDIR /project
 COPY requirements.txt .
 RUN pip install --upgrade pip
