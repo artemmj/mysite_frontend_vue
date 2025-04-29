@@ -53,13 +53,16 @@ watch(articleContent, async () => {
   background-color: rgb(244, 244, 244);
 }
 .article-container p {
-  margin: 15px;
+  margin: 20px;
 }
 .article-container ol {
   columns: 3;
-  margin-left: 30px;
+  margin-left: 40px;
   -webkit-columns: 2;
   -moz-columns: 2;
+}
+.article-container ul {
+  margin-left: 30px;
 }
 .article-title {
   color: var(--accent);  /* Цвет текста из акцентной переменной */
@@ -134,7 +137,9 @@ tr:hover {
   transition: background 0.2s ease;
 }
 pre[class*="language-"] {
-  font-size: 0.8rem;
+  margin: 20px;
+  padding: 20px;
+  font-size: 0.9rem;
   border-radius: 5px;  /* Закругленные углы */
 }
 @media (max-width: 768px) {
