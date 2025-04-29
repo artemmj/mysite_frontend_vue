@@ -7,7 +7,7 @@
       <button class="filter-btn" data-filter="django">Django</button>
       <button class="filter-btn" data-filter="fastapi">FastAPI</button>
       <button class="filter-btn" data-filter="go">Go</button>
-      <!-- <button class="filter-btn" data-filter="js">JS</button> -->
+      <button class="filter-btn" data-filter="js">JS</button>
       <button class="filter-btn" data-filter="devops">DevOps</button>
     </div>
   </header>
