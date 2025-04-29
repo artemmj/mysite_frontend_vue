@@ -26,6 +26,7 @@ export default {
 <style lang="scss" scoped>
 header {
   background: var(--secondary);
+  border-radius: 15px;
   border: 0.01rem solid;
   padding: 1rem;                             /* Внутренние отступы */
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* Тень для глубины */
@@ -55,11 +56,14 @@ header {
 .filter-btn {
   margin: 2px;
   padding: 8px 16px;
-  border: 1px solid gray;
+  border: 0.1rem none gray;
   background: #f5f5f5;
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.3s;
+}
+.filter-btn:hover {
+  background: #cbcbcb;
 }
 .filter-btn.active {
   border-color: black;

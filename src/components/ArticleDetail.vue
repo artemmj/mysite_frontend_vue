@@ -26,18 +26,22 @@ watch(articleContent, async () => {
 
 <style lang="scss"> /*scoped*/
 .list-headings {
+  padding: 2px;
   margin-bottom: 20px;
+  border-bottom: 2px solid var(--accent);
 }
 .list-headings a {
+  font-style: bold;
   color: var(--accent-light);
   font-size: 14px;
   text-decoration: none;
 }
 .list-headings a:hover {
-  font-style: bold;
+  font-weight: bold;
 }
 /* Основной контейнер для статьи */
 .article-container {
+  border: 0.01rem solid;
   margin: 20px auto 40px;                     /* Вертикальные отступы + автоматическое центрирование по горизонтали */
   padding: 2rem;                              /* Внутренние отступы со всех сторон */
   background: var(--secondary);               /* Цвет фона из CSS-переменных (меняется при смене темы) */

@@ -14,8 +14,12 @@
         <li><a href="#get_send_headers">Отправка и получение заголовков</a></li>
         <li><a href="#coockies">Куки</a></li>
         <li><a href="#forms">Формы</a></li>
+        <li><a href="#make_simple_api">Создание простейшего API</a></li>
+        <li><a href="#sqlalchemy">Работа с БД через SQLAlchemy</a></li>
+        <li><a href="#base_ops_db">Базовые операции с базой данных в веб-приложении</a></li>
     </ol>
 </div>
+<p><b>FastAPI</b> представляет собой <b>быстрый высокопроизводительный фреймворк</b> для создания <b>веб-приложений</b> на языке <b>Python</b>.</p>
 <p>В центре приложения <b>FastAPI</b> находится одноименный класс <b>FastAPI</b> из пакета fastapi. Данный класс фактически и представляет приложение <b>FastAPI</b>. Этот класс наследуется от класса <b>starlette.applications.Starlette</b>.<br><b>Starlette</b> представляет другой легковесный ASGI-фреймворк для создания асинхронных веб-сервисов на Python. Собственно, <b>FastAPI</b> работает поверх <b>Scarlette</b>, используя и дополняя его функциональность. Это касается не только самого класса <b>FastAPI</b>, но и других классов фреймворка - многие из них используют функционал <b>Scarlette</b>.</p>
 <h3 class="section-title" id="proc_req_resps">Обработка запросов и отправка ответов</h3>
 <p>В классе FastAPI для каждого из типов REST запросов определены одноименные методы: <b>get, post, put, delete, options, head, patch, trace</b></p>
@@ -25,21 +29,12 @@ from fastapi.encoders import jsonable_encoder
 
 app = FastAPI()
 
+# Распространенные - HTMLResponse, JSONResponse,  PlainTextResponse, FileResponse
+
 @app.get("/")
 def root():
     # Класс fastapi.Response является базовым для остальных классов ответа.
     return Response(content="<h1>=== Hello FastAPI! main page ===</h1>", media_type="text/html")
-
-# Методы FastAPI позволяют задать тип ответа с помощью параметра response_class
-@app.get("/simple", response_class=PlainTextResponse)
-def simple_reponse():
-    # Для отправки простого текста также можно использовать класс-наследник PlainTextResponse
-    return PlainTextResponse(content="=== simple text ===", media_type="text/plain")
-
-@app.get("/html", response_class=HTMLResponse)
-def simple_reponse():
-    # Для упрощения отправки кода html предназначен класс HTMLResponse
-    return HTMLResponse(content="<h1>=== html text ===</h1>")
 
 # Для отправки файлов из приложения FastAPI применяется класс FileResponse
 @app.get("/file", response_class=FileResponse)
@@ -52,12 +47,7 @@ def about():
     #   "public/index.html", 
     #   filename="mainpage.html", 
     #   media_type="application/octet-stream"
-    # )
-
-@app.get("/json", response_class=JSONResponse)
-def json():
-    json_data = jsonable_encoder({"message": "success json response!"})
-    return JSONResponse(content=json_data)</code></pre>
+    # )</code></pre>
 <h3 class="section-title" id="path_params">Параметры пути и строки запроса</h3>
 <p><b>Параметры пути</b> определяются в шаблоне пути внутри фигурных скобок: <b>{название_параметра}</b>.</p>
 <pre><code class="lang-py">@app.get("/users/{id}")
@@ -81,25 +71,19 @@ def admin():
 @app.get("/users/{name}")
 def users(name):
     return {"user_name": name}</code></pre>
-<p>FastAPI позволяет <b>ограничить тип параметров</b> и соответственно набор используемых значений. Например, мы хотим, чтобы параметр <b>id</b> представлял только <b>целое число</b>:</p>
+<p>FastAPI позволяет <b>ограничить тип параметров</b> и соответственно набор используемых значений</p>
 <pre><code class="lang-py">@app.get("/users/{id}")
 def users(id: int):
     return {"user_id": id}</code></pre>
 <p>Дополнительно для работы с <b>параметрами пути</b> фреймворк <b>FastAPI</b> предоставляет класс <b>Path</b> из пакета <b>fastapi</b>. Он позволяет <b>валидировать значения параметров</b>:</p>
 <pre><code class="lang-py">from fastapi import Path
 
-# min_length: устанавливает минимальное количество символов в значении параметра
-# max_length: устанавливает максимальное количество символов в значении параметра
-# pattern: устанавливает регулярное выражение, которому должно соответствовать значение параметра
-# lt: значение параметра должно быть меньше определенного значения
-# le: значение параметра должно быть меньше или равно определенному значению
-# gt: значение параметра должно быть больше определенного значения
-# ge: значение параметра должно быть больше или равно определенному значению
+# Распростаненные параметры: min_length, max_length, pattern, lt, le, gt, ge
+
 @app.get("/users/{name}/{age}")
 def users(
     name: str = Path(min_length=3, max_length=20), 
     age: int = Path(ge=18, lt=111),
-    phone: str = Path(pattern=r"^\d{11}$")
 ):
     return {"name": name, "age": age}</code></pre>
 <p><b>Параметры строки запроса</b> представляют еще один способ передать в приложение некоторые значения в запросе типа <b>GET</b>. </p>
@@ -126,8 +110,8 @@ def get_model(param1: str = 'empty', param2: int = 0):
 # le: значение параметра должно быть меньше или равно определенному значению
 # gt: значение параметра должно быть больше определенного значения
 # ge: значение параметра должно быть больше или равно определенному значению
-@app.get("/users4")
-def users4(
+@app.get("/users")
+def users(
     name: str = Query(default='empty', min_length=3, max_length=20),
     age: int = Query(default=None, ge=18, lt=111),
     phone: str  = Query(default=None, pattern=r"^\d{11}$"),
@@ -135,12 +119,12 @@ def users4(
     return {"name": name, "age": age, "phone": phone}
 </code></pre>
 <p>Использование класса <b>Query</b> позволяет получать через <b>строку запроса</b> <b>списки</b>. В общем случае <b>списки значений</b> передаются, когда в <b>строке запроса</b> одному <b>параметру</b> несколько раз передаются <b>разные значения</b>.</p>
-<pre><code class="lang-py">@app.get("/users5")
-def users5(params: list[str]  = Query()):  # GET /users5/?params=1&#38;params=2&#38;params=3
+<pre><code class="lang-py">@app.get("/users")
+def users(params: list[str]  = Query()):   # GET /users/?params=1&#38;params=2&#38;params=3
     return {"params": params}              # {"params":["1","2","3"]}</code></pre>
 <p>При необходимости можно сочетать <b>параметры пути</b> и <b>строки запроса</b>:</p>
 <pre><code class="lang-py">@app.get("/users/{name}")
-def users6(
+def users(
     name:str = Path(min_length=3, max_length=20), 
     age: int = Query(ge=18, lt=111),
 ):
@@ -177,12 +161,12 @@ def users(response: Response, id: int = Path()):
 from fastapi.responses import RedirectResponse, PlainTextResponse
 
 @app.get("/old")
-    def old():
-        return RedirectResponse("/new")
+def old():
+    return RedirectResponse("/new")
 
-    @app.get("/new")
-    def new():
-        return PlainTextResponse("Новая страница")
+@app.get("/new")
+def new():
+    return PlainTextResponse("Новая страница")
 
 # Альтернативный вариант
 @app.get("/old", response_class= RedirectResponse)
@@ -227,14 +211,7 @@ def hello(data = Body()):
 def hello(name = Body(embed=True), age = Body(embed=True)):
     return {"message": f"{name}, ваш возраст - {age}"}
 
-# Через конструктор Body можно установить следующие параметры для валидации значений:
-#   min_length: устанавливает минимальное количество символов в значении параметра
-#   max_length: устанавливает максимальное количество символов в значении параметра
-#   pattern: устанавливает регулярное выражение, которому должно соответствовать значение параметра
-#   lt: значение параметра должно быть меньше определенного значения
-#   le: значение параметра должно быть меньше или равно определенному значению
-#   gt: значение параметра должно быть больше определенного значения
-#   ge: значение параметра должно быть больше или равно определенному значению
+# Распростаненные параметры: min_length, max_length, pattern, lt, le, gt, ge
 
 @app.post("/hello")
 def hello(
@@ -268,16 +245,9 @@ def hello(person: Person):
 
 # Для более детальной настройки атрибутов модели применяется класс pydantic.Field
 # Например, он позволяет задать значение по умолчанию и правила валдации значений
-# с помощью следующих параметров конструктора:
+# с помощью параметров конструктора:
 
-# default: устанавливает значение по умолчанию
-# min_length: устанавливает минимальное количество символов в значении параметра
-# max_length: устанавливает максимальное количество символов в значении параметра
-# pattern: устанавливает регулярное выражение, которому должно соответствовать значение параметра
-# lt: значение параметра должно быть меньше определенного значения
-# le: значение параметра должно быть меньше или равно определенному значению
-# gt: значение параметра должно быть больше определенного значения
-# ge: значение параметра должно быть больше или равно определенному значению
+# Распростаненные параметры: min_length, max_length, pattern, lt, le, gt, ge
 
 class Person(BaseModel):
     name: str = Field(default="Undefined", min_length=3, max_length=20)
@@ -386,14 +356,7 @@ def root(last_visit: str | None = Cookie(default=None)):
 def postdata(username=Form(), userage=Form()):
     return {"name": username, "age": userage}
 
-# Класс Form из пакета fastapi предоставляет возможности валидации
-# min_length: устанавливает минимальное количество символов в значении параметра
-# max_length: устанавливает максимальное количество символов в значении параметра
-# pattern: устанавливает регулярное выражение, которому должно соответствовать значение параметра
-# lt: значение параметра должно быть меньше определенного значения
-# le: значение параметра должно быть меньше или равно определенному значению
-# gt: значение параметра должно быть больше определенного значения
-# ge: значение параметра должно быть больше или равно определенному значению
+# Распростаненные параметры: min_length, max_length, pattern, lt, le, gt, ge
 
 @app.post("/postdata")
 def postdata(
@@ -419,4 +382,260 @@ def postdata(
     languages: list =Form()
 ):
     return {"name": username, "languages": languages}</code></pre>
+<h3 class="section-title" id="make_simple_api">Создание простейшего API</h3>
+<p>Реализуем простейшее приложение <b>Web API</b> в стиле <b>REST</b>. Архитектура <b>REST</b> предполагает применение следующих <b>методов</b> или <b>типов запросов HTTP</b> для взаимодействия с сервером, где каждый <b>тип</b> запроса отвечает за определенное <b>действие</b>: <b>GET</b> (получение данных), <b>POST</b> (добавление данных), <b>PUT</b> (изменение данных), <b>DELETE</b> (удаление данных).</p>
+<pre><code class="lang-py">import uuid
+from fastapi import FastAPI, Body, status
+from fastapi.responses import JSONResponse, FileResponse
 
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        self.id = str(uuid.uuid4())
+
+# Условная база данных - набор объектов Person
+people = [Person("Alyx", 11), Person("John", 12), Person("Nik", 13)]
+
+def find_person(id):
+    """Функция ищет пользователя в списке по айди."""
+    for person in people: 
+        if person.id == id:
+            return person
+    return None
+
+app = FastAPI()
+
+@app.get("/")
+async def main():
+    return FileResponse("public/index.html")
+
+@app.get("/api/users")  # Список пользователей
+def get_users():
+    return people
+
+@app.get("/api/users/{id}")  # Детальный вид конкретного юзера
+def get_user_detail(id):
+    person = find_person(id)
+    print(person)
+    if person == None:  
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            content={ "message": "Пользователь не найден" }
+        )
+    return person
+
+@app.post("/api/users")  # Создание юзера
+def create_user(data = Body()):
+    person = Person(data["name"], data["age"])
+    people.append(person)
+    return person
+
+@app.put("/api/users")  # Обновление юзера
+def edit_user(data = Body()):
+    person = find_person(data["id"])
+    if person == None: 
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            content={ "message": "Пользователь не найден" }
+        )
+    person.age = data["age"]
+    person.name = data["name"]
+    return person
+
+@app.delete("/api/users/{id}")  # Удаление юзера
+def delete_user(id):
+    person = find_person(id)
+    if person == None:
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND, 
+            content={ "message": "Пользователь не найден" }
+        )
+    people.remove(person)
+    return person
+</code></pre>
+<h3 class="section-title" id="sqlalchemy">Работа с БД через SQLAlchemy</h3>
+<p><b>FastAPI</b> поддерживает работу с самыми разными <b>системами баз данных</b>: PostgreSQL, MySQL, SQLite, Oracle, Microsoft SQL Server и т.д. Причем мы не ограничены только <b>реалиционными базами</b> данных и равным образом использовать и <b>нереляционные</b>, так называемые <b>NoSQL-системы</b> баз данных.</p>
+<p>При работе с <b>базами данных</b> самым простым решением является использование специальных инструментов - <b>ORM (Object Relational Mapper)</b>, которые позволяют абстрагироваться от строения <b>базы данных</b> в конкретной <b>СУБД</b> и позволяет автоматически связать <b>сущности</b> в коде <b>Python</b> с <b>таблицами в базе данных</b>. В <b>FastAPI</b> наиболее распространным <b>ORM-инструментом</b> является <b>SQLAlchemy ORM</b>. Рассмотрим работу с БД через <b>SQLAlchemy ORM</b> на примере <b>SQLite</b>.</p>
+<p>Установим</p>
+<pre><code class="lang-bash">pip install sqlalchemy</code></pre>
+<p>Для создания базы данных и таблиц по метаданным моделей применяется метод <b>Base.metadata.create_all()</b>. Его ключевой параметр - <b>bind</b> принимает <b>класс</b>, который используется для подключения к базе данных. В качестве такого класса применяется созданный ранее движок<b> SQLAlchemy</b>. Если <b>база данных</b> и все необходимые <b>таблицы</b> уже имеются, то <b>метод</b> не создает заново <b>таблицы</b>.</p>
+<pre><code class="lang-py">from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.orm import DeclarativeBase
+from fastapi import FastAPI
+
+# Определение строки подключения к БД
+SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
+# sqlite:///относительный_путь/file.db
+# sqlite:////абсолютный_путь/file.db
+# Например для PostgreSQL
+# SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
+
+# Определение движка
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL,
+    connect_args={
+        # По умолчанию SQLite разрешает взаимодействовать с БД только
+        # одному потоку. Эта настройка чтобы исправить это
+        "check_same_thread": False,
+    }
+)
+# При работе с другими СУБД достаточно указать только адрес подключения:
+# engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
+# Для создания моделей необходима базовая модель, от которой потом наследуются остальные модели
+class Base(DeclarativeBase): pass
+
+# Затем уже можно определить конкретные модели, данные которых будут храниться в БД
+class Person(Base):
+    __tablename__ = "people"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    age = Column(Integer,)
+
+# Сбросить таблицы
+Base.metadata.create_all(bind=engine)
+
+# Приложение, которое ничего не делает
+app = FastAPI()</code></pre>
+<p>Для взаимодействия с <b>БД</b> необходимо создать <b>сессию</b> базы данных, которая представляет объект <b>sqlalchemy.orm.Session</b>. Через этот <b>объект</b> идет вся работа с <b>БД</b>. Но для этого вначале надо создать класс-построитель <b>Session</b> с помощью <b>функции-фабрики sessionmaker()</b>.</p>
+<pre><code class="lang-py">from sqlalchemy.orm import sessionmaker
+
+# autoflush: при значении True (дефолт) будет вызываться метод Session.flush()
+#            который записывает все изменения в базу данных
+# bind: привязывает сессию бд к определенному движку,
+#       который применяется для установки подключения
+SessionLocal = sessionmaker(autoflush=False, bind=engine)
+db = SessionLocal()
+</code></pre>
+<p><b>Добавление данных</b> - для <b>добавления</b> в <b>БД</b> необходимо сначала <b>создать объект модели</b>, который передается в метод <b>add()</b> объекта <b>Session</b>. После добавления для подтверждения изменений у объекта <b>Session</b> вызывается метод <b>commit()</b>.</p>
+<p>Следует отметить, что после <b>добавления</b> или <b>обновления</b> объекта, если мы хотим <b>использовать этот объект</b>, обращаться к его атрибутами, то желательно, а иногда может быть <b>необходимо</b>, использовать метод <b>refresh()</b>, который <b>обновляет состояние объекта</b>.</p>
+<p>Для получения <b>объектов</b> из <b>БД</b> вначале у объекта <b>Session</b> необходимо вызывать метод <b>query()</b> - в него передается <b>тип модели</b>, данные которой необходимо <b>получить</b>. Но данный <b>метод</b> просто создает объект <b>Query</b> - <b>некоторый запрос</b>, который будет выполнен в будущем при <b>непосредственном получении данных</b>. Далее применяя к объекту <b>Query</b> различные методы, мы можем получить <b>непосредственный результат</b>. Например, если надо получить <b>все объекты</b>, применяется метод <b>all()</b>. Для <b>получения одного объекта</b> по <b>id</b> применяется метод <b>get()</b>. Для <b>фильтрации</b> у объекта <b>Query</b> применяется метод <b>filter()</b>, который принимает условие фильтрации. Для получения только <b>одного объекта</b> применяется метод <b>first()</b>.</p>
+<p>Для <b>обновления</b> объекта достаточно изменить значения его атрибутов и затем вызвать у объекта <b>Session</b> метод <b>commit()</b> для применения изменений.</p>
+<p>Для <b>удаления</b> у объекта <b>Session</b> применяется метод <b>delete()</b>, в который передается удаляемый объект.</p>
+<pre><code class="lang-py"># Добавление данных
+
+alyx = Person(name='Alyx', age=19)
+db.add(alyx)
+db.commit()
+
+# Создаем объект Person для добавления в БД
+tom = Person(name="Tom", age=38)
+db.add(tom)      # добавляем в бд
+db.commit()      # сохраняем изменения
+db.refresh(tom)  # обновляем состояние объекта
+print(tom.id)    # можно получить установленный id
+
+alice = Person(name="Alice", age=33)
+kate = Person(name="Kate", age=28)
+db.add_all([alice, kate])
+db.commit()
+
+# Получение данных
+
+# Все объекты
+people = db.query(Person).all()
+for p in people:
+    print(f"{p.id}.{p.name} ({p.age})")
+
+# Методы get() и first() возвращают None, если объект не найден, нужно проверять
+
+# Принимает идентификатор нужного объекта
+first_person = db.get(Person, 1)
+print(f"{first_person.name} - {first_person.age}")
+
+# Фильтрация
+people = db.query(Person).filter(Person.age > 30).all()
+for p in people:
+    print(f"{p.id}.{p.name} ({p.age})")
+
+# Для получения только одного объекта
+first = db.query(Person).filter(Person.id==1).first()
+print(f"{first.name} ({first.age})")
+
+# Для обновления объекта достаточно изменить значения его атрибутов и вызвать commit()
+tom.name = "Tomas"
+tom.age = 22
+db.commit()
+
+# Для удаления применяется метод delete(), в который передается удаляемый объект
+bob = db.query(Person).filter(Person.id==2).first()
+db.delete(bob)
+db.commit()</code></pre>
+<h3 class="section-title" id="base_ops_db">Базовые операции с базой данных в веб-приложении</h3>
+<p>Вынести в отдельный <b>database.py</b> настройки <b>БД</b></p>
+<pre><code class="lang-py">from sqlalchemy import create_engine
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import  Column, Integer, String
+
+SQLALCHEMY_DATABASE_URL = "sqlite:///./sqlite.db"
+engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+
+class Base(DeclarativeBase): pass
+
+class Person(Base):
+    __tablename__ = "people"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    age = Column(Integer,)
+
+SessionLocal = sessionmaker(autoflush=False, bind=engine)</code></pre>
+<p>Создание <b>сервера</b></p>
+<pre><code class="lang-py">from database import Base, Person, SessionLocal, engine
+from sqlalchemy.orm import Session
+from fastapi import Depends, FastAPI, Body
+from fastapi.responses import JSONResponse, FileResponse
+
+Base.metadata.create_all(bind=engine)
+app = FastAPI()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.get("/")
+def main():
+    return FileResponse("public/index.html")
+
+@app.get("/api/users")
+def get_people(db: Session = Depends(get_db)):
+    return db.query(Person).all()
+
+@app.get("/api/users/{id}")
+def get_person(id, db: Session = Depends(get_db)):
+    person = db.query(Person).filter(Person.id == id).first()
+    if person == None:  
+        return JSONResponse(status_code=404, content={"message": "Пользователь не найден"})
+    return person
+
+@app.post("/api/users")
+def create_person(data  = Body(), db: Session = Depends(get_db)):
+    person = Person(name=data["name"], age=data["age"])
+    db.add(person)
+    db.commit()
+    db.refresh(person)
+    return person
+
+@app.put("/api/users")
+def edit_person(data  = Body(), db: Session = Depends(get_db)):
+    person = db.query(Person).filter(Person.id == data["id"]).first()
+    if person == None: 
+        return JSONResponse(status_code=404, content={ "message": "Пользователь не найден"})
+    person.age = data["age"]
+    person.name = data["name"]
+    db.commit()
+    db.refresh(person)
+    return person
+
+@app.delete("/api/users/{id}")
+def delete_person(id, db: Session = Depends(get_db)):
+    person = db.query(Person).filter(Person.id == id).first()
+    if person == None:
+        return JSONResponse(status_code=404, content={ "message": "Пользователь не найден"})
+    db.delete(person)
+    db.commit()
+    return person</code></pre>

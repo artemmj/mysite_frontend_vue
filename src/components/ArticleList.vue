@@ -29,10 +29,10 @@ export default {
   color: black;
   font-size: 0.8rem;
 }
-/* Стили карточки статьи */
 .post-card {
   background: var(--secondary);                    /* Фон карточки */
   border-radius: 15px;                             /* Закругленные углы */
+  border: 0.01rem solid gray;
   padding: 20px;                                   /* Внутренние отступы */
   cursor: pointer;                                 /* Курсор-указатель */
   transform: translateY(0);                        /* Начальное положение для анимации */
@@ -46,12 +46,10 @@ export default {
   margin: 0;
   display: none;
 }
-/* Эффекты при наведении на карточку */
 .post-card:hover {
   transform: translateX(-10px);       /* Поднятие карточки */
   box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Тень при наведении */
 }
-/* Заголовок статьи */
 .post-card h2 {
   font-size: 1.1rem;
   color: var(--accent);              /* Акцентный цвет */
@@ -60,14 +58,12 @@ export default {
 .post-card a {
   text-decoration: none;
 }
-/* Дата публикации */
 .post-date {
   font-size: 0.7rem;      /* Размер шрифта */
   color: var(--text);   /* Цвет из переменных */
   opacity: 0.7;         /* Полупрозрачность */
   margin-bottom: 3px;
 }
-/* Теги публикации */
 .post-tags {
   font-size: 0.7rem;      /* Размер шрифта */
   color: var(--text);   /* Цвет из переменных */

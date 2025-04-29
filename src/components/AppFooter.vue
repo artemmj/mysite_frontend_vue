@@ -20,5 +20,6 @@ export default {
   text-align: center;                /* Выравнивание по центру */
   padding: 2rem;                     /* Внутренние отступы */
   margin-top: 4rem;                  /* Отступ сверху */
+  border-radius: 15px;
 }
 </style>
