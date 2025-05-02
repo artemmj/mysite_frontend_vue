@@ -4,10 +4,11 @@
     <div class="nav">
       <!-- <button class="filter-btn active" data-filter="all">Всё</button> -->
       <button class="filter-btn" data-filter="python">Python</button>
-      <button class="filter-btn" data-filter="django">Django</button>
-      <button class="filter-btn" data-filter="fastapi">FastAPI</button>
       <button class="filter-btn" data-filter="go">Go</button>
       <button class="filter-btn" data-filter="js">JS</button>
+      <button class="filter-btn" data-filter="django">Django</button>
+      <button class="filter-btn" data-filter="fastapi">FastAPI</button>
+      <button class="filter-btn" data-filter="vuejs">VueJS</button>
       <button class="filter-btn" data-filter="devops">DevOps</button>
     </div>
   </header>

@@ -18,7 +18,6 @@
 </ol>
 </div>
 <h3 class="section-title" id="func_params">Функции и их параметры, возвращение результата из функции</h3>
-<div class="text-block">
 <pre><code class="lang-go">func имя_функции (список_параметров) тип_возвращаемого_значения {
   выполняемые_операторы
   return возвращаемое_значение
@@ -51,11 +50,9 @@ func add(x, y int, data1, data2 string) (z int, returnData string) {
   returnData = data1 + " " + data2
   return
 }</code></pre>
-      </div>
-      <h3 class="section-title" id="func_type">Тип функции</h3>
-      <p>Каждая функция имеет определенный тип, который складывается из списка типов параметров и списка типов возвращаемых результатов. Какое значение имеет тип функции? Это значит, что мы можем определять переменные или параметры функций, которые будут представлять определенный тип функциии. То есть фактически переменная может быть функцией.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">func add(x int, y int) int{  // func(int, int) int
+<h3 class="section-title" id="func_type">Тип функции</h3>
+<p>Каждая функция имеет определенный тип, который складывается из списка типов параметров и списка типов возвращаемых результатов. Какое значение имеет тип функции? Это значит, что мы можем определять переменные или параметры функций, которые будут представлять определенный тип функциии. То есть фактически переменная может быть функцией.</p>
+<pre><code class="lang-go">func add(x int, y int) int{  // func(int, int) int
   return x + y
 }
 func multiply(x int, y int) int{  //func(int, int) int
@@ -68,10 +65,8 @@ func display(message string){  // func(string)
 var f func(int, int) int = add
 fmt.Println(f(3, 4))
 var x = f(4, 5)  // 9</code></pre>
-      </div>
-      <p>При этом переменная может изменять функцию, на которую она указывает, но при этому функция обязательно должна соответствовать ее типу</p>
-      <div class="text-block">
-        <pre><code class="lang-go">func add(x int, y int) int { return x + y}
+<p>При этом переменная может изменять функцию, на которую она указывает, но при этому функция обязательно должна соответствовать ее типу</p>
+<pre><code class="lang-go">func add(x int, y int) int { return x + y}
 func multiply(x int, y int) int { return x * y}
 func display(message string) { fmt.Println(message) }
 
@@ -84,10 +79,8 @@ func main() {
   var f1 func(string) = display  // ok 
   f1("hello")
 }</code></pre>
-      </div>
-      <p>Также функция может передаваться в качестве параметра в другую функцию.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">func isEven(n int) bool{ return n % 2 == 0 }
+<p>Также функция может передаваться в качестве параметра в другую функцию.</p>
+<pre><code class="lang-go">func isEven(n int) bool{ return n % 2 == 0 }
 func isPositive(n int) bool{ return n > 0 }
 
 func sum(numbers []int, criteria func(int) bool) int {
@@ -104,10 +97,8 @@ sumOfEvens := sum(slice, isEven)          // сумма четных чисел
 fmt.Println(sumOfEvens)                   // -2
 sumOfPositives := sum(slice, isPositive)  // сумма положительных чисел
 fmt.Println(sumOfPositives)               // 37</code></pre>
-      </div>
-      <p>Функция также может возвращаться из другой функции в качестве результата.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">func add(x int, y int) int{ return x + y}
+<p>Функция также может возвращаться из другой функции в качестве результата.</p>
+<pre><code class="lang-go">func add(x int, y int) int{ return x + y}
 func subtract(x int, y int) int{ return x - y}
 func multiply(x int, y int) int{ return x * y}
 
@@ -120,10 +111,8 @@ f := selectFn("add")
 fmt.Println(f(3, 4))  // 7
 f = selectFn("subtract")
 fmt.Println(f(3, 4))  // 12</code></pre>
-      </div>
-      <p><b>Анонимные функции</b> - это функции, которым не назначено имя. Они отличаются от обычных функций также тем, что они могут определяться внутри других функций и также могут иметь доступ к контексту выполнения. Анонимные функции позволяют нам определить некоторое действие непосредственно там, где оно применяется.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">var f func(int, int) int = func(x, y int) int{ return x + y}
+<p><b>Анонимные функции</b> - это функции, которым не назначено имя. Они отличаются от обычных функций также тем, что они могут определяться внутри других функций и также могут иметь доступ к контексту выполнения. Анонимные функции позволяют нам определить некоторое действие непосредственно там, где оно применяется.</p>
+<pre><code class="lang-go">var f func(int, int) int = func(x, y int) int{ return x + y}
 
 
 // Анонимная функция как аргумент функции
@@ -164,25 +153,19 @@ func main() {
   fmt.Println(f())        // 16
   fmt.Println(f())        // 25
 }</code></pre>
-      </div>
-      <h3 class="section-title" id="counters">Указатели</h3>
-      <p>Указатели представляют собой объекты, значением которых служат адреса других объектов (например, переменных). Указатель определяется как обычная переменная, только перед типом данных ставится символ звездочки *. Этому указателю можно присвоить адрес переменной определенного типа.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">var x int = 4   // определяем переменную
+<h3 class="section-title" id="counters">Указатели</h3>
+<p>Указатели представляют собой объекты, значением которых служат адреса других объектов (например, переменных). Указатель определяется как обычная переменная, только перед типом данных ставится символ звездочки *. Этому указателю можно присвоить адрес переменной определенного типа.</p>
+<pre><code class="lang-go">var x int = 4   // определяем переменную
 var p *int      // определяем указатель 
 p = &x          // указатель получает адрес переменной
 fmt.Println(p)  // значение самого указателя - адрес переменной x (напр. 0xc0420120a0)</code></pre>
-      </div>
-      <p>По адресу, который хранит указатель, мы получить значение переменной x. Для этого применяется операция * или операция разыменования. Результатом этой операции является значение переменной, на которую указывает указатель.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">var x int = 4
+<p>По адресу, который хранит указатель, мы получить значение переменной x. Для этого применяется операция * или операция разыменования. Результатом этой операции является значение переменной, на которую указывает указатель.</p>
+<pre><code class="lang-go">var x int = 4
 var p *int  = &x            // указатель получает адрес переменной
 fmt.Println("Address:", p)  // значение указателя - адрес переменной x
 fmt.Println("Value:", *p)   // значение переменной x</code></pre>
-      </div>
-      <p>И также используя указатель, мы можем менять значение по адресу, который хранится в указателе.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">var x int = 4
+<p>И также используя указатель, мы можем менять значение по адресу, который хранится в указателе.</p>
+<pre><code class="lang-go">var x int = 4
 var p *int = &x
 *p = 25
 fmt.Println(x)  // 25
@@ -198,19 +181,15 @@ pf := &f
 if pf != nil{
   fmt.Println("Value:", *pf)
 }</code></pre>
-      </div>
-      <p>Go также позволяет создавать безымянные объекты - они также размещаются в памяти, но не имеют имени как переменные. Для этого применяется функция new(type). В эту функцию передается тип, объект которого надо создать. Функция возвращает указатель на созданный объект.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">p := new(int) 
+<p>Go также позволяет создавать безымянные объекты - они также размещаются в памяти, но не имеют имени как переменные. Для этого применяется функция new(type). В эту функцию передается тип, объект которого надо создать. Функция возвращает указатель на созданный объект.</p>
+<pre><code class="lang-go">p := new(int) 
 fmt.Println("Value:", *p)  // Value: 0 - значение по умолчанию
 *p = 8                     // изменяем значение
 fmt.Println("Value:", *p)  // Value: 8</code></pre>
-      </div>
-      <p>Объект, созданный с помощью функции new, ничем не отличается от обычной переменной. Единственное что, чтобы обратиться к этому объекту - получить или изменить его адрес, необходимо использовать указатель.</p>
-      <h3 class="section-title" id="counters_like_param">Указатели как параметры функции</h3>
-      <p>По умолчанию все параметры передаются в функцию по значению. Функция получает копию переданной переменной и работает с ней независимо от оригинальной переменной. Если нам все таки надо менять значение передаваемой переменной - надо использовать указатели.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">func changeValue(x *int){
+<p>Объект, созданный с помощью функции new, ничем не отличается от обычной переменной. Единственное что, чтобы обратиться к этому объекту - получить или изменить его адрес, необходимо использовать указатель.</p>
+<h3 class="section-title" id="counters_like_param">Указатели как параметры функции</h3>
+<p>По умолчанию все параметры передаются в функцию по значению. Функция получает копию переданной переменной и работает с ней независимо от оригинальной переменной. Если нам все таки надо менять значение передаваемой переменной - надо использовать указатели.</p>
+<pre><code class="lang-go">func changeValue(x *int){
   *x = (*x) * (*x)
 }
 func main() {
@@ -219,10 +198,8 @@ func main() {
   changeValue(&d)                 // изменяем значение
   fmt.Println("d after:", d)      // 25
 }</code></pre>
-      </div>
-      <p>Функция может возвращать указатель.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">func createPointer(x int) *int {
+<p>Функция может возвращать указатель.</p>
+<pre><code class="lang-go">func createPointer(x int) *int {
   p := new(int)
   *p = x
   return p
@@ -236,10 +213,8 @@ func main() {
   p3 := createPointer(28)
   fmt.Println("p3:", *p3)     // p3: 28
 }</code></pre>
-      </div>
-      <h3 class="section-title" id="struct">Структуры</h3>
-      <div class="text-block">
-        <pre><code class="lang-go">type data_struct struct {
+<h3 class="section-title" id="struct">Структуры</h3>
+<pre><code class="lang-go">type data_struct struct {
   id    int
   value string
 }
@@ -258,10 +233,8 @@ func main() {
   fmt.Println(bob.id, bob.value)
   fmt.Println(undefined.id, undefined.value)
 }</code></pre>
-      </div>
-      <p>Как и в случае с обычными переменными, можно создавать <b>указатели на структуры</b>.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">type data_struct struct{
+<p>Как и в случае с обычными переменными, можно создавать <b>указатели на структуры</b>.</p>
+<pre><code class="lang-go">type data_struct struct{
   id    int
   value string
 }
@@ -299,10 +272,8 @@ var User1 = user {
     phone: "+1234567899",
   },
 }</code></pre>
-      </div>
-      <p>Здесь определена структура node, которая представляет типичный узел односвязного списка. Она хранит значение в поле value и ссылку на следующий узел через указатель next.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">type node struct{
+<p>Здесь определена структура node, которая представляет типичный узел односвязного списка. Она хранит значение в поле value и ссылку на следующий узел через указатель next.</p>
+<pre><code class="lang-go">type node struct{
   value int
   next *node
 }
@@ -325,11 +296,9 @@ func main() {
     current = current.next
   }
 }</code></pre>
-      </div>
-      <h3 class="section-title" id="methods">Методы</h3>
-      <p>Метод представляет функцию, связанную с определенным типом. Методы определяются также как и обычные функции за тем исключением, что в определении метода также необходимо указать получателя или receiver. Получатель - это параметр того типа, к которому прикрепляется метод.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">func (имя_параметра тип_получателя) имя_метода (параметры) (типы_возвращаемых_результатов){
+<h3 class="section-title" id="methods">Методы</h3>
+<p>Метод представляет функцию, связанную с определенным типом. Методы определяются также как и обычные функции за тем исключением, что в определении метода также необходимо указать получателя или receiver. Получатель - это параметр того типа, к которому прикрепляется метод.</p>
+<pre><code class="lang-go">func (имя_параметра тип_получателя) имя_метода (параметры) (типы_возвращаемых_результатов){
   тело_метода
 }
 
@@ -341,16 +310,12 @@ func (l library) print(){
     fmt.Println(val)
   }
 }</code></pre>
-      </div>
-      <p>Та часть, которая расположена между ключевым словом func и именем метода и представляет определение получателя, для которого будет определен этот метод: (l library). Используя параметр получателя (в данном случае l), мы можем обращаться к получателю. Например, в нашем случае получатель представляет срез - набор объектов. С помощью цикла for можно пройтись по этому срезу и вывести все его элементы на консоль.</p>
-      <p>Поскольку print представляет именно метод, который определен для типа library, а не обычную функцию, то мы можем вызвать этот метод у любого объекта типа library.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">var lib library = library{ "Book1", "Book2", "Book3" }
+<p>Та часть, которая расположена между ключевым словом func и именем метода и представляет определение получателя, для которого будет определен этот метод: (l library). Используя параметр получателя (в данном случае l), мы можем обращаться к получателю. Например, в нашем случае получатель представляет срез - набор объектов. С помощью цикла for можно пройтись по этому срезу и вывести все его элементы на консоль.</p>
+<p>Поскольку print представляет именно метод, который определен для типа library, а не обычную функцию, то мы можем вызвать этот метод у любого объекта типа library.</p>
+<pre><code class="lang-go">var lib library = library{ "Book1", "Book2", "Book3" }
 lib.print()</code></pre>
-      </div>
-      <h3 class="section-title" id="methods_struct">Методы структур</h3>
-      <div class="text-block">
-        <pre><code class="lang-go">type data_struct struct {
+<h3 class="section-title" id="methods_struct">Методы структур</h3>
+<pre><code class="lang-go">type data_struct struct {
   name string
   age  int
 }
@@ -368,11 +333,9 @@ func main() {
   alex.print()
   alex.eat("text text text")
 }</code></pre>
-      </div>
-      <h3 class="section-title" id="methods_counter">Методы указателей</h3>
-      <p>При вызове метода, объект структуры, для которого определен метод, передается в него по значению. Что это значит?</p>
-      <div class="text-block">
-        <pre><code class="lang-go">type data_struct struct{
+<h3 class="section-title" id="methods_counter">Методы указателей</h3>
+<p>При вызове метода, объект структуры, для которого определен метод, передается в него по значению. Что это значит?</p>
+<pre><code class="lang-go">type data_struct struct{
   name string
   value int
 }
@@ -385,10 +348,8 @@ func main() {
   data1.updateValue(33)
   fmt.Println("after", data1.value)   // 24  не изменяется, метод updateValue получает копию структуры data1
 }</code></pre>
-      </div>
-      <p>Необходимо использовать указатели на структуры</p>
-      <div class="text-block">
-        <pre><code class="lang-go">type data_struct struct{
+<p>Необходимо использовать указатели на структуры</p>
+<pre><code class="lang-go">type data_struct struct{
   name string
   value int
 }
@@ -402,12 +363,10 @@ func main() {
   data1Pointer.updateValue(33)
   fmt.Println("after", data1.value)   // 33  ok
 }</code></pre>
-      </div>
-      <p>Стоит отметить, что несмотря на то, что метод updateValue определен для указателя на структуру data_struct, мы по прежнему можем вызывать этот метод и для объекта data_struct.</p>
-      <h3 class="section-title" id="interfaces">Интерфейсы</h3>
-      <p>Интерфейсы представляют абстракцию поведения других типов. Интерфейсы позволяют определять функции, которые не привязаны к конкретной реализации. То есть интерфейсы определяют некоторый функционал, но не реализуют его.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">type имя_интерфейса interface{
+<p>Стоит отметить, что несмотря на то, что метод updateValue определен для указателя на структуру data_struct, мы по прежнему можем вызывать этот метод и для объекта data_struct.</p>
+<h3 class="section-title" id="interfaces">Интерфейсы</h3>
+<p>Интерфейсы представляют абстракцию поведения других типов. Интерфейсы позволяют определять функции, которые не привязаны к конкретной реализации. То есть интерфейсы определяют некоторый функционал, но не реализуют его.</p>
+<pre><code class="lang-go">type имя_интерфейса interface{
   определения_функций
 }
 type vehicle_interface interface{
@@ -436,10 +395,8 @@ func main() {
 	tesla.move()
 	boing.move()
 }</code></pre>
-      </div>
-      <p>В Go интерфейс реализуется неявно. Нам не надо специально указывать, что структуры применяют определенный интерфейс, как в некоторых других языках программирования. Для реализации типу данных достаточно реализовать методы, которые определяет интерфейс.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">package main
+<p>В Go интерфейс реализуется неявно. Нам не надо специально указывать, что структуры применяют определенный интерфейс, как в некоторых других языках программирования. Для реализации типу данных достаточно реализовать методы, которые определяет интерфейс.</p>
+<pre><code class="lang-go">package main
 
 import "fmt"
 
@@ -467,10 +424,8 @@ func main() {
   drive(boing)
 }
 </code></pre>
-      </div>
-      <p>Чтобы тип данных соответствовал интерфейсу, он должен реализовать все методы этого интерфейса.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">type Stream_Iface interface {
+<p>Чтобы тип данных соответствовал интерфейсу, он должен реализовать все методы этого интерфейса.</p>
+<pre><code class="lang-go">type Stream_Iface interface {
   read() string
   write(string)
   close()
@@ -528,10 +483,8 @@ func main() {
   myFile.close()
   myFolder.close() // Так можно
 }</code></pre>
-      </div>
-      <p>При этом тип данных необязательно должен реализовать только методы интерфейса, для типа данных можно определить его собственные методы или также реализовать методы других интерфейсов.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">type Reader_Iface interface {
+<p>При этом тип данных необязательно должен реализовать только методы интерфейса, для типа данных можно определить его собственные методы или также реализовать методы других интерфейсов.</p>
+<pre><code class="lang-go">type Reader_Iface interface {
   read()
 }
 type Writer_Iface interface {
@@ -566,11 +519,9 @@ func main() {
   writeToStream(myFile, "hello world")
   readFromStream(myFile)
 }</code></pre>
-      </div>
-      <h3 class="section-title" id="polymorphism">Полиморфизм</h3>
-      <p>Полиморфизм представляет способность принимать многообразные формы.</p>
-      <div class="text-block">
-        <pre><code class="lang-go">type Vehicle_Iface interface {
+<h3 class="section-title" id="polymorphism">Полиморфизм</h3>
+<p>Полиморфизм представляет способность принимать многообразные формы.</p>
+<pre><code class="lang-go">type Vehicle_Iface interface {
   move()
 }
 
@@ -593,5 +544,4 @@ func main() {
     vehicle.move()
   }
 }</code></pre>
-</div>
 <p>В данном случае определен массив vehicles, который содержит набор структур, которые соответствуют интерфейсу Vehicle, то есть объекты Car и Aircraft. То есть объект Vehicle может принимать различные формы: или структуру Car, или структуру Aircraft. При переборе массива для каждого объекта вызывается метод move. И в зависимости от реального типа структуры динамически определяется, какая именно реализация метода move для какой структуры должна вызываться.</p>

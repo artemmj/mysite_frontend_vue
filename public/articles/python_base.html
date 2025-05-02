@@ -29,7 +29,6 @@
 <h3 class="section-title" id="intro">Вступление</h3>
 <p>Представьте себе инструмент, который превращает ваши идеи в код так же легко, как вы записываете мысли на бумаге. Python — это не просто язык программирования. Это мост между человеческой логикой и машинным интеллектом, между начинающим энтузиастом и профессионалом, между мечтой и реальностью. Python не требует жертвовать красотой ради функциональности. Он позволяет писать программы, которые понятны как компьютеру, так и человеку.</p>
 <p>Этот язык — как универсальный ключ: он открывает двери в мир IT, Data Science, игр, робототехники и даже искусства. Здесь не нужны сложные настройки или годы обучения. Все, что требуется, — ваше любопытство и труд.</p>
-<div class="text-block">
 <pre><code class="lang-py">False      await      else       import     pass
 None       break      except     in         raise
 True       class      finally    is         return
@@ -37,11 +36,9 @@ and        continue   for        lambda     try
 as         def        from       nonlocal   while
 assert     del        global     not        with
 async      elif       if         or         yield</code></pre>
-      </div>
-      <h3 class="section-title" id="vars">Переменные, области видимости</h3>
-      <p><b>Область видимости</b> или <b>scope</b> определяет контекст переменной, в рамках которого ее можно использовать. В Python есть два типа контекста: <b>глобальный</b> и <b>локальный</b>. <b>Глобальный</b> контекст подразумевает, что переменная является глобальной, она определена вне любой из функций и доступна любой функции в программе. <b>Локальная</b> же переменная определяется внутри функции и доступна только из этой функции, то есть имеет локальную область видимости.</p>
-      <div class="text-block">
-        <pre><code class="lang-py">x = 10              # Целое число (int)
+<h3 class="section-title" id="vars">Переменные, области видимости</h3>
+<p><b>Область видимости</b> или <b>scope</b> определяет контекст переменной, в рамках которого ее можно использовать. В Python есть два типа контекста: <b>глобальный</b> и <b>локальный</b>. <b>Глобальный</b> контекст подразумевает, что переменная является глобальной, она определена вне любой из функций и доступна любой функции в программе. <b>Локальная</b> же переменная определяется внутри функции и доступна только из этой функции, то есть имеет локальную область видимости.</p>
+<pre><code class="lang-py">x = 10              # Целое число (int)
 y = 3.14            # Дробное число (float)
 name = "Alice"      # Строка (str)
 is_valid = True     # Булево значение (bool)
@@ -85,18 +82,16 @@ def outer():
     inner()  
     print(y)  # 6  
 outer()</code></pre>
-      </div>
-      <h3 class="section-title" id="arifmet_oper">Арифметические операции</h3>
-      <p>При последовательном использовании нескольких арифметических операций их выполнение производится в соответствии с их приоритетом.</p>
-      <p><b>Особенности:</b></p>
-      <ul>
-        <li>Деление <b>/</b> всегда возвращает float, даже для целых чисел</li>
-        <li>Целочисленное деление <b>//</b> округляет вниз для отрицательных чисел</li>
-        <li>Остаток от деления <b>%</b> сохраняет знак делителя</li>
-      </ul>
-      <p>Приоритет: <b>скобки → степень → умножение/деление → сложение/вычитание</b>.</p>
-      <div class="text-block">
-        <pre><code class="lang-py">a = 10
+<h3 class="section-title" id="arifmet_oper">Арифметические операции</h3>
+<p>При последовательном использовании нескольких арифметических операций их выполнение производится в соответствии с их приоритетом.</p>
+<p><b>Особенности:</b></p>
+<ul>
+<li>Деление <b>/</b> всегда возвращает float, даже для целых чисел</li>
+<li>Целочисленное деление <b>//</b> округляет вниз для отрицательных чисел</li>
+<li>Остаток от деления <b>%</b> сохраняет знак делителя</li>
+</ul>
+<p>Приоритет: <b>скобки → степень → умножение/деление → сложение/вычитание</b>.</p>
+<pre><code class="lang-py">a = 10
 b = 3
 print(a + b)   # 13    (сложение)
 print(a - b)   # 7     (вычитание)
@@ -118,18 +113,16 @@ x **= 2  # x = 49
 # Для работы с дробями использовать модуль fractions или округлять результаты
 print(0.1 + 0.2)           # 0.30000000000000004 (погрешность)
 print(round(0.1 + 0.2, 1)) # 0.3 (округление до 1 знака)</code></pre>
-      </div>
-      <h3 class="section-title" id="conditional_expressions">Условные выражения</h3>
-      <p>Python считает ложными:</p>
-      <ul>
-        <li><b>False</b></li>
-        <li><b>0, 0.0</b></li>
-        <li><b>"" (пустая строка)</b></li>
-        <li><b>None</b></li>
-        <li><b>[], {}, set() (пустые коллекции)</b></li>
-      </ul>
-      <div class="text-block">
-        <pre><code class="lang-py">a, b = 5, 6
+<h3 class="section-title" id="conditional_expressions">Условные выражения</h3>
+<p>Python считает ложными:</p>
+<ul>
+<li><b>False</b></li>
+<li><b>0, 0.0</b></li>
+<li><b>"" (пустая строка)</b></li>
+<li><b>None</b></li>
+<li><b>[], {}, set() (пустые коллекции)</b></li>
+</ul>
+<pre><code class="lang-py">a, b = 5, 6
 result = 5 == 6  # сохраняем результат операции в переменную
 print(result)    # False - 5 не равно 6
 print(a != b)    # True
@@ -162,10 +155,8 @@ print(a is b)  # False (разные объекты)
 
 # Для сложных условий используй скобки
 if (x > 0) and (y != "error"):</code></pre>
-      </div>
-      <h3 class="section-title" id="if_cons_cycles">Условная конструкция if, циклы</h3>
-      <div class="text-block">
-        <pre><code class="lang-py">age = 18
+<h3 class="section-title" id="if_cons_cycles">Условная конструкция if, циклы</h3>
+<pre><code class="lang-py">age = 18
 if age < 18:
     print("Доступ запрещен")  
 elif age == 18:  
@@ -227,11 +218,9 @@ for n in [2, 4, 6]:
         break  
 else:
     print("5 не найдено")</code></pre>
-      </div>
-      <h3 class="section-title" id="funcs">Функции</h3>
-      <p>Функции — объекты первого класса: их можно передавать в другие функции, сохранять в переменных. Избегайте изменяемых аргументов по умолчанию. Аннотируйте типы. Мы можем присвоить переменной какую-нибудь функцию и затем, используя переменную, вызывать данную функцию. Мы можем передать ее в качестве параметра в другую функцию. Также одна функция в Python может возвращать другую функцию.</p>
-      <div class="text-block">
-        <pre><code class="lang-py">def greet(name):  
+<h3 class="section-title" id="funcs">Функции</h3>
+<p>Функции — объекты первого класса: их можно передавать в другие функции, сохранять в переменных. Избегайте изменяемых аргументов по умолчанию. Аннотируйте типы. Мы можем присвоить переменной какую-нибудь функцию и затем, используя переменную, вызывать данную функцию. Мы можем передать ее в качестве параметра в другую функцию. Также одна функция в Python может возвращать другую функцию.</p>
+<pre><code class="lang-py">def greet(name):  
     """Возвращает приветствие (docstring)."""  
     return f"Привет, {name}!"  
 print(greet("Анна"))  # Привет, Анна!
@@ -293,10 +282,8 @@ subt = select_operation(2)   # operation = subtract
 print(subt(10, 6))           # 4
 mult = select_operation(3)   # operation = multiply
 print(mult(10, 6))           # 60</code></pre>
-      </div>
-      <h3 class="section-title" id="packing">Упаковка и распаковка</h3>
-      <div class="text-block">
-        <pre><code class="lang-py"># Позиционная распаковка:
+<h3 class="section-title" id="packing">Упаковка и распаковка</h3>
+<pre><code class="lang-py"># Позиционная распаковка:
 values = [1, 2, 3]
 a, b, c = values          # a=1, b=2, c=3
 point = (10, 20)
@@ -371,11 +358,9 @@ a, b, c = gen  # a=0, b=1, c=2
 # 2. Комбинируйте с enumerate():
 for index, (name, age) in enumerate([("Alice", 25), ("Bob", 30)]):
     print(index, name, age)</code></pre>
-      </div>
-      <h3 class="section-title" id="lambda">Лямбда-выражения</h3>
-      <p><b>Лямбда-выражения</b> в языке Python представляют небольшие анонимные функции, которые определяются с помощью оператора <b>lambda</b>.</p>
-      <div class="text-block">
-        <pre><code class="lang-py">square = lambda x: x ** 2  
+<h3 class="section-title" id="lambda">Лямбда-выражения</h3>
+<p><b>Лямбда-выражения</b> в языке Python представляют небольшие анонимные функции, которые определяются с помощью оператора <b>lambda</b>.</p>
+<pre><code class="lang-py">square = lambda x: x ** 2  
 print(square(4))  # 16  
 # Использование с map/filter:  
 numbers = [1, 2, 3]  
@@ -392,10 +377,8 @@ summa = select_operation(1)  # operation = sum
 summa(2, 3)  # 5
 multi = select_operation(3)  # operation = multiply
 multi(2, 3)  # 6</code></pre>
-      </div>
-      <h3 class="section-title" id="retypes">Преобразование типов</h3>
-      <div class="text-block">
-        <pre><code class="lang-py">a = "2"
+<h3 class="section-title" id="retypes">Преобразование типов</h3>
+<pre><code class="lang-py">a = "2"
 b = 3
 c = int(a) + b      # 5
 b = int(3.7)        # b = 3
@@ -408,13 +391,10 @@ h = str(5.7)        # d = "5.7"
 
 age = 22
 message = "Age: " + age        # Ошибка
-message = "Age: " + str(age)   # Age: 22
-</code></pre>
-      </div>
-      <h3 class="section-title" id="decorators">Декораторы</h3>
-      <p>Декораторы в Python представляют функцию, которая в качестве параметра получает функцию и в качестве результата также возвращает функцию. Декораторы позволяют модифицировать выполняемую функцию, значения ее параметров и ее результат без изменения исходного кода этой функции.</p>
-      <div class="text-block">
-        <pre><code class="lang-py">def logger(func):  
+message = "Age: " + str(age)   # Age: 22</code></pre>
+<h3 class="section-title" id="decorators">Декораторы</h3>
+<p>Декораторы в Python представляют функцию, которая в качестве параметра получает функцию и в качестве результата также возвращает функцию. Декораторы позволяют модифицировать выполняемую функцию, значения ее параметров и ее результат без изменения исходного кода этой функции.</p>
+<pre><code class="lang-py">def logger(func):  
     """Декоратор, выводящий имя функции."""  
     def wrapper(*args):  
         print(f"Вызов функции: {func.__name__}")  
@@ -426,15 +406,13 @@ def add(a, b):
     return a + b  
 
 print(add(2, 3))  # Вызов функции: add → 5</code></pre>
-      </div>
-      <h3 class="section-title" id="try-except">try..except</h3>
-      <ul>
-        <li><b>Конкретные исключения</b> - всегда указывайте конкретные <b>типы</b> исключений вместо общего <b>Exception</b></li>
-        <li><b>Получение информации об ошибке</b> - используйте <b>as</b> для доступа к <b>объекту исключения</b></li>
-        <li><b>Иерархия исключений</b> - порядок блоков <b>except</b> важен — обрабатывайте <b>от частных к общим</b></li>
-      </ul>
-      <div class="text-block">
-        <pre><code class="lang-py">try:
+<h3 class="section-title" id="try-except">try..except</h3>
+<ul>
+<li><b>Конкретные исключения</b> - всегда указывайте конкретные <b>типы</b> исключений вместо общего <b>Exception</b></li>
+<li><b>Получение информации об ошибке</b> - используйте <b>as</b> для доступа к <b>объекту исключения</b></li>
+<li><b>Иерархия исключений</b> - порядок блоков <b>except</b> важен — обрабатывайте <b>от частных к общим</b></li>
+</ul>
+<pre><code class="lang-py">try:
     num = int(input("Введите число: "))
     result = 100 / num
 except ValueError:
@@ -496,9 +474,8 @@ try:
 except ValueError as e:
     print("Логируем ошибку")
     raise  # Повторно вызывает исключение для внешней обработки</code></pre>
-      </div>
-      <h3 class="section-title" id="strings">Строки</h3>
-      <pre><code class="lang-py">s1 = 'Простая строка'  
+<h3 class="section-title" id="strings">Строки</h3>
+<pre><code class="lang-py">s1 = 'Простая строка'  
 s2 = "Строка с кавычками: 'Привет'"  
 s3 = """Многострочная
 строка"""  
@@ -573,17 +550,17 @@ clean = "".join([c for c in s if not c.isdigit()])  # "abc"
 # Перевернуть слова в строке  
 text = "Hello World Python"
 reversed_words = " ".join(text.split()[::-1])       # "Python World Hello"</code></pre>
-      <h3 class="section-title" id="oop">ООП</h3>
-      <p>Ключевые концепции: <b>классы</b>, <b>объекты</b>, <b>наследование</b>, <b>инкапсуляция</b>, <b>полиморфизм</b>, <b>абстракция</b>.</p>
-      <p>Советы:</p>
-      <ul>
-        <li>Приватные атрибуты (__name) не защищены полностью — доступны через _ClassName__name.</li>
-        <li>Для перегрузки операторов используйте магические методы (__eq__, __lt__ и др.).</li>
-        <li>Используйте isinstance() для проверки типа объекта.</li>
-        <li>Избегайте множественного наследования без необходимости.</li>
-      </ul>
-      <p><b>Наследование</b></p>
-      <pre><code class="lang-py">class Cat:
+<h3 class="section-title" id="oop">ООП</h3>
+<p>Ключевые концепции: <b>классы</b>, <b>объекты</b>, <b>наследование</b>, <b>инкапсуляция</b>, <b>полиморфизм</b>, <b>абстракция</b>.</p>
+<p>Советы:</p>
+<ul>
+<li>Приватные атрибуты (__name) не защищены полностью — доступны через _ClassName__name.</li>
+<li>Для перегрузки операторов используйте магические методы (__eq__, __lt__ и др.).</li>
+<li>Используйте isinstance() для проверки типа объекта.</li>
+<li>Избегайте множественного наследования без необходимости.</li>
+</ul>
+<p><b>Наследование</b></p>
+<pre><code class="lang-py">class Cat:
     def __init__(self, name, age):  # Конструктор (инициализатор)
         self.name = name            # Публичный атрибут
         self._age = age             # Защищенный атрибут (условно приватный)
@@ -611,8 +588,8 @@ my_cat = Cat("Барсик", 3)
 my_cat.speak()  # Барсик говорит: Мяу!
 tiger = Tiger("Амур", 5, 100)
 tiger.speak()  # Амур рычит: Рррр!</code></pre>
-      <p><b>Инкапсуляция</b></p>
-      <pre><code class="lang-py">class BankAccount:
+<p><b>Инкапсуляция</b></p>
+<pre><code class="lang-py">class BankAccount:
     def __init__(self):
         self.__balance = 0  # Приватный атрибут
 
@@ -631,8 +608,8 @@ tiger.speak()  # Амур рычит: Рррр!</code></pre>
 account = BankAccount()
 account.balance = 100  # Используем сеттер
 print(account.balance)  # 100 (используем геттер)</code></pre>
-      <p><b>Полиморфизм (разные классы с одинаковым методом)</b></p>
-      <pre><code class="lang-py">class Dog:
+<p><b>Полиморфизм (разные классы с одинаковым методом)</b></p>
+<pre><code class="lang-py">class Dog:
     def speak(self):
         return "Гав!"
 
@@ -645,8 +622,8 @@ def animal_sound(animal):
 
 animal_sound(Dog())   # Гав!
 animal_sound(Duck())  # Кря!</code></pre>
-      <p><b>Абстрактные классы</b></p>
-      <pre><code class="lang-py">from abc import ABC, abstractmethod
+<p><b>Абстрактные классы</b></p>
+<pre><code class="lang-py">from abc import ABC, abstractmethod
 class Shape(ABC):  # Абстрактный класс
     @abstractmethod
     def area(self):
@@ -662,8 +639,8 @@ class Circle(Shape):
 # shape = Shape()  # Ошибка! Нельзя создать экземпляр абстрактного класса
 circle = Circle(5)
 print(circle.area())  # 78.5</code></pre>
-      <p><b>Магические методы</b></p>
-      <pre><code class="lang-py">class Vector:
+<p><b>Магические методы</b></p>
+<pre><code class="lang-py">class Vector:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -678,8 +655,8 @@ v1 = Vector(2, 3)
 v2 = Vector(1, 4)
 v3 = v1 + v2
 print(v3)  # Vector(3, 7)</code></pre>
-      <p><b>Статические и классовые методы</b></p>
-      <pre><code class="lang-py">class Math:
+<p><b>Статические и классовые методы</b></p>
+<pre><code class="lang-py">class Math:
     PI = 3.14159
 
     @staticmethod

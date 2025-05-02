@@ -82,16 +82,6 @@ watch(articleContent, async () => {
   opacity: 0.8;  /* Полупрозрачность для второстепенной информации */
   font-size: 0.9rem;  /* Уменьшенный размер шрифта */
 }
-.text-block {
-  color: rgb(0, 0, 0);  /* Акцентная полоса слева */
-  border-left: 4px solid var(--accent);  /* Отступ от левой границы */
-  padding-left: 1rem;  /* Вертикальные отступы */
-  margin: 1.5rem 0;  /* Фон из первичной переменной */
-  background: rgb(211, 229, 240);  /* Внутренние отступы */
-  padding: 5px;  /* Закругление углов */
-  border-radius: 5px;
-  overflow-x: auto;  /* Горизонтальный скролл при необходимости */
-}
 .section-title {
   color: var(--accent);  /* Акцентный цвет текста */
   margin: 2rem auto 1rem;  /* Отступы: сверху 2rem, снизу 1rem */
@@ -102,10 +92,10 @@ watch(articleContent, async () => {
 .file-path {
   color: var(--accent);  /* Акцентный цвет текста */
   font-family: monospace;  /* Моноширинный шрифт */
+  margin-left: 20px;
   padding: 0.5rem 0.8rem;  /* Компактные внутренние отступы */
   background: var(--primary);  /* Фон из первичной переменной */
   border-radius: 4px;  /* Слегка закругленные углы */
-  margin: 0.5rem 0;  /* Небольшие вертикальные отступы */
   display: inline-block;  /* Строчно-блочное отображение */
 }
 .table-wrapper {
@@ -156,6 +146,9 @@ pre[class*="language-"] {
     margin: 1px;
     /* Меньшие внутренние отступы */
     padding: 1rem;
+  }
+  .article-container p {
+    margin: 5px;
   }
   .article-container ol {
     columns: 2;

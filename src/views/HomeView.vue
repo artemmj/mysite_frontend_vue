@@ -1,5 +1,9 @@
 <template>
   <div id="main">
+    <div class="welcome-block">
+      <p><b>Добро пожаловать</b> на цифровую стройплощадку знаний - <b>fullstackdevblog.ru</b>. Запустился в апреле 2025 года. Этот сайт — <b>живой архив</b>, который растёт вместе со мной: конспекты по <b>Linux</b>, база <b>Python</b>, заметки о <b>Django</b> и <b>FastAPI</b>, первые наброски статей про <b>Go</b>, <b>JavaScript</b> и <b>Vue</b>. Здесь нет музейных экспонатов — только <b>свежий код</b>, <b>рабочие примеры</b> и <b>мысли</b>, которые ещё пахнут кофе. Сайт только <b>набирает ход</b>: база статей <b>пополняется</b>, разделы <b>обрастают деталями</b>, а некоторые темы <b>ждут своего часа</b> в черновиках.</p>
+    </div>
+    <p><b>Материалы:</b></p>
     <div class="posts-grid">
       <ArticleList :articles="articles" />
     </div>
@@ -88,4 +92,12 @@ const articles = ref([
 </script>
 
 <style lang="scss" scoped>
+.welcome-block {
+  background: var(--secondary);
+  border-radius: 15px;
+  border: 0.01rem solid gray;
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* Тень для глубины */
+}
 </style>

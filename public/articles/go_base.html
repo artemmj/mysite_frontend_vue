@@ -19,7 +19,6 @@
 </div>
 <p>Go представляет собой компилируемый статически типизированный язык программирования от компании Google. Go предназначен для разного, но прежде всего это веб-сервисы и клиент-серверные приложения. Хотя также язык обладает возможностями по работе с графикой, низкоуровневыми возможностями и т.д. Работа над языком Go началась в 2007 в недрах компании Google. Одним из авторов является Кен Томпсон, который, является одним из авторов языка Си. 10 ноября 2009 года язык был анонсирован, а в марте 2012 года вышла версия 1.0. В феврале 2024 года вышла версия 1.22.</p>
 <h3 class="section-title" id="ariph_ops">Арифметические операции</h3>
-<div class="text-block">
 <pre><code class="lang-go">var a int = 10
 var b int = 4
 var c int = a / b      // 2
@@ -32,9 +31,7 @@ var a int = 8
 a++                    // 9
 var a int = 8
 a--                    // 7</code></pre>
-</div>
 <h3 class="section-title" id="conditional_expressions">Условные выражения</h3>
-<div class="text-block">
   <pre><code class="lang-go">var a int = 8
 var b int = 3
 var c bool = a > b   // true
@@ -49,11 +46,9 @@ var b bool = 4 > 5 && 6 > 8    // false
 var c bool = 3 <= 5 && 10 > 8  // true
 var b bool = 4 > 5 || 6 > 8    // false
 var c bool = 3 == 5 || 10 > 8  // true</code></pre>
-</div>
 <h3 class="section-title" id="arrays">Массивы</h3>
 <p>Массивы представляют последовательность элементов определенного типа.</p>
-<div class="text-block">
-  <pre><code class="lang-go">var numbers [число_элементов]тип_элементов
+<pre><code class="lang-go">var numbers [число_элементов]тип_элементов
 var numbers [5]int
 // Значений не может быть больше длины массива
 var numbers [5]int = [5]int{1,2,3,4,5}
@@ -72,11 +67,9 @@ fmt.Println(numbers[0])
 // Мы можем явным образом указать, какому ключу какое значение будет соответствовать
 colors := [3]string{2: "blue", 0: "red", 1: "green"}
 fmt.Println(colors[2])  // blue</code></pre>
-</div>
 <h3 class="section-title" id="conditional_constructions">Условные конструкции</h3>
 <ul>
   <li>if...else</li>
-  <div class="text-block">
     <pre><code class="lang-go">if a == 9 {
     fmt.Println("a = 9")
 } else if a == 8 {
@@ -86,9 +79,7 @@ fmt.Println(colors[2])  // blue</code></pre>
 } else {
   fmt.Println("unknown")
 }</code></pre>
-  </div>
   <li>switch</li>
-  <div class="text-block">
     <pre><code class="lang-go">a := 5
 switch(a) {
   case 3: fmt.Println("a = 9")
@@ -102,8 +93,7 @@ switch(a) {
   </div>
 </ul>
 <h3 class="section-title" id="cycles">Циклы</h3>
-<div class="text-block">
-  <pre><code class="lang-go">for [инициализация счетчика]; [условие]; [изменение счетчика] {
+<pre><code class="lang-go">for [инициализация счетчика]; [условие]; [изменение счетчика] {
   // действия
 }
 
@@ -122,12 +112,9 @@ for ; i < 10;{
 for i < 10{
   fmt.Println(i * i)
   i++
-}
-</code></pre>
-</div>
+}</code></pre>
 <p><b>Перебор массивов</b></p>
-<div class="text-block">
-  <pre><code class="lang-go">for индекс, значение := range массив{
+<pre><code class="lang-go">for индекс, значение := range массив{
   // действия
 }
 
@@ -148,40 +135,30 @@ for i:= 0; i < len(datas); i++ {
   }
   fmt.Println(datas[i])
 }</code></pre>
-</div>
 <h3 class="section-title" id="slices">Срезы</h3>
 <p><b>Срезы (slice)</b> представляют последовательность элементов одного типа переменной длины. В отличие от массивов длина в срезах не фиксирована и динамически может меняться, то есть можно добавлять новые элементы или удалять уже существующие.</p>
-<div class="text-block">
-  <pre><code class="lang-go">var users []string
+<pre><code class="lang-go">var users []string
 
 var data1 = []string{ "data1", "data2", "data3" }
 data2 := []string{ "data1", "data2", "data3" }
 // Создать срез из нескольких элементов, которые будут иметь значения по умолчанию
 var data3 []string = make([]string, 3)</code></pre>
-</div>
 <p>Для добавления в срез применяется встроенная функция <b>append(slice, value)</b>. Первый параметр функции - срез, в который надо добавить, а второй параметр - значение, которое нужно добавить. Результатом функции является увеличенный срез.</p>
-<div class="text-block">
-  <pre><code class="lang-go">datas := []string{"data1", "data2", "data3"}
+<pre><code class="lang-go">datas := []string{"data1", "data2", "data3"}
 newdatas = append(datas, "data4")</code></pre>
-</div>
 <p><b>Оператор среза s[i:j]</b> создает из последовательности s новый срез, который содержит элементы последовательности s с i по j-1. При этом должно соблюдаться условие 0 <= i <= j <= cap(s). В качестве исходной последовательности, из которой берутся элементы, может использоваться массив, указатель на массив или другой срез. В итоге в полученном срезе будет j-i элементов. Если значение i не указано, то применяется по умолчанию значение 0. Если значение j не указано, то вместо него используется длина исходной последовательности s.</p>
-<div class="text-block">
-  <pre><code class="lang-go">initialDatas := [8]string{ "data1", "data2", "data3", "data4", "data5", "data6", "data7", "data8" }
+<pre><code class="lang-go">initialDatas := [8]string{ "data1", "data2", "data3", "data4", "data5", "data6", "data7", "data8" }
 datas1 := initialDatas[2:6]  // с 3-го по 6-й ["data3", "data4", "data5", "data6"]
 datas1 := initialDatas[:4]   // с 1-го по 4-й ["data1", "data2", "data3", "data4"]
 datas1 := initialDatas[3:]   // с 4-го до конца ["data4", "data5", "data6", "data7", "data8"]</code></pre>
-</div>
 <p>Чтобы удалить какой-то определенный элемент, можем комбинировать функцию append и оператор среза.</p>
-<div class="text-block">
-  <pre><code class="lang-go">initialDatas := []string{ "data1", "data2", "data3", "data4", "data5", "data6", "data7", "data8" }
+<pre><code class="lang-go">initialDatas := []string{ "data1", "data2", "data3", "data4", "data5", "data6", "data7", "data8" }
 // Удаляем 4-й элемент
 var n = 3
 datas = append(datas[:n], datas[n+1:]...)  // ["data1", "data2", "data3", "data5", "data6", "data7", "data8"]</code></pre>
-</div>
 <h3 class="section-title" id="map">Отображения</h3>
 <p>Отображение или map представляет ссылку на хеш-таблицу - структуру данных, где каждый элемент представляет пару "ключ-значение". При этом каждый элемент имеет уникальный ключ, по которому можно получить значение элемента. Отображение определяется как объект типа map[K]V, где К представляет тип ключа, а V - тип значения. Причем тип ключа K должен поддерживать операцию сравнения ==, чтобы отображение могло сопоставить значение с одним из ключей и хеш-таблицы.</p>
-<div class="text-block">
-  <pre><code class="lang-go">var datas map[string]int   // Ключи представляют тип string, значения - тип int
+<pre><code class="lang-go">var datas map[string]int   // Ключи представляют тип string, значения - тип int
 var datas = map[string]int{ 
   "id1": 1,
   "id2": 2,
@@ -219,11 +196,9 @@ fmt.Println(datas)     // map[id1:1  did2:2  id999:128]
 var datas = map[string]int{ "id1": 1, "id2": 2, "id3": 4}
 delete(datas, "id2")
 fmt.Println(datas)     // map[id1:1  id3:4]</code></pre>
-</div>
 <h3 class="section-title" id="named_types_presudonames">Именованные типы и псевдонимы</h3>
 <p>Оператор type позволяет определять именнованный тип на основе другого.</p>
-<div class="text-block">
-  <pre><code class="lang-go">type mile uint
+<pre><code class="lang-go">type mile uint
 type kilometer uint
 
 func distanceToEnemy (distance mile) {
@@ -251,10 +226,8 @@ func main() {
   var myOperation BinaryOp = add
   action(10, 35, myOperation)     // 45
 }</code></pre>
-</div>
 <p>На именнованные типы похожи <b>псевдонимы</b>. Они также определяются с помощью оператора type, только при присвоении типа применяется операция присваивания</p>
-<div class="text-block">
-  <pre><code class="lang-go">type mile = uint
+<pre><code class="lang-go">type mile = uint
 type kilometer = uint
 
 func distanceToEnemy (distance mile) {
@@ -269,12 +242,10 @@ func main() {
     var distance2 kilometer = 5
     distanceToEnemy(distance2)   // ok
 }</code></pre>
-</div>
 <p>Несмотря на то, что параметр функции distanceToEnemy определен как параметр типа mile, ему можно передать и значение собственно типа uint, и значение его псевдонима - kilometer. Обычо псевдонимы применяются для сокращения названий других типов или для определения более описательного имени.</p>
 <h3 class="section-title" id="defer_panic">defer и panic</h3>
 <p>Оператор <b>defer</b> позволяет выполнить определенную функцию в конце программы, при этом не важно, где в реальности вызывается эта функция.</p>
-<div class="text-block">
-  <pre><code class="lang-go">func main() {
+<pre><code class="lang-go">func main() {
   defer finish()
   defer fmt.Println("Program has been started")
   fmt.Println("Program is working")
@@ -288,10 +259,8 @@ func finish(){
 // Program is working
 // Program has been started
 // Program has been finished</code></pre>
-</div>
 <p>Оператор <b>panic</b> позволяет сгенерировать ошибку и выйти из программы.</p>
-<div class="text-block">
-  <pre><code class="lang-go">func main() {
+<pre><code class="lang-go">func main() {
   fmt.Println(divide(15, 5))
   fmt.Println(divide(4, 0))
   fmt.Println("Program has been finished")
@@ -301,4 +270,3 @@ func divide(x, y float64) float64{
   if y == 0 { panic("Division by zero!") }
   return x / y
 }</code></pre>
-</div>
