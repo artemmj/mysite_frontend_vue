@@ -13,6 +13,11 @@ const routes = [
     component: () => import('../components/ArticleDetail.vue'), // Ленивая загрузка
     props: true, // Передача параметра :id как props
   },
+  {
+    path: '/about',
+    name: 'About',
+    component: () => import('../components/AppAbout.vue'), // Ленивая загрузка
+  },
 ];
 
 const router = createRouter({

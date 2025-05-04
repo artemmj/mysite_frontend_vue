@@ -156,5 +156,9 @@ pre[class*="language-"] {
     -webkit-columns: 2;
     -moz-columns: 2;
   }
+  pre[class*="language-"] {
+    margin: 5px;
+    font-size: 0.8rem;
+  }
 }
 </style>

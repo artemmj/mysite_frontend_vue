@@ -1,9 +1,5 @@
 <template>
   <div id="main">
-    <div class="welcome-block">
-      <p><b>Добро пожаловать</b> на цифровую стройплощадку знаний - <b>fullstackdevblog.ru</b>. Запустился в апреле 2025 года. Этот сайт — <b>живой архив</b>, который растёт вместе со мной: конспекты по <b>Linux</b>, база <b>Python</b>, заметки о <b>Django</b> и <b>FastAPI</b>, первые наброски статей про <b>Go</b>, <b>JavaScript</b> и <b>Vue</b>. Здесь нет музейных экспонатов — только <b>свежий код</b>, <b>рабочие примеры</b> и <b>мысли</b>, которые ещё пахнут кофе. Сайт только <b>набирает ход</b>: база статей <b>пополняется</b>, разделы <b>обрастают деталями</b>, а некоторые темы <b>ждут своего часа</b> в черновиках.</p>
-    </div>
-    <p><b>Материалы:</b></p>
     <div class="posts-grid">
       <ArticleList :articles="articles" />
     </div>
@@ -19,7 +15,7 @@ const articles = ref([
   {
     id: 9,
     filename: "fastapi_base.html",
-    title: "FastApi. Основы",
+    title: "FastAPI. Основы",
     date: "28 Апреля 2025",
     tags: "FastAPI, Python",
     short_content: "Обработка запросов и отправка ответов, параметры пути и строки запроса, статус коды, переадресация, статические файлы, даннные запроса, заголовки, куки, формы, SQLAlchemy",
@@ -77,7 +73,7 @@ const articles = ref([
     filename: "django_setup_rest_api.html",
     title: "Django Setup Basics REST API",
     date: "18 Марта 2025",
-    tags: "Django, Docker, Django Rest Framework, API, Swagger, CORS",
+    tags: "Django, Docker, DRF, API, Swagger, CORS",
     short_content: "Настройка чистого проекта Django в Docker для работы с REST API с Swagger, Celery, Redis",
   },
   {
@@ -85,19 +81,11 @@ const articles = ref([
     filename: "ubuntu_setup.html",
     title: "Linux Ubuntu Setup",
     date: "15 Марта 2025",
-    tags: "Linux, Ubuntu, DevOps, Docker, Nginx",
+    tags: "Ubuntu, Docker, Nginx",
     short_content: "Быстрая настройка Linux Ubuntu под простой домашний сервер, команды и конфигурации",
   }
 ]);
 </script>
 
 <style lang="scss" scoped>
-.welcome-block {
-  background: var(--secondary);
-  border-radius: 15px;
-  border: 0.01rem solid gray;
-  margin: 20px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* Тень для глубины */
-}
 </style>

@@ -9,7 +9,13 @@
       <button class="filter-btn" data-filter="django">Django</button>
       <button class="filter-btn" data-filter="fastapi">FastAPI</button>
       <button class="filter-btn" data-filter="vuejs">VueJS</button>
-      <button class="filter-btn" data-filter="devops">DevOps</button>
+      <button class="filter-btn" data-filter="linux">Linux</button>
+    </div>
+    <div class="about">
+      <a href="/about"><button class="about-btn" data-filter="python">Про сайт</button></a>
+    </div>
+    <div class="head_img">
+      <img src="./pik.png"/>
     </div>
   </header>
 </template>
@@ -29,17 +35,41 @@ header {
   background: var(--secondary);
   border-radius: 15px;
   border: 0.01rem solid;
-  padding: 1rem;                             /* Внутренние отступы */
+  padding: 0.8rem;                             /* Внутренние отступы */
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* Тень для глубины */
   width: 100%;                               /* На всю ширину экрана */
   top: 0;                                    /* Прижатие к верху */
-  z-index: 1000;                             /*Поверх остальных элементов */
+  z-index: 1000;                             /* Поверх остальных элементов */
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+.about {
+  display: block;
+  min-width: 70px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.about-btn {
+  margin: 2px;
+  padding: 8px 16px;
+  border: 0.1rem none gray;
+  background: #d8d8d8;
+  border-radius: 4px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.about-btn:hover {
+  background: #b2b2b2;
+}
 .nav {
   display: block;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .nav a {
   margin: 10px;
@@ -59,7 +89,6 @@ header {
   padding: 8px 16px;
   border: 0.1rem none gray;
   background: #f5f5f5;
-  cursor: pointer;
   border-radius: 4px;
   transition: all 0.3s;
 }
@@ -69,6 +98,14 @@ header {
 .filter-btn.active {
   border-color: black;
 }
+.head_img img {
+  margin-left: 30px;
+  max-width: 70px;
+  border-radius: 15px;
+}
+// .head_img img:hover {
+//   max-width: 170px;
+// }
 @media (max-width: 768px) {
   header {
     display: block;
