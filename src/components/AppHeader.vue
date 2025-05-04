@@ -1,8 +1,9 @@
 <template>
   <header class="header">
     <div class="logo"><a href="/"> fullstackdevblog.ru</a></div>
+    <div class="pika_img"><a href="/"><img src="./pik.png"/></a></div>
     <div class="nav">
-      <!-- <button class="filter-btn active" data-filter="all">Всё</button> -->
+      <button class="filter-btn active" data-filter="all">Всё</button>
       <button class="filter-btn" data-filter="python">Python</button>
       <button class="filter-btn" data-filter="go">Go</button>
       <button class="filter-btn" data-filter="js">JS</button>
@@ -11,23 +12,14 @@
       <button class="filter-btn" data-filter="vuejs">VueJS</button>
       <button class="filter-btn" data-filter="linux">Linux</button>
     </div>
-    <div class="about">
-      <a href="/about"><button class="about-btn" data-filter="python">Про сайт</button></a>
-    </div>
-    <div class="head_img">
-      <img src="./pik.png"/>
-    </div>
+    <div class="about"><a href="/about"><button class="about-btn" data-filter="python">Про сайт</button></a></div>
   </header>
 </template>
 
 <script>
-export default {
-  name: 'AppHeader' // Явное имя для ESLint
-}
 </script>
 
 <script setup>
-// Логика компонента (если нужна)
 </script>
 
 <style lang="scss" scoped>
@@ -41,16 +33,11 @@ header {
   top: 0;                                    /* Прижатие к верху */
   z-index: 1000;                             /* Поверх остальных элементов */
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 .about {
-  display: block;
-  min-width: 70px;
   margin-left: 20px;
-  margin-right: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  min-width: 70px;
 }
 .about-btn {
   margin: 2px;
@@ -75,13 +62,15 @@ header {
   margin: 10px;
   padding: 10px;
 }
+.logo {
+  margin-left: 20px;
+}
 .logo a {
   border-bottom: solid;
   font-size: 20px;                    /* Размер шрифта */
   font-weight: bold;                  /* Жирное начертание */
   color: black;                     /* Акцентный цвет */
   text-decoration: none;              /* Убрать подчеркивание */
-  animation: logo-float 2s ease-in-out infinite;
   color: #004998;
 }
 .filter-btn {
@@ -98,10 +87,11 @@ header {
 .filter-btn.active {
   border-color: black;
 }
-.head_img img {
-  margin-left: 30px;
+.pika_img img {
   max-width: 70px;
   border-radius: 15px;
+  margin-right: 20px;
+  margin-left: 30px;
 }
 // .head_img img:hover {
 //   max-width: 170px;

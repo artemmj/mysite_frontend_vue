@@ -15,6 +15,61 @@
 export default {
   name: 'ArticleList',
   props: ['articles'], // Получаем статьи из HomeView
+
+  data() {
+    return {
+      // Храним выбранный тег для фильтрации (пустая строка = нет фильтра)
+      selectedTag: '', 
+
+      // Массив статей (ваши реальные данные будут из API или файлов)
+      // articles: [ 
+      //   { 
+      //     filename: 'post1', 
+      //     tag: 'python', // Тег статьи (должен совпадать с кнопкой фильтра)
+      //     title: 'Python Basics' 
+      //   },
+      //   // ... другие статьи
+      // ]
+    }
+  },
+
+  methods: {
+    /**
+     * Переключает фильтр: 
+     * - Если кликаем на уже выбранный тег -> сбрасываем фильтр
+     * - Если кликаем на новый тег -> применяем его
+     */
+    toggleFilter(tag) {
+      this.selectedTag = this.selectedTag === tag ? '' : tag
+    }
+  },
+
+  computed: {
+    /**
+     * Автоматически обновляемый список отфильтрованных статей.
+     * Vue пересчитывает это свойство при изменении selectedTag или articles.
+     */
+    filteredArticles() {
+      // Если фильтр не выбран -> возвращаем все статьи
+      if (!this.selectedTag) return this.articles
+
+      // Фильтруем статьи, сравнивая теги в нижнем регистре (регистронезависимо)
+      return this.articles.filter(article => 
+        article.tag.toLowerCase() === this.selectedTag.toLowerCase()
+      )
+    },
+
+    /**
+     * Динамический список уникальных тегов из всех статей 
+     * (альтернатива хардкоду кнопок)
+     */
+    uniqueTags() {
+      // Собираем все теги, преобразуем в нижний регистр, удаляем дубли
+      return [...new Set(
+        this.articles.map(article => article.tag.toLowerCase())
+      )]
+    }
+  }
 }
 </script>
 
