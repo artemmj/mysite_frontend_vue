@@ -12,6 +12,14 @@ import ArticleList from '../components/ArticleList.vue';
 
 // Моковые данные (можно заменить на запрос к API)
 const articles = ref([
+{
+    id: 10,
+    filename: "vuejs_base.html",
+    title: "Vue 3. Основы",
+    date: "6 Мая 2025",
+    tags: "Vue 3, JavaScript",
+    short_content: "В РАБОТЕ",
+  },
   {
     id: 9,
     filename: "fastapi_base.html",
@@ -50,7 +58,7 @@ const articles = ref([
     title: "JavaScript. Функциональное программирование",
     date: "8 Апреля 2025",
     tags: "JavaScript",
-    short_content: "",
+    short_content: "В РАБОТЕ",
   },
   {
     id: 4,
@@ -58,7 +66,7 @@ const articles = ref([
     title: "JavaScript. Основы",
     date: "7 Апреля 2025",
     tags: "JavaScript",
-    short_content: "",
+    short_content: "В РАБОТЕ",
   },
   {
     id: 3,
