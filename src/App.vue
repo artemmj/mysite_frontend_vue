@@ -36,7 +36,7 @@ onMounted(async () => {
 
 <style lang="scss">
 #app {
-  max-width: 1200px;       /* Ограничение ширины */
+  max-width: 1300px;       /* Ограничение ширины */
   margin: 10px auto 40px;  /* Отступы сверху/снизу и центрирование */
   padding: 0 20px;         /* Боковые отступы */
 }
