@@ -60,7 +60,7 @@ watch(articleContent, async () => {
   margin: 20px;
 }
 .article-container ol {
-  columns: 3;
+  columns: 2;
   margin-left: 40px;
   -webkit-columns: 2;
   -moz-columns: 2;
@@ -151,7 +151,7 @@ pre[class*="language-"] {
     margin: 5px;
   }
   .article-container ol {
-    columns: 2;
+    columns: 1;
     margin-left: 20px;
     -webkit-columns: 2;
     -moz-columns: 2;

@@ -3,7 +3,6 @@
     <div class="logo"><a href="/"> fullstackdevblog.ru</a></div>
     <div class="pika_img"><a href="/"><img src="./pik.png"/></a></div>
     <div class="nav">
-      <button class="filter-btn active" data-filter="all">Всё</button>
       <button class="filter-btn" data-filter="python">Python</button>
       <button class="filter-btn" data-filter="go">Go</button>
       <button class="filter-btn" data-filter="js">JS</button>
