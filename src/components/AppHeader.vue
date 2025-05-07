@@ -1,7 +1,7 @@
 <template>
   <header class="header">
-    <div class="logo"><a href="/"> fullstackdevblog.ru</a></div>
     <div class="pika_img"><a href="/"><img src="./pik.png"/></a></div>
+    <div class="logo"><a href="/"> fullstackdevblog.ru</a></div>
     <div class="nav">
       <button class="filter-btn" data-filter="python">Python</button>
       <button class="filter-btn" data-filter="go">Go</button>
@@ -32,10 +32,12 @@ header {
   top: 0;                                    /* Прижатие к верху */
   z-index: 1000;                             /* Поверх остальных элементов */
   display: flex;
+  justify-content: space-around;
   align-items: center;
 }
 .about {
-  margin-left: 20px;
+  align-self: flex-end;
+  margin-left: 10px;
   min-width: 70px;
 }
 .about-btn {
@@ -52,7 +54,7 @@ header {
 }
 .nav {
   display: block;
-  margin-left: 20px;
+  margin-left: 10px;
   margin-right: 20px;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -62,7 +64,7 @@ header {
   padding: 10px;
 }
 .logo {
-  margin-left: 20px;
+  margin-left: 10px;
 }
 .logo a {
   border-bottom: solid;
@@ -89,8 +91,7 @@ header {
 .pika_img img {
   max-width: 70px;
   border-radius: 15px;
-  margin-right: 20px;
-  margin-left: 30px;
+  margin-left: 10px;
 }
 // .head_img img:hover {
 //   max-width: 170px;

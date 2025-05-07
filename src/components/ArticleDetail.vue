@@ -59,6 +59,9 @@ watch(articleContent, async () => {
 .article-container p {
   margin: 20px;
 }
+.article-container b {
+  background-color: rgb(240, 240, 240);
+}
 .article-container ol {
   columns: 2;
   margin-left: 40px;
