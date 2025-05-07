@@ -50,23 +50,12 @@ export default {
 &lt;/script&gt;</code></pre>
 <h3 class="section-title" id="attrs_in_vue">Работа с атрибутами, v-bind</h3>
 <p> Вставлять значения свойств из <b>data</b> можно не только в текст, но и в <b>атрибуты тегов</b>. Это делается с помощью директивы <b>v-bind</b>. Установим значение атрибута <b>src</b> для тега <b>img</b>. Пусть желаемое значение хранится в свойстве <b>attr</b> (обычно пользуются <b>сокращенным</b> вариантом <b>v-bind</b>, он представляет собой просто двоеточие перед именем атрибута <b>&lt;img :src="attr"&gt;</b>).</p>
+<p>Вывод содержимого массивов, так же как и объектов, во <b>Vue</b> осуществляется так же, как и в чистом <b>JavaScript</b>.</p>
 <pre><code class="lang-html">&lt;template&gt;
   &lt;img v-bind:src="attr"&gt;
   или
   &lt;img :src="attr"&gt;
-&lt;/template&gt;
 
-&lt;script&gt;
-export default {
-  data() {
-    return {
-      attr: 'img.png',
-    }
-  }
-}
-&lt;/script&gt;</code></pre>
-<p>Вывод содержимого массивов, так же как и объектов, во <b>Vue</b> осуществляется так же, как и в чистом <b>JavaScript</b>.</p>
-<pre><code class="lang-html">&lt;template&gt;
   Массив:
   {{ arr[0] }}
   {{ arr[1] }}
@@ -81,6 +70,7 @@ export default {
 export default {
   data() {
     return {
+      attr: 'img.png',
       arr: [1, 2, 3],
       obj: {a: 1, b: 2, c: 3},
     }
@@ -89,22 +79,10 @@ export default {
 &lt;/script&gt;</code></pre>
 <h3 class="section-title" id="methods_in_vue">Методы, обработчики событий, v-on</h3>
 <p>Во <b>Vue</b> можно создавать свои <b>функции</b>, которые в терминах <b>Vue</b> называются <b>методами</b>. Для этого предназначено свойство <b>methods</b>. В примере ниже, вызвав этот метод в представлении, он сработает сразу же по загрузке страницы.</p>
-<pre><code class="lang-html">&lt;template&gt;
-  {{ show() }}
-&lt;/template&gt;
-
-&lt;script&gt;
-export default {
-  data() { return {} }
-  methods: {
-    show: function() {
-      alert("alert!")
-    }
-  }
-}
-&lt;/script&gt;</code></pre>
 <p>Для того, чтобы <b>навесить</b> событие на какой-нибудь <b>DOM</b> элемент, нужно использовать директиву <b>v-on</b>. В этой директиве после двоеточия нужно указывать <b>имя события</b>, а значением - <b>имя метода</b>, который нужно <b>вызвать</b> по наступлению этого события. </p>
 <pre><code class="lang-html">&lt;template&gt;
+  {{ show() }}
+
   &lt;button v-on:click="show"&gt;text&lt;/button&gt;
   или
   &lt;button @click="show"&gt;text&lt;/button&gt;
@@ -122,31 +100,26 @@ export default {
 &lt;/script&gt;</code></pre>
 <h3 class="section-title" id="data_in_meths">data внутри методов</h3>
 <p>Внутри <b>методов</b> можно получать доступ к <b>свойствам</b> объекта <b>data</b>. Для этого к ним нужно обращаться через <b>this</b>. Можно делать <b>вспомогательные методы</b>, которые будут использоваться внутри <b>других методов</b>. К таким методам также нужно обращаться через <b>this</b>.</p>
-<pre><code class="lang-js">data() {
-  return {
-    text: 'str',
-  }
-}
-methods: {
-  show: function() {
-    let text = this.cape(this.text);
-    alert(text);
-  },
-  cape: function(str) {
-    return str[0].toUpperCase() + str.slice(1);
-  }
-}</code></pre>
 <p>Можно передавать <b>параметры</b> в <b>методы</b>, привязываемые в качестве <b>обработчиков</b>. </p>
 <pre><code class="lang-html">&lt;template&gt;
   &lt;button @click="show('text1')"&gt;btn1&lt;/button&gt;
-  &lt;button @click="show('text2')"&gt;btn2&lt;/button&gt;
+  &lt;button @click="show('text12)"&gt;btn2&lt;/button&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
 export default {
+  data() {
+    return {
+      text: 'str',
+    }
+  }
   methods: {
     show: function(str) {
-      alert(str);
+      let text = this.cape(this.text);
+      alert(text);
+    }
+    cape: function(str) {
+      return str[0].toUpperCase() + str.slice(1);
     }
   }
 }
@@ -181,24 +154,7 @@ export default {
   &lt;p v-if="visible"&gt;text&lt;/p&gt;  // элемент покажется
   &lt;p v-if="!visible"&gt;text&lt;/p&gt;  // элемент не покажется, инвертированное условие
   &lt;button @click="change"&gt;{{ visible ? 'Скрыть все' : 'Показать все' }}&lt;/button&gt;
-&lt;/template&gt;
 
-&lt;script&gt;
-export default {
-  data() {
-    return {
-      visible: true,
-    }
-  },
-  methods: {
-    change: function() {
-      this.visible = !this.visible;
-    }
-  }
-}
-&lt;/script&gt;</code></pre>
-<p>Директива <b>v-if</b> может также работать в комплекте с <b>v-else</b>. Можно делать более <b>сложные</b> условия. Вместо нескольких <b>v-if</b> можно использовать конструкции <b>v-else-if</b>.</p>
-<pre><code class="lang-html">&lt;template&gt;
   &lt;p v-if="isAuth"&gt;+++&lt;/p&gt;
   &lt;p v-else="isAuth"&gt;---&lt;/p&gt;
 
@@ -216,12 +172,19 @@ export default {
 export default {
   data() {
     return {
+      visible: true,
       isAuth: false,
       num: 3,
+    }
+  },
+  methods: {
+    change: function() {
+      this.visible = !this.visible;
     }
   }
 }
 &lt;/script&gt;</code></pre>
+<p>Директива <b>v-if</b> может также работать в комплекте с <b>v-else</b>. Можно делать более <b>сложные</b> условия. Вместо нескольких <b>v-if</b> можно использовать конструкции <b>v-else-if</b>.</p>
 <p>Иногда нам нужно наложить <b>условие</b> сразу на <b>группу тегов</b>. В этом случае мы можем <b>объединить</b> их общим <b>родителем</b> и наложить <b>условие</b> на него. При этом, иногда нам не хотелось бы объединять <b>теги</b> общим <b>родителем</b>. В этом случае их можно объединить тегом <b>template</b>. Этот тег объединяет другие теги, <b>но не попадает</b> <b>в итоговую верстку</b>.</p>
 <pre><code class="lang-html">&lt;template&gt;
   &lt;div v-if="isAuth"&gt;
