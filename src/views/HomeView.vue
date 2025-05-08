@@ -12,13 +12,21 @@ import ArticleList from '../components/ArticleList.vue';
 
 // Моковые данные (можно заменить на запрос к API)
 const articles = ref([
-{
+  {
+    id: 11,
+    filename: "vuejs_forms_comps.html",
+    title: "Vue 3. Формы и компоненты",
+    date: "8 Мая 2025",
+    tags: "Vue 3, JavaScript",
+    short_content: "В РАБОТЕ",
+  },
+  {
     id: 10,
     filename: "vuejs_base.html",
     title: "Vue 3. Основы",
     date: "6 Мая 2025",
     tags: "Vue 3, JavaScript",
-    short_content: "В РАБОТЕ",
+    short_content: "Структура компонента, data, работа с атрибутами, v-bind, методы, обработчики событий, v-on, data внутри методов, вычисляемые свойства, модификаторы событий, показ по условию, v-if, v-else, v-show, v-for, перебор массивов, стилизация",
   },
   {
     id: 9,

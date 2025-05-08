@@ -14,6 +14,7 @@
   <li><a href="#cacl_props">Вычисляемые свойства, модификаторы событий</a></li>
   <li><a href="#v_if">Показ по условию, v-if, v-else, v-show</a></li>
   <li><a href="#v_for">v-for, перебор массивов</a></li>
+  <li><a href="#style">Стилизация</a></li>
 </ol>
 </div>
 <p>Vue 3 представляет современный прогрессивный фреймворк, написанный на языке TypeScript и предназначенный для создания веб-приложений на уровне клиента. Основная область применения данного фреймворка - это создание и организация пользовательского интерфейса. Vue 3 имеет довольно небольшой размер и при этом обладает хорошей производительностью по сравнению с такими фреймворками как Angular или React, а также по сравнению с предыдущей версией - Vue.js 2.x.</p>
@@ -272,3 +273,57 @@ export default {
   }
 }
 &lt;/script&gt;</code></pre>
+<h3 class="section-title" id="style">Стилизация</h3>
+<p>Для <b>стилизации компонентов</b> в файле компонента нужно написать тег <b>style</b>. В этом <b>теге</b> можно будет писать <b>CSS код</b>, при этом он будет применяться <b>только</b> к <b>HTML</b> коду <b>компонента</b>, и <b>не будет применен где-то вовне</b>. Это сделано специально для удобства. Работа с атрибутом <b>class</b> происходит через директиву <b>v-bind</b> или ее <b>сокращенную форму</b>.</p>
+<p><b>CSS</b> классы могут также хранится в <b>объектах</b>. При этом <b>имена</b> классов будут <b>ключами</b> объекта, а <b>элементами</b> объекта будут <b>логические значения</b>. Если значение будет <b>true</b>, то класс будет <b>добавлен</b> элементу, а если <b>false</b>, то <b>не будет</b>. Объект с <b>CSS</b> классами предназначен для того, чтобы удобно было <b>реактивно</b> назначать <b>классы</b> элементам.</p>
+<p>Объект с <b>CSS</b> классами можно писать прямо в качестве значения атрибута <b>class</b>. Классы, имена которых содержат <b>дефис</b>, необходимо брать в <b>кавычки</b>.</p>
+<p><b>CSS</b> классы можно <b>добавлять</b> элементу в зависимости от значений свойств объекта <b>data</b>.</p>
+<p><b>CSS</b> стили можно <b>напрямую добавлять</b> через атрибут <b>style</b>. Для этого в атрибут передается <b>объект</b>, в котором желаемые <b>CSS</b> свойства должны быть <b>ключами</b> этого объекта, а соответствующие <b>значения</b> CSS свойств - <b>значениями</b> этого объекта. </p>
+<pre><code class="lang-html">&lt;template&gt;
+  &lt;p :class="str"&gt;text&lt;/p&gt;
+  &lt;p :class="obj"&gt;text&lt;/p&gt;
+
+  &lt;p :class="styles"&gt;text&lt;/p&gt;
+  &lt;button @click="changeText"&gt;changeText&lt;/button&gt;
+
+  &lt;!-- Инлайн объект с CSS классами --&gt;
+  &lt;p :class="{active: true, error: false}"&gt;text&lt;/p&gt;
+  &lt;p :class="{active: true, 'has-error': false}"&gt;text&lt;/p&gt;
+
+  &lt;!-- CSS классы через data --&gt;
+  &lt;p :class="{active: isActive, error: hasError}"&gt;text&lt;/p&gt;
+
+  &lt;!-- Стилизация через атрибут style --&gt;
+  &lt;p :style="{color: 'red', 'font-size': '30px', border: '1px solid green'}"&gt;text&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  data() {
+    return {
+      str: 'active valid',
+      obj: {
+        active: true,
+        valid:  false,
+      },
+      styles: {
+        done: false,
+      },
+      isActive: true,
+      hasError: true,
+    }
+  },
+  methods: {
+    changeText: function() {
+      this.styles.done = true;
+    }
+  }
+}
+&lt;/script&gt;
+
+&lt;style&gt;
+p.done {
+  text-decoration: line-through;
+}
+&lt;/style&gt;
+</code></pre>
