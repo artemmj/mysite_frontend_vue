@@ -52,6 +52,7 @@
 import { ref, computed, defineProps } from 'vue'
 
 const props = defineProps({
+  name: 'ArticleList',
   articles: {
     type: Array,
     required: true
@@ -85,10 +86,6 @@ const shouldShowCategory = (category) => {
 </script>
 
 <script>
-export default {
-  name: 'ArticleList',
-  props: ['articles'], // Получаем статьи из HomeView
-}
 </script>
 
 <style lang="scss" scoped>
