@@ -1,5 +1,5 @@
 import Prism from 'prismjs';
-import 'prismjs/themes/prism-okaidia.min.css'; // Любая тема из папки prismjs/themes
+import 'prismjs/themes/prism-tomorrow.min.css'; // Любая тема из папки prismjs/themes
 
 // Импортируйте нужные языки
 import 'prismjs/components/prism-bash';
