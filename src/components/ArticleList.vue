@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, defineProps } from 'vue'
 
 const props = defineProps({
   articles: {
@@ -79,9 +79,9 @@ const shouldShowCategory = (category) => {
   return !activeCategory.value || activeCategory.value === category
 }
 // Форматирование даты
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleDateString('ru-RU')
-}
+// const formatDate = (dateString) => {
+//   return new Date(dateString).toLocaleDateString('ru-RU')
+// }
 </script>
 
 <script>
