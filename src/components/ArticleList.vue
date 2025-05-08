@@ -52,7 +52,6 @@
 import { ref, computed, defineProps } from 'vue'
 
 const props = defineProps({
-  name: 'ArticleList',
   articles: {
     type: Array,
     required: true
@@ -86,6 +85,9 @@ const shouldShowCategory = (category) => {
 </script>
 
 <script>
+export default {
+  name: 'ArticleList',
+}
 </script>
 
 <style lang="scss" scoped>
