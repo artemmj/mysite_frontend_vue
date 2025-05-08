@@ -1,17 +1,12 @@
 <template>
   <header class="header">
-    <div class="pika_img"><a href="/"><img src="./pik.png"/></a></div>
-    <div class="logo"><a href="/"> fullstackdevblog.ru</a></div>
-    <div class="nav">
-      <button class="filter-btn" data-filter="python">Python</button>
-      <button class="filter-btn" data-filter="go">Go</button>
-      <button class="filter-btn" data-filter="js">JS</button>
-      <button class="filter-btn" data-filter="django">Django</button>
-      <button class="filter-btn" data-filter="fastapi">FastAPI</button>
-      <button class="filter-btn" data-filter="vuejs">VueJS</button>
-      <button class="filter-btn" data-filter="linux">Linux</button>
+    <div class="header__left">
+      <div class="pika_img"><a href="/"><img src="./pik.png"/></a></div>
+      <div class="logo"><a href="/"> fullstackdevblog.ru</a></div>
     </div>
-    <div class="about"><a href="/about"><button class="about-btn" data-filter="python">Про сайт</button></a></div>
+    <div class="header__right">
+      <div class="about"><a href="/about"><button class="about-btn" data-filter="python">Про сайт</button></a></div>
+    </div>
   </header>
 </template>
 
@@ -26,19 +21,23 @@ header {
   background: var(--secondary);
   border-radius: 15px;
   border: 0.01rem solid;
-  padding: 0.8rem;                             /* Внутренние отступы */
+  padding: 0.5rem;                           /* Внутренние отступы */
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* Тень для глубины */
   width: 100%;                               /* На всю ширину экрана */
   top: 0;                                    /* Прижатие к верху */
   z-index: 1000;                             /* Поверх остальных элементов */
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between; /* Распределение по краям */
+  align-items: center; /* Вертикальное выравнивание */
+}
+.header__left {
+  display: flex;
   align-items: center;
+  gap: 1.5rem; /* Пространство между лого и текстом */
 }
 .about {
-  align-self: flex-end;
   margin-left: 10px;
-  min-width: 70px;
+  min-width: 100px;
 }
 .about-btn {
   margin: 2px;
@@ -51,17 +50,6 @@ header {
 }
 .about-btn:hover {
   background: #b2b2b2;
-}
-.nav {
-  display: block;
-  margin-left: 10px;
-  margin-right: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.nav a {
-  margin: 10px;
-  padding: 10px;
 }
 .logo {
   margin-left: 10px;
@@ -98,7 +86,7 @@ header {
 // }
 @media (max-width: 768px) {
   header {
-    display: block;
+    display: inline-block;
   }
 }
 </style>
