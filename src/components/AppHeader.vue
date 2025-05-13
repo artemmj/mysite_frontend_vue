@@ -5,7 +5,11 @@
       <div class="logo"><a href="/"> fullstackdevblog.ru</a></div>
     </div>
     <div class="header__right">
-      <div class="about"><a href="/about"><button class="about-btn" data-filter="python">Про сайт</button></a></div>
+      <div class="about">
+        <a href="/about">
+          <img src="./about.png">
+        </a>
+      </div>
     </div>
   </header>
 </template>
@@ -33,23 +37,14 @@ header {
 .header__left {
   display: flex;
   align-items: center;
-  gap: 1.5rem; /* Пространство между лого и текстом */
+  gap: 1.2rem;  /* Пространство между лого и текстом */
 }
 .about {
   margin-left: 10px;
-  min-width: 100px;
+  margin-right: 10px;
 }
-.about-btn {
-  margin: 2px;
-  padding: 8px 16px;
-  border: 0.1rem none gray;
-  background: #d8d8d8;
-  border-radius: 4px;
-  transition: all 0.3s;
-  cursor: pointer;
-}
-.about-btn:hover {
-  background: #b2b2b2;
+.about img {
+  max-width: 35px;
 }
 .logo a {
   border-bottom: solid;
