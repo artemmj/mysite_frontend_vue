@@ -51,9 +51,6 @@ header {
 .about-btn:hover {
   background: #b2b2b2;
 }
-.logo {
-  margin-left: 10px;
-}
 .logo a {
   border-bottom: solid;
   font-size: 20px;                    /* Размер шрифта */
@@ -77,12 +74,11 @@ header {
   border-color: black;
 }
 .pika_img img {
-  max-width: 70px;
-  border-radius: 15px;
+  max-width: 35px;
   margin-left: 10px;
 }
-// .head_img img:hover {
-//   max-width: 170px;
+// .pika_img img:hover {
+//   max-width: 70px;
 // }
 @media (max-width: 768px) {
   header {
