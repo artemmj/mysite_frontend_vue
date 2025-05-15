@@ -6,7 +6,7 @@
 }
 :root {
   /* Цвета для светлой темы */
-  --primary-light: #ededed;       /* Основной фон */
+  --primary-light: #ffffff;       /* Основной фон */
   --secondary-light: #ffffff;     /* Вторичный фон (карточки, хедер) */
   --text-light: #333333;          /* Цвет текста */
   --accent-light: #007bff;        /* Акцентный цвет (кнопки, заголовки) */
@@ -20,7 +20,7 @@
 
 body {
   font-family: 'Segoe UI', sans-serif; /* Современный шрифт */
-  background-color: #f0f0f0;         /* Динамический фон через переменные */
+  background-color: #f2f2f2;         /* Динамический фон через переменные */
   color: var(--text);                  /* Динамический цвет текста */
   line-height: 1.8;                    /* Удобочитаемый межстрочный интервал */
 }

@@ -34,18 +34,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <hr>
-  <div class="posts-grid">
-    <div v-for="article in articles" class="post-card">
-      <router-link :to="`/article/${article.filename}`">
-        <h2>{{ article.title }}</h2>
-        <p class="post-date">🗓 {{ article.date }}</p>
-        <p class="post-tags">🏷️ {{ article.tags }}</p>
-        <p class="short-content">{{ article.short_content }}</p>
-      </router-link>
-    </div>
-  </div> -->
 </template>
 
 <script setup>
@@ -78,10 +66,6 @@ const toggleCategory = (category) => {
 const shouldShowCategory = (category) => {
   return !activeCategory.value || activeCategory.value === category
 }
-// Форматирование даты
-// const formatDate = (dateString) => {
-//   return new Date(dateString).toLocaleDateString('ru-RU')
-// }
 </script>
 
 <script>
@@ -94,7 +78,7 @@ export default {
 .posts-grid {
   margin-top: 20px;
   display: grid;                                                /* CSS Grid раскладка */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  /* Адаптивные колонки */
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));  /* Адаптивные колонки */
   gap: 1rem;                                                     /* Расстояние между карточками */
 }
 .category-group {

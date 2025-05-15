@@ -12,6 +12,15 @@ import ArticleList from '../components/ArticleList.vue';
 
 // Моковые данные (можно заменить на запрос к API)
 const articles = ref([
+{
+    id: 12,
+    filename: "go_rest_api.html",
+    title: "Go. REST API приложение",
+    date: "15 Мая 2025",
+    tags: "Go, REST API",
+    category: "go",
+    short_content: "В РАБОТЕ. Конфигурация приложения, логирование, storage, подготовка HTTP сервера, обработчики запросов (handlers)",
+  },
   {
     id: 11,
     filename: "vuejs_forms_comps.html",
@@ -19,7 +28,7 @@ const articles = ref([
     date: "8 Мая 2025",
     tags: "Vue 3, JavaScript",
     category: "vue",
-    short_content: "Двусторонняя привязка данных, формы реактивного добавления\\удаления\\редактирования, работа с компонентами",
+    short_content: "Двусторонняя привязка данных, формы реактивного добавления, удаления, редактирования, работа с компонентами",
   },
   {
     id: 10,

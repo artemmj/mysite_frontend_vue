@@ -49,12 +49,8 @@ watch(articleContent, async () => {
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);  /* Тень с прозрачностью 5% для эффекта глубины */
   animation: card-entrance 0.5s ease-out;     /* Анимация появления с названием, длительностью и функцией времени */
 }
-.article-container h2 {
+.article-container h2 h3 {
   text-align: center;
-}
-.article-container h3 {
-  text-align: center;
-  background-color: rgb(244, 244, 244);
 }
 .article-container p {
   margin: 20px;
@@ -86,7 +82,9 @@ watch(articleContent, async () => {
   font-size: 0.9rem;  /* Уменьшенный размер шрифта */
 }
 .section-title {
+  text-align: center;
   color: var(--accent);  /* Акцентный цвет текста */
+  background-color: rgb(250, 250, 250);
   margin: 2rem auto 1rem;  /* Отступы: сверху 2rem, снизу 1rem */
   padding-bottom: 0.3rem;  /* Отступ для визуального разделения линии */
   border-bottom: 1px dashed var(--accent);  /* Пунктирная акцентная линия снизу */
