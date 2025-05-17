@@ -54,7 +54,6 @@ watch(articleContent, async () => {
 }
 .article-container p {
   margin: 20px;
-  font-size: 1.15rem;
 }
 .article-container b {
   background-color: rgb(240, 240, 240);
@@ -83,12 +82,12 @@ watch(articleContent, async () => {
   font-size: 0.9rem;  /* Уменьшенный размер шрифта */
 }
 .section-title {
-  text-align: center;
-  color: var(--accent);  /* Акцентный цвет текста */
-  background-color: rgb(250, 250, 250);
-  margin: 2rem auto 1rem;  /* Отступы: сверху 2rem, снизу 1rem */
-  padding-bottom: 0.3rem;  /* Отступ для визуального разделения линии */
-  border-bottom: 1px dashed var(--accent);  /* Пунктирная акцентная линия снизу */
+    text-align: center;
+    color: var(--accent);  /* Акцентный цвет текста */
+    background-color: rgb(236, 234, 234);
+    margin: 2rem auto 1rem;  /* Отступы: сверху 2rem, снизу 1rem */
+    padding-bottom: 0.3rem;  /* Отступ для визуального разделения линии */
+    border-bottom: 1px dashed var(--accent);  /* Пунктирная акцентная линия снизу */
 }
 /* Стилизация путей к файлам */
 .file-path {

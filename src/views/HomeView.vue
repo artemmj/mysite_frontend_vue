@@ -1,9 +1,9 @@
 <template>
-  <div id="main">
-    <div class="posts-grid">
-      <ArticleList :articles="articles" />
+    <div id="main">
+        <div class="posts-grid">
+            <ArticleList :articles="articles" />
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -19,9 +19,9 @@ const articles = ref([
     date: "15 Мая 2025",
     tags: "Go, REST API",
     category: "go",
-    short_content: "В РАБОТЕ. Конфигурация приложения, логирование, storage, подготовка HTTP сервера, обработчики запросов (handlers)",
-  },
-  {
+    short_content: "Конфигурация приложения, логирование, storage, подготовка HTTP сервера, обработчики запросов (handlers), авторизация, тесты (TODO: деплой, больше тестов)",
+},
+{
     id: 11,
     filename: "vuejs_forms_comps.html",
     title: "Vue 3. Формы и компоненты",
@@ -29,8 +29,8 @@ const articles = ref([
     tags: "Vue 3, JavaScript",
     category: "vue",
     short_content: "Двусторонняя привязка данных, формы реактивного добавления, удаления, редактирования, работа с компонентами",
-  },
-  {
+},
+{
     id: 10,
     filename: "vuejs_base.html",
     title: "Vue 3. Основы",
@@ -38,8 +38,8 @@ const articles = ref([
     tags: "Vue 3, JavaScript",
     category: "vue",
     short_content: "Структура компонента, data, работа с атрибутами, v-bind, методы, обработчики событий, v-on, data внутри методов, вычисляемые свойства, модификаторы событий, показ по условию, v-if, v-else, v-show, v-for, перебор массивов, стилизация",
-  },
-  {
+},
+{
     id: 9,
     filename: "fastapi_base.html",
     title: "FastAPI. Основы",
@@ -47,8 +47,8 @@ const articles = ref([
     tags: "FastAPI, Python",
     category: "fastapi",
     short_content: "Обработка запросов и отправка ответов, параметры пути и строки запроса, статус коды, переадресация, статические файлы, даннные запроса, заголовки, куки, формы, SQLAlchemy",
-  },
-  {
+},
+{
     id: 8,
     filename: "python_base.html",
     title: "Python. База",
@@ -56,8 +56,8 @@ const articles = ref([
     tags: "Python",
     category: "python",
     short_content: "Переменные, арифметические операции, условные конструкции, циклы, фукнции, упаковка и распаковка, лямбды, преобразования типов, декораторы try..except, строки, ООП, списки, кортежи, словари, множества, List Comprehension",
-  },
-  {
+},
+{
     id: 7,
     filename: "go_deep.html",
     title: "Go. Глубже",
@@ -65,8 +65,8 @@ const articles = ref([
     tags: "Go",
     category: "go",
     short_content: "Функции (параметры, возврат, тип), указатели, структуры, методы, интерфейсы, полиморфизм",
-  },
-  {
+},
+{
     id: 6,
     filename: "go_base.html",
     title: "Go. Основы",
@@ -74,8 +74,8 @@ const articles = ref([
     tags: "Go",
     category: "go",
     short_content: "Базовые операции, условные выражения, массивы, условные конструкции, циклы, срезы, отображения, именованные типы и псевдонимы, defer и panic",
-  },
-  {
+},
+{
     id: 5,
     filename: "javascript_funcs.html",
     title: "JavaScript. Функциональное программирование",
@@ -83,8 +83,8 @@ const articles = ref([
     tags: "JavaScript",
     category: "javascript",
     short_content: "В РАБОТЕ",
-  },
-  {
+},
+{
     id: 4,
     filename: "javascript_base.html",
     title: "JavaScript. Основы",
@@ -92,8 +92,8 @@ const articles = ref([
     tags: "JavaScript",
     category: "javascript",
     short_content: "В РАБОТЕ",
-  },
-  {
+},
+{
     id: 3,
     filename: "django_setup_jwt_auth.html",
     title: "Django Setup JWT authentication",
@@ -101,8 +101,8 @@ const articles = ref([
     tags: "Django, Auth, JWT",
     category: "django",
     short_content: "Настройка JWT аутентификации в проекте Django",
-  },
-  {
+},
+{
     id: 2,
     filename: "django_setup_rest_api.html",
     title: "Django Setup Basics REST API",
@@ -110,8 +110,8 @@ const articles = ref([
     tags: "Django, Docker, DRF, API, Swagger, CORS",
     category: "django",
     short_content: "Настройка чистого проекта Django в Docker для работы с REST API с Swagger, Celery, Redis",
-  },
-  {
+},
+{
     id: 1,
     filename: "ubuntu_setup.html",
     title: "Linux Ubuntu Setup",
@@ -119,8 +119,7 @@ const articles = ref([
     tags: "Ubuntu, Docker, Nginx",
     category: "linux",
     short_content: "Быстрая настройка Linux Ubuntu под простой домашний сервер, команды и конфигурации",
-  }
-]);
+}]);
 </script>
 
 <style lang="scss" scoped>

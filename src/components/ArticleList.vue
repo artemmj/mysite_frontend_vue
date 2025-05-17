@@ -53,7 +53,7 @@ const allCategories = computed(() => {
 // Группировка статей по категориям
 const groupedArticles = computed(() => {
   return props.articles.reduce((acc, article) => {
-    const category = article.category || 'Без категории'
+    const category = article.category.toUpperCase() || 'Без категории'
     if (!acc[category]) acc[category] = []
     acc[category].push(article)
     return acc
@@ -78,7 +78,7 @@ export default {
 .posts-grid {
   margin-top: 20px;
   display: grid;                                                /* CSS Grid раскладка */
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));  /* Адаптивные колонки */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  /* Адаптивные колонки */
   gap: 1rem;                                                     /* Расстояние между карточками */
 }
 .category-group {

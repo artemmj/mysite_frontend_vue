@@ -1,17 +1,15 @@
 <template>
-  <header class="header">
-    <div class="header__left">
-      <div class="pika_img"><a href="/"><img src="./pik.png"/></a></div>
-      <div class="logo"><a href="/"> fullstackdevblog.ru</a></div>
-    </div>
-    <div class="header__right">
-      <div class="about">
-        <a href="/about">
-          <img src="./about.png">
-        </a>
-      </div>
-    </div>
-  </header>
+    <header class="header">
+        <div class="header__left">
+            <div class="pika_img"><a href="/"><img src="./pik.png"/></a></div>
+            <div class="logo"><a href="/"> fullstackdevblog.ru</a></div>
+        </div>
+        <div class="header__right">
+            <div class="about">
+                <a href="/about"><img src="./about.png"></a>
+            </div>
+        </div>
+    </header>
 </template>
 
 <script>
@@ -22,17 +20,18 @@
 
 <style lang="scss" scoped>
 header {
-  background: var(--secondary);
-  border-radius: 15px;
-  border: 0.01rem solid;
-  padding: 0.5rem;                           /* Внутренние отступы */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* Тень для глубины */
-  width: 100%;                               /* На всю ширину экрана */
-  top: 0;                                    /* Прижатие к верху */
-  z-index: 1000;                             /* Поверх остальных элементов */
-  display: flex;
-  justify-content: space-between; /* Распределение по краям */
-  align-items: center; /* Вертикальное выравнивание */
+    // position: fixed;
+    background: var(--secondary);
+    border-radius: 15px;
+    border: 0.01rem solid;
+    padding: 0.5rem;                           /* Внутренние отступы */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);  /* Тень для глубины */
+    width: 100%;                               /* На всю ширину экрана */
+    top: 0;                                    /* Прижатие к верху */
+    z-index: 1000;                             /* Поверх остальных элементов */
+    display: flex;
+    justify-content: space-between; /* Распределение по краям */
+    align-items: center; /* Вертикальное выравнивание */
 }
 .header__left {
   display: flex;
