@@ -54,6 +54,7 @@ watch(articleContent, async () => {
 }
 .article-container p {
   margin: 20px;
+  font-size: 1.15rem;
 }
 .article-container b {
   background-color: rgb(240, 240, 240);

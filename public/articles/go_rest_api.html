@@ -3,6 +3,7 @@
 <span>🗓 15 мая 2025</span>
 <span>🏷️ Go, REST API</span>
 </div>
+<p>Черпал вдохновение из: <a href="https://habr.com/ru/companies/selectel/articles/747738">Статья на habr</a></p>
 <div class="list-headings">
 <ol>
     <li><a href="#conf">Конфигурация приложения</a></li>
@@ -10,6 +11,8 @@
     <li><a href="#storage">Пишем storage</a></li>
     <li><a href="#httpserver_setup">Подготовка HTTP сервера</a></li>
     <li><a href="#handlers">Handlers — обработчики запросов</a></li>
+    <li><a href="#reidrect">Redirect — перенаправление на сохраненный URL</a></li>
+    <li><a href="#auth">Авторизация</a></li>
 </ol>
 </div>
 <p>В статье описан процесс написания полноценного REST API сервиса — URL Shortener — и его деплой (???)</p>
@@ -614,3 +617,200 @@ func New(log *slog.Logger, urlSaver URLSaver) http.HandlerFunc {
     "status": "Error",
     "error": "Key: 'Request.URL' Error:Field validation for 'URL' failed on the 'url' tag"
 }</code></pre>
+<p>Для формирование более ясного ответа лучше добавить в пакет response такую функцию:</p>
+<pre><code class="lang-go">// internal/lib/api/response/response.go
+
+...
+func ValidationError(errs validator.ValidationErrors) Response {
+    var errMsgs []string
+
+    for _, err := range errs {
+        switch err.ActualTag() {
+        case "required":
+            errMsgs = append(errMsgs, fmt.Sprintf("field %s is a required field", err.Field()))
+        case "url":
+            errMsgs = append(errMsgs, fmt.Sprintf("field %s is not a valid URL", err.Field()))
+        default:
+            errMsgs = append(errMsgs, fmt.Sprintf("field %s is not valid", err.Field()))
+        }
+    }
+
+    return Response{
+        Status: StatusError,
+        Error:  strings.Join(errMsgs, ", "),
+    }
+}</code></pre>
+<p>Теперь обработчик вернет внятный ответ.</p>
+<pre><code class="lang-bash">{
+    "status": "Error",
+    "error": "field URL is not a valid URL"
+}</code></pre>
+<p>Alias проверяем вручную. Если он пустой — генерируем случайный:</p>
+<pre><code class="lang-go">// internal/http-server/handlers/url/save/save.go
+
+//go:generate moq -out save_mock.go . URLSaver
+type URLSaver interface {
+	SaveURL(URL, alias string) (int64, error)
+}
+
+const aliasLength = 6 // TODO: перенести в конфиг приложения
+
+func New(log *slog.Logger, urlSaver URLSaver) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        ...
+        alias := req.Alias
+        if alias == "" {
+            alias = random.NewRandomString(aliasLength)
+        }
+    }
+}</code></pre>
+<p>Можно сгенерировать строку своими методами либо использовать для этого готовую библиотеку. Используем random, в котором реализована функция NewRandomString:</p>
+<pre><code class="lang-go">// internal/lib/random/random.go
+package random
+
+import (
+	"math/rand"
+	"time"
+)
+
+func NewRandomString(size int) string {
+	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
+
+	chars := []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+		"abcdefghijklmnopqrstuvwxyz" +
+		"0123456789")
+
+	b := make([]rune, size)
+	for i := range b {
+		b[i] = chars[rnd.Intn(len(chars))]
+	}
+
+	return string(b)
+}</code></pre>
+<p>Осталось только сохранить URL и Alias, а после — вернуть ответ с сообщением об успехе:</p>
+<pre><code class="lang-go">// internal/http-server/handlers/url/save/save.go
+
+func New(log *slog.Logger, urlSaver URLSaver) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        ...
+        id, err := urlSaver.SaveURL(req.URL, alias)
+        if errors.Is(err, storage.ErrURLExists) {
+            // Отдельно обрабатываем ситуацию, когда запись с таким Alias уже существует
+            log.Info("url already exists", slog.String("url", req.URL))
+            render.JSON(w, r, resp.Error("url already exists"))
+            return
+        }
+        if err != nil {
+            log.Error("failed to add url", sl.Err(err))
+            render.JSON(w, r, resp.Error("failed to add url"))
+            return
+        }
+        log.Info("url added", slog.Int64("id", id))
+        responseOK(w, r, alias)
+    }
+}</code></pre>
+<p>Функцию responseOK опишем в этом же файле:</p>
+<pre><code class="lang-go">// internal/http-server/handlers/url/save/save.go
+
+func responseOK(w http.ResponseWriter, r *http.Request, alias string) {
+    render.JSON(w, r, Response{
+        Response: resp.OK(),
+        Alias:    alias,
+    })
+}</code></pre>
+<p>Опишем путь в роутере в main() и пропишем запуск сервера:</p>
+<pre><code class="lang-go">// cmd/url-shortener/main.go
+...
+router.Post("/", save.New(log, storage))
+
+log.Info("starting server", slog.String("address", cfg.Address))
+done := make(chan os.Signal, 1)
+signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+
+srv := &http.Server{
+    Addr:         cfg.Address,
+    Handler:      router,
+    ReadTimeout:  cfg.HTTPServer.Timeout,
+    WriteTimeout: cfg.HTTPServer.Timeout,
+    IdleTimeout:  cfg.HTTPServer.IdleTimeout,
+}
+
+go func() {
+    if err := srv.ListenAndServe(); err != nil {
+        log.Error("failed to start server")
+    }
+}()
+
+log.Info("server started")
+
+<-done
+log.Info("stopping server")
+...</code></pre>
+<h3 id="reidrect" class="section-title">Redirect — перенаправление на сохраненный URL</h3>
+<p>Переходим к следующему хендлеру — redirect. Это будет GET-запрос, поэтому объект Request здесь не потребуется, как и Response. Ведь возвращать мы тоже ничего не будем, а просто сделаем редирект. Код хендера будет таким:</p>
+<pre><code class="lang-go">// internal/http-server/handlers/url/get/get.go
+
+package get
+
+import (
+	"errors"
+	"log/slog"
+	"net/http"
+	resp "url-shortener/internal/lib/api/response"
+	"url-shortener/internal/lib/logger/sl"
+	"url-shortener/internal/storage"
+
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/render"
+)
+
+type URLGetter interface {
+	GetURL(alias string) (string, error)
+}
+
+func New(log *slog.Logger, urlGetter URLGetter) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		const op = "handlers.url.redirect.New"
+
+		log = log.With(
+			slog.String("op", op),
+			slog.String("request_id", middleware.GetReqID(r.Context())),
+		)
+
+		// Роутер chi позволяет делать вот такие финты - получать GET-параметры по их именам.
+		// Имена определяются при добавлении хэндлера в роутер, это будет ниже.
+		alias := chi.URLParam(r, "alias")
+		if alias == "" {
+			log.Info("alias is empty")
+			render.JSON(w, r, resp.Error("not found"))
+			return
+		}
+
+		// Находим URL по алиасу в БД
+		resURL, err := urlGetter.GetURL(alias)
+		if errors.Is(err, storage.ErrURLNotFound) {
+			// Не нашли URL, сообщаем об этом клиенту
+			log.Info("url not found", "alias", alias)
+			render.JSON(w, r, resp.Error("not found"))
+			return
+		}
+		if err != nil {
+			// Не удалось осуществить поиск
+			log.Error("failed to get url", sl.Err(err))
+			render.JSON(w, r, resp.Error("internal error"))
+			return
+		}
+		log.Info("got url", slog.String("url", resURL))
+		// Делаем редирект на найденный URL
+		http.Redirect(w, r, resURL, http.StatusFound)
+	}
+}</code></pre>
+<p>В последней строчке делаем редирект со статусом http.StatusFound — код HTTP 302. Он обычно используется для временных перенаправлений, а не постоянных, за которые отвечает 301. Наш сервис может перенаправлять на разные URL в зависимости от ситуации (мы ведь можем удалить или изменить сохраненный URL), поэтому есть смысл использовать именно http.StatusFound. Это важно для систем кэширования и поисковых машин — они обычно кэшируют редиректы с кодом 301, то есть считают их постоянными. Нам такое поведение не нужно.</p>
+<p>Подключаем новый хендлер в main:</p>
+<pre><code class="lang-go">// cmd/url-shortener/main.go
+...
+router.Get("/{alias}", get.New(log, storage))
+...</code></pre>
+<p>Здесь формируем путь для обращения и именуем его параметр — {alias}. В хендлере можно получить этот параметр по указанному имени, что мы и сделано выше.</p>
+<h3 id="auth" class="section-title">Авторизация</h3>
