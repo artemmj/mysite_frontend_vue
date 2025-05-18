@@ -1,7 +1,7 @@
 <template>
     <header class="header">
         <div class="header__left">
-            <div class="logo"><a href="/"> fullstackdevblog.ru</a></div>
+            <div class="logo"><a href="/">> fullstackdevblog.ru</a></div>
         </div>
         <div>
             <div class="about"><a href="/about"><img src="./about.png"></a></div>
@@ -42,7 +42,7 @@ header {
     max-width: 30px;
 }
 .logo {
-    margin-left: 5px;
+    margin-left: 20px;
 }
 .logo a {
     border-bottom: solid;

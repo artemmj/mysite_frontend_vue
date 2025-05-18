@@ -39,6 +39,12 @@ watch(articleContent, async () => {
 .list-headings a:hover {
   font-weight: bold;
 }
+.list-headings ol {
+  columns: 2;
+  margin-left: 40px;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
 /* Основной контейнер для статьи */
 .article-container {
   border: 0.01rem solid;
@@ -59,7 +65,7 @@ watch(articleContent, async () => {
   background-color: rgb(240, 240, 240);
 }
 .article-container ol {
-  columns: 2;
+  columns: 1;
   margin-left: 40px;
   -webkit-columns: 2;
   -moz-columns: 2;
@@ -148,7 +154,7 @@ pre[class*="language-"] {
   .article-container p {
     margin: 5px;
   }
-  .article-container ol {
+  .list-headings ol {
     columns: 1;
     margin-left: 20px;
     -webkit-columns: 2;

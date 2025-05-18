@@ -13,6 +13,14 @@ import ArticleList from '../components/ArticleList.vue';
 // Моковые данные (можно заменить на запрос к API)
 const articles = ref([
 {
+    id: 14,
+    filename: "go_async.html",
+    title: "Go. Параллельное программирование",
+    date: "18 Мая 2025",
+    tags: "Go",
+    short_content: "WORK IN PROGRESS",
+},
+{
     id: 13,
     filename: "go_grpc.html",
     title: "Go. gRPC приложение",
@@ -53,14 +61,6 @@ const articles = ref([
     short_content: "Структура компонента, data, работа с атрибутами, v-bind, методы, обработчики событий, v-on, data внутри методов, вычисляемые свойства, модификаторы событий, показ по условию, v-if, v-else, v-show, v-for, перебор массивов, стилизация",
 },
 {
-    id: 9,
-    filename: "fastapi_base.html",
-    title: "FastAPI. Основы",
-    date: "28 Апреля 2025",
-    tags: "FastAPI, Python",
-    short_content: "Обработка запросов и отправка ответов, параметры пути и строки запроса, статус коды, переадресация, статические файлы, даннные запроса, заголовки, куки, формы, SQLAlchemy",
-},
-{
     id: 7,
     filename: "go_deep.html",
     title: "Go. Глубже",
@@ -75,6 +75,14 @@ const articles = ref([
     date: "10 Апреля 2025",
     tags: "Go",
     short_content: "Базовые операции, условные выражения, массивы, условные конструкции, циклы, срезы, отображения, именованные типы и псевдонимы, defer и panic",
+},
+{
+    id: 9,
+    filename: "fastapi_base.html",
+    title: "FastAPI. Основы",
+    date: "28 Апреля 2025",
+    tags: "FastAPI, Python",
+    short_content: "Обработка запросов и отправка ответов, параметры пути и строки запроса, статус коды, переадресация, статические файлы, даннные запроса, заголовки, куки, формы, SQLAlchemy",
 },
 {
     id: 5,
