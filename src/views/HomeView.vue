@@ -13,12 +13,28 @@ import ArticleList from '../components/ArticleList.vue';
 // Моковые данные (можно заменить на запрос к API)
 const articles = ref([
 {
+    id: 13,
+    filename: "go_grpc.html",
+    title: "Go. gRPC приложение",
+    date: "18 Мая 2025",
+    tags: "Go, gRPC",
+    short_content: "WORK IN PROGRESS",
+},
+{
     id: 12,
     filename: "go_rest_api.html",
     title: "Go. REST API приложение",
     date: "15 Мая 2025",
     tags: "Go, REST API",
     short_content: "Конфигурация приложения, логирование, storage, подготовка HTTP сервера, обработчики запросов (handlers), авторизация, тесты (TODO: деплой, больше тестов)",
+},
+{
+    id: 8,
+    filename: "python_base.html",
+    title: "Python. База",
+    date: "19 Апреля 2025",
+    tags: "Python",
+    short_content: "Переменные, арифметические операции, условные конструкции, циклы, фукнции, упаковка и распаковка, лямбды, преобразования типов, декораторы try..except, строки, ООП, списки, кортежи, словари, множества, List Comprehension",
 },
 {
     id: 11,
@@ -43,14 +59,6 @@ const articles = ref([
     date: "28 Апреля 2025",
     tags: "FastAPI, Python",
     short_content: "Обработка запросов и отправка ответов, параметры пути и строки запроса, статус коды, переадресация, статические файлы, даннные запроса, заголовки, куки, формы, SQLAlchemy",
-},
-{
-    id: 8,
-    filename: "python_base.html",
-    title: "Python. База",
-    date: "19 Апреля 2025",
-    tags: "Python",
-    short_content: "Переменные, арифметические операции, условные конструкции, циклы, фукнции, упаковка и распаковка, лямбды, преобразования типов, декораторы try..except, строки, ООП, списки, кортежи, словари, множества, List Comprehension",
 },
 {
     id: 7,
@@ -97,7 +105,7 @@ const articles = ref([
     filename: "django_setup_rest_api.html",
     title: "Django Setup Basics REST API",
     date: "18 Марта 2025",
-    tags: "Django, Docker, DRF",
+    tags: "Django, Docker",
     short_content: "Настройка чистого проекта Django в Docker для работы с REST API с Swagger, Celery, Redis",
 },
 {
