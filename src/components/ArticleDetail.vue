@@ -100,33 +100,30 @@ watch(articleContent, async () => {
   display: inline-block;  /* Строчно-блочное отображение */
 }
 .table-wrapper {
-  overflow-x: auto; /* Для адаптива на мобильных */
-  box-shadow: 0 2px 15px rgba(0,0,0,0.1); /* Мягкая тень */
-  border-radius: 10px; /* Закругленные углы */
+    overflow-x: auto; /* Для адаптива на мобильных */
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1); /* Мягкая тень */
+    border-radius: 10px; /* Закругленные углы */
 }
 table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Segoe UI', sans-serif;
-  margin: 1rem 0;
-  background: whitesmoke;
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 1rem 0;
+    background: whitesmoke;
 }
 th {
-  background: var(--accent); /* Темно-синий цвет */
-  color: white;
-  font-weight: 600;
-  text-align: left;
-  padding: 1.2rem;
-  border-bottom: 3px solid #34495e;
+    background: var(--accent); /* Темно-синий цвет */
+    color: white;
+    font-weight: 600;
+    text-align: left;
+    padding: 1.2rem;
+    border-bottom: 3px solid #34495e;
 }
 td {
-  padding: 1rem;
-  border: 1px solid #0898bc; /* Светлая граница */
-  color: #34495e; /* Темно-серый цвет текста */
+    padding: 0.7rem;
+    border: 1px solid #0898bc; /* Светлая граница */
+    color: #34495e; /* Темно-серый цвет текста */
 }
-// tr:nth-child(even) {
-//   background: #f8f9fa; /* Чередование фона строк */
-// }
 tr:hover {
   background: #f1f5f9; /* Ховер-эффект */
   transition: background 0.2s ease;

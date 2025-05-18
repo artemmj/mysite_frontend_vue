@@ -18,7 +18,6 @@ const articles = ref([
     title: "Go. REST API приложение",
     date: "15 Мая 2025",
     tags: "Go, REST API",
-    category: "go",
     short_content: "Конфигурация приложения, логирование, storage, подготовка HTTP сервера, обработчики запросов (handlers), авторизация, тесты (TODO: деплой, больше тестов)",
 },
 {
@@ -27,7 +26,6 @@ const articles = ref([
     title: "Vue 3. Формы и компоненты",
     date: "8 Мая 2025",
     tags: "Vue 3, JavaScript",
-    category: "vue",
     short_content: "Двусторонняя привязка данных, формы реактивного добавления, удаления, редактирования, работа с компонентами",
 },
 {
@@ -36,7 +34,6 @@ const articles = ref([
     title: "Vue 3. Основы",
     date: "6 Мая 2025",
     tags: "Vue 3, JavaScript",
-    category: "vue",
     short_content: "Структура компонента, data, работа с атрибутами, v-bind, методы, обработчики событий, v-on, data внутри методов, вычисляемые свойства, модификаторы событий, показ по условию, v-if, v-else, v-show, v-for, перебор массивов, стилизация",
 },
 {
@@ -45,7 +42,6 @@ const articles = ref([
     title: "FastAPI. Основы",
     date: "28 Апреля 2025",
     tags: "FastAPI, Python",
-    category: "fastapi",
     short_content: "Обработка запросов и отправка ответов, параметры пути и строки запроса, статус коды, переадресация, статические файлы, даннные запроса, заголовки, куки, формы, SQLAlchemy",
 },
 {
@@ -54,7 +50,6 @@ const articles = ref([
     title: "Python. База",
     date: "19 Апреля 2025",
     tags: "Python",
-    category: "python",
     short_content: "Переменные, арифметические операции, условные конструкции, циклы, фукнции, упаковка и распаковка, лямбды, преобразования типов, декораторы try..except, строки, ООП, списки, кортежи, словари, множества, List Comprehension",
 },
 {
@@ -63,7 +58,6 @@ const articles = ref([
     title: "Go. Глубже",
     date: "18 Апреля 2025",
     tags: "Go",
-    category: "go",
     short_content: "Функции (параметры, возврат, тип), указатели, структуры, методы, интерфейсы, полиморфизм",
 },
 {
@@ -72,7 +66,6 @@ const articles = ref([
     title: "Go. Основы",
     date: "10 Апреля 2025",
     tags: "Go",
-    category: "go",
     short_content: "Базовые операции, условные выражения, массивы, условные конструкции, циклы, срезы, отображения, именованные типы и псевдонимы, defer и panic",
 },
 {
@@ -81,7 +74,6 @@ const articles = ref([
     title: "JavaScript. Функциональное программирование",
     date: "8 Апреля 2025",
     tags: "JavaScript",
-    category: "javascript",
     short_content: "В РАБОТЕ",
 },
 {
@@ -90,7 +82,6 @@ const articles = ref([
     title: "JavaScript. Основы",
     date: "7 Апреля 2025",
     tags: "JavaScript",
-    category: "javascript",
     short_content: "В РАБОТЕ",
 },
 {
@@ -98,8 +89,7 @@ const articles = ref([
     filename: "django_setup_jwt_auth.html",
     title: "Django Setup JWT authentication",
     date: "25 Марта 2025",
-    tags: "Django, Auth, JWT",
-    category: "django",
+    tags: "Django, JWT",
     short_content: "Настройка JWT аутентификации в проекте Django",
 },
 {
@@ -107,8 +97,7 @@ const articles = ref([
     filename: "django_setup_rest_api.html",
     title: "Django Setup Basics REST API",
     date: "18 Марта 2025",
-    tags: "Django, Docker, DRF, API, Swagger, CORS",
-    category: "django",
+    tags: "Django, Docker, DRF",
     short_content: "Настройка чистого проекта Django в Docker для работы с REST API с Swagger, Celery, Redis",
 },
 {
@@ -116,8 +105,7 @@ const articles = ref([
     filename: "ubuntu_setup.html",
     title: "Linux Ubuntu Setup",
     date: "15 Марта 2025",
-    tags: "Ubuntu, Docker, Nginx",
-    category: "linux",
+    tags: "Linux, Ubuntu, Docker, Nginx",
     short_content: "Быстрая настройка Linux Ubuntu под простой домашний сервер, команды и конфигурации",
 }]);
 </script>

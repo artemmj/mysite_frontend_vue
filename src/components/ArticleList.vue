@@ -1,76 +1,64 @@
 <template>
-  <div class="filters">
-    <button
-      v-for="category in allCategories"
-      :key="category"
-      @click="toggleCategory(category)"
-      :class="{ active: activeCategory === category }"
-      class="filter-btn"
-    >
-      {{ category }}
-    </button>
-  </div>
-  <div class="posts-grid">
-    <div 
-      v-for="(articles, category) in groupedArticles" 
-      :key="category"
-      v-show="shouldShowCategory(category)"
-      class="category-group"
-    >
-      <h2 class="category-title">{{ category }}</h2>
-      <div class="articles-grid">
-        <article 
-          v-for="article in articles" 
-          :key="article.id"
-          class="post-card"
+    <div class="filters">
+        <button
+        v-for="category in allCategories"
+        :key="category"
+        @click="toggleTag(category)"
+        :class="{ active: activeCategory === category }"
+        class="filter-btn"
         >
-          <router-link :to="`/article/${article.filename}`">
-            <h2>{{ article.title }}</h2>
-            <p class="post-date">🗓 {{ article.date }}</p>
-            <p class="post-tags">🏷️ {{ article.tags }}</p>
-            <p class="short-content">{{ article.short_content }}</p>
-          </router-link>
-        </article>
-      </div>
+        {{ category }}
+        </button>
     </div>
-  </div>
+    <div class="posts-grid">
+            <article 
+            v-for="article in articles" 
+            :key="article.id"
+            class="post-card"
+            >
+            <router-link :to="`/article/${article.filename}`">
+                <h2>{{ article.title }}</h2>
+                <p class="post-date">🗓 {{ article.date }}</p>
+                <p class="post-tags">🏷️ {{ article.tags }}</p>
+                <p class="short-content">{{ article.short_content }}</p>
+            </router-link>
+        </article>
+    </div>
 </template>
 
 <script setup>
 import { ref, computed, defineProps } from 'vue'
 
 const props = defineProps({
-  articles: {
-    type: Array,
-    required: true
-  }
+    articles: {
+        type: Array,
+        required: true
+    }
 })
 const activeCategory = ref(null)
+
 // Все уникальные категории
 const allCategories = computed(() => {
-  return [...new Set(props.articles.map(a => a.category))].sort()
+    const cats = new Set()
+    for (const article of props.articles) {
+        const acats = article.tags.split(', ')
+        for (const cat of acats) {
+            cats.add(cat)
+        }
+    }
+    return cats
+    // return [...new Set(props.articles.map(a => a.category.split(', ')))]
 })
-// Группировка статей по категориям
-const groupedArticles = computed(() => {
-  return props.articles.reduce((acc, article) => {
-    const category = article.category.toUpperCase() || 'Без категории'
-    if (!acc[category]) acc[category] = []
-    acc[category].push(article)
-    return acc
-  }, {})
-})
+
 // Логика фильтрации
-const toggleCategory = (category) => {
-  activeCategory.value = activeCategory.value === category ? null : category
-}
-const shouldShowCategory = (category) => {
-  return !activeCategory.value || activeCategory.value === category
+const toggleTag = (category) => {
+    console.log("TOGGLE TAG, FILTER BY ", category)
 }
 </script>
 
 <script>
 export default {
-  name: 'ArticleList',
+    name: 'ArticleList',
 }
 </script>
 
@@ -78,18 +66,8 @@ export default {
 .posts-grid {
   margin-top: 20px;
   display: grid;                                                /* CSS Grid раскладка */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  /* Адаптивные колонки */
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));  /* Адаптивные колонки */
   gap: 1rem;                                                     /* Расстояние между карточками */
-}
-.category-group {
-  background-color: rgb(234, 233, 233);
-  border-radius: 20px;
-  padding: 10px;
-  // border-style: dotted;
-}
-.category-group h2{
-  color: var(--accent);
-  text-align: center;
 }
 .filters {
   display: flex;
@@ -99,21 +77,12 @@ export default {
   margin-top: 30px;
 }
 .filter-btn {
-  padding: 8px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 20px;
-  background: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.filter-btn:hover {
-  background: #f5f5f5;
-}
-
-.filter-btn.active {
-  background: #2196F3;
-  color: white;
-  border-color: transparent;
+    padding: 8px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 .short-content {
   color: black;
