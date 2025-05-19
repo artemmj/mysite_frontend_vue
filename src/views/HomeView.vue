@@ -13,12 +13,20 @@ import ArticleList from '../components/ArticleList.vue';
 // Моковые данные (можно заменить на запрос к API)
 const articles = ref([
 {
+    id: 15,
+    filename: "go_io.html",
+    title: "Go. Потоки и файлы",
+    date: "19 Мая 2025",
+    tags: "Go",
+    short_content: "Операции ввода-вывода. Reader и Writer. Работа с  файлами. Стандартные потоки ввода-вывода и io.Copy. Форматированный вывод. Форматируемый ввод. Чтение с консоли. Буферизированный ввод-вывод",
+},
+{
     id: 14,
     filename: "go_async.html",
     title: "Go. Параллельное программирование",
     date: "18 Мая 2025",
     tags: "Go",
-    short_content: "WORK IN PROGRESS",
+    short_content: "Горутины. Каналы. Синхронизация. Передача потоков данных. Мьютексы. WaitGroup",
 },
 {
     id: 13,
@@ -26,7 +34,7 @@ const articles = ref([
     title: "Go. gRPC приложение",
     date: "18 Мая 2025",
     tags: "Go, gRPC",
-    short_content: "WORK IN PROGRESS",
+    short_content: "WORK IN PROGRESS...",
 },
 {
     id: 12,
@@ -90,7 +98,7 @@ const articles = ref([
     title: "JavaScript. Функциональное программирование",
     date: "8 Апреля 2025",
     tags: "JavaScript",
-    short_content: "В РАБОТЕ",
+    short_content: "",
 },
 {
     id: 4,
@@ -98,7 +106,7 @@ const articles = ref([
     title: "JavaScript. Основы",
     date: "7 Апреля 2025",
     tags: "JavaScript",
-    short_content: "В РАБОТЕ",
+    short_content: "",
 },
 {
     id: 3,

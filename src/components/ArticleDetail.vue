@@ -64,14 +64,8 @@ watch(articleContent, async () => {
 .article-container b {
   background-color: rgb(240, 240, 240);
 }
-.article-container ol {
-  columns: 1;
-  margin-left: 40px;
-  -webkit-columns: 2;
-  -moz-columns: 2;
-}
 .article-container ul {
-  margin-left: 30px;
+    margin-left: 50px;
 }
 .article-title {
   color: var(--accent);  /* Цвет текста из акцентной переменной */
@@ -87,6 +81,12 @@ watch(articleContent, async () => {
   opacity: 0.8;  /* Полупрозрачность для второстепенной информации */
   font-size: 0.9rem;  /* Уменьшенный размер шрифта */
 }
+.article-ol {
+    columns: 1;
+    margin-left: 80px;
+    -webkit-columns: 1;
+    -moz-columns: 1;
+}
 .section-title {
     text-align: center;
     color: var(--accent);  /* Акцентный цвет текста */
@@ -97,13 +97,13 @@ watch(articleContent, async () => {
 }
 /* Стилизация путей к файлам */
 .file-path {
-  color: var(--accent);  /* Акцентный цвет текста */
-  font-family: monospace;  /* Моноширинный шрифт */
-  margin-left: 20px;
-  padding: 0.5rem 0.8rem;  /* Компактные внутренние отступы */
-  background: var(--primary);  /* Фон из первичной переменной */
-  border-radius: 4px;  /* Слегка закругленные углы */
-  display: inline-block;  /* Строчно-блочное отображение */
+    color: var(--accent);  /* Акцентный цвет текста */
+    font-family: monospace;  /* Моноширинный шрифт */
+    margin-left: 20px;
+    padding: 0.5rem 0.8rem;  /* Компактные внутренние отступы */
+    background: var(--primary);  /* Фон из первичной переменной */
+    border-radius: 4px;  /* Слегка закругленные углы */
+    display: inline-block;  /* Строчно-блочное отображение */
 }
 .table-wrapper {
     overflow-x: auto; /* Для адаптива на мобильных */
@@ -153,16 +153,16 @@ pre[class*="language-"] {
   }
   .article-container p {
     margin: 5px;
-  }
-  .list-headings ol {
-    columns: 1;
-    margin-left: 20px;
-    -webkit-columns: 2;
-    -moz-columns: 2;
-  }
-  pre[class*="language-"] {
-    margin: 5px;
-    font-size: 0.8rem;
-  }
+    }
+    .list-headings ol {
+        columns: 1;
+        margin-left: 20px;
+        -webkit-columns: 2;
+        -moz-columns: 2;
+    }
+    pre[class*="language-"] {
+        margin: 5px;
+        font-size: 0.8rem;
+    }
 }
 </style>
