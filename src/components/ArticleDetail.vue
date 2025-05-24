@@ -1,7 +1,7 @@
 <template>
-  <div class="article-container">
-    <div v-html="articleContent"></div> <!-- Здесь рендерится HTML -->
-  </div>
+    <div class="article-container">
+        <div v-html="articleContent"></div> <!-- Здесь рендерится HTML -->
+    </div>
 </template>
 
 <script setup>
@@ -14,55 +14,55 @@ import { highlightAll } from '@/plugins/prism';
 
 // Загрузка HTML-статьи
 onMounted(async () => {
-  const filename = route.params.id;
-  const response = await fetch(`/articles/${filename}`);
-  articleContent.value = await response.text();
+    const filename = route.params.id;
+    const response = await fetch(`/articles/${filename}`);
+    articleContent.value = await response.text();
 });
 watch(articleContent, async () => {
-  await nextTick(); // Ждем обновления DOM
-  highlightAll();
+    await nextTick(); // Ждем обновления DOM
+    highlightAll();
 });
 </script>
 
 <style lang="scss"> /*scoped*/
 .list-headings {
-  padding: 2px;
-  margin-bottom: 20px;
-  border-bottom: 2px solid var(--accent);
+    padding: 2px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--accent);
 }
 .list-headings a {
-  font-style: bold;
-  color: var(--accent-light);
-  font-size: 14px;
-  text-decoration: none;
+    font-style: bold;
+    color: var(--accent-light);
+    font-size: 14px;
+    text-decoration: none;
 }
 .list-headings a:hover {
-  font-weight: bold;
+    font-weight: bold;
 }
 .list-headings ol {
-  columns: 2;
-  margin-left: 40px;
-  -webkit-columns: 2;
-  -moz-columns: 2;
+    columns: 2;
+    margin-left: 40px;
+    -webkit-columns: 2;
+    -moz-columns: 2;
 }
 /* Основной контейнер для статьи */
 .article-container {
-  border: 0.01rem solid;
-  margin: 20px auto 40px;                     /* Вертикальные отступы + автоматическое центрирование по горизонтали */
-  padding: 2rem;                              /* Внутренние отступы со всех сторон */
-  background: var(--secondary);               /* Цвет фона из CSS-переменных (меняется при смене темы) */
-  border-radius: 15px;                        /* Закругление углов контейнера */
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);  /* Тень с прозрачностью 5% для эффекта глубины */
-  animation: card-entrance 0.5s ease-out;     /* Анимация появления с названием, длительностью и функцией времени */
+    border: 0.01rem solid;
+    margin: 20px auto 40px;                     /* Вертикальные отступы + автоматическое центрирование по горизонтали */
+    padding: 2rem;                              /* Внутренние отступы со всех сторон */
+    background: var(--secondary);               /* Цвет фона из CSS-переменных (меняется при смене темы) */
+    border-radius: 15px;                        /* Закругление углов контейнера */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);  /* Тень с прозрачностью 5% для эффекта глубины */
+    animation: card-entrance 0.5s ease-out;     /* Анимация появления с названием, длительностью и функцией времени */
 }
 .article-container h2 h3 {
-  text-align: center;
+    text-align: center;
 }
 .article-container p {
-  margin: 20px;
+    margin: 20px;
 }
 .article-container b {
-  background-color: rgb(240, 240, 240);
+    background-color: rgb(240, 240, 240);
 }
 .article-container ul {
     margin-left: 50px;
@@ -131,28 +131,28 @@ td {
     color: #34495e; /* Темно-серый цвет текста */
 }
 tr:hover {
-  background: #f1f5f9; /* Ховер-эффект */
-  transition: background 0.2s ease;
+    background: #f1f5f9; /* Ховер-эффект */
+    transition: background 0.2s ease;
 }
 pre[class*="language-"] {
-  margin: 20px;
-  padding: 20px;
-  font-size: 0.9rem;
-  border-radius: 5px;  /* Закругленные углы */
+    margin: 20px;
+    padding: 20px;
+    font-size: 0.9rem;
+    border-radius: 5px;  /* Закругленные углы */
 }
 @media (max-width: 768px) {
-  #app {
-    padding-left: 3px;
-    padding-right: 3px;
-  }
-  .article-container {
-    /* Уменьшенные отступы и адаптивная ширина */
-    margin: 1px;
-    /* Меньшие внутренние отступы */
-    padding: 1rem;
-  }
-  .article-container p {
-    margin: 5px;
+    #app {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+    .article-container {
+        /* Уменьшенные отступы и адаптивная ширина */
+        margin: 1px;
+        /* Меньшие внутренние отступы */
+        padding: 1rem;
+    }
+    .article-container p {
+        margin: 5px;
     }
     .list-headings ol {
         columns: 1;
