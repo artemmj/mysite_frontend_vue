@@ -1,9 +1,9 @@
 <template>
     <header class="header">
         <div class="header__left">
-            <div class="logo"><a href="/">> fullstackdevblog.ru</a></div>
+            <div class="logo"><a href="/">fullstackdevblog.ru</a></div>
         </div>
-        <div>
+        <div class="header__right">
             <div class="about"><a href="/about"><img src="./about.png"></a></div>
         </div>
     </header>
@@ -32,6 +32,9 @@ header {
     align-items: center; /* Вертикальное выравнивание */
 }
 .header__left {
+    display: flex;
+}
+.header__right {
     display: flex;
 }
 .about {
