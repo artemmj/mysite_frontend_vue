@@ -36,7 +36,7 @@ header {
 }
 .about {
     margin-top: 5px;
-    margin-right: 5px;
+    margin-right: 20px;
 }
 .about img {
     max-width: 30px;

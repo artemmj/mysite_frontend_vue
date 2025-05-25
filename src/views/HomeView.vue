@@ -18,12 +18,12 @@ const articles = ref([
     title: "Go. Статья. gRPC приложение",
     date: "18 Мая 2025",
     tags: "Go, gRPC",
-    short_content: "WORK IN PROGRESS...",
+    short_content: "WORK IN PROGRESS... Описание и генерация контракта, конфигурация, gRPC-сервер, сервисный слой Auth, Storage, Gracefull Shutdown",
 },
 {
     id: 6,
     filename: "go_intro.html",
-    title: "Go. Конспект. Вступление",
+    title: "Язык программирования Go (Донован, Керниган). Конспект. Вступление",
     date: "10 Апреля 2025",
     tags: "Go",
     short_content: "Базовые операции, условные выражения, массивы, условные конструкции, циклы, срезы, отображения, именованные типы и псевдонимы, defer и panic",
@@ -55,7 +55,7 @@ const articles = ref([
 {
     id: 8,
     filename: "python_base.html",
-    title: "Python. Статья. База",
+    title: "Python. Статья. База (by metanit.com)",
     date: "19 Апреля 2025",
     tags: "Python",
     short_content: "Переменные, арифметические операции, условные конструкции, циклы, фукнции, упаковка и распаковка, лямбды, преобразования типов, декораторы try..except, строки, ООП, списки, кортежи, словари, множества, List Comprehension",
@@ -87,7 +87,7 @@ const articles = ref([
 {
     id: 9,
     filename: "fastapi_base.html",
-    title: "FastAPI. Основы",
+    title: "FastAPI. Основы (by metanit.com)",
     date: "28 Апреля 2025",
     tags: "FastAPI, Python",
     short_content: "Обработка запросов и отправка ответов, параметры пути и строки запроса, статус коды, переадресация, статические файлы, даннные запроса, заголовки, куки, формы, SQLAlchemy",

@@ -55,9 +55,6 @@ watch(articleContent, async () => {
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);  /* Тень с прозрачностью 5% для эффекта глубины */
     animation: card-entrance 0.5s ease-out;     /* Анимация появления с названием, длительностью и функцией времени */
 }
-.article-container h2 h3 {
-    text-align: center;
-}
 .article-container p {
     margin: 20px;
 }
@@ -68,11 +65,12 @@ watch(articleContent, async () => {
     margin-left: 50px;
 }
 .article-title {
-  color: var(--accent);  /* Цвет текста из акцентной переменной */
-  margin-bottom: 1.5rem;  /* Отступ снизу для визуального разделения */
-  font-size: 2.0rem;  /* Размер шрифта для заголовка */
-  border-bottom: 2px solid var(--accent);  /* Подчеркивание акцентной линией */
-  padding-bottom: 0.5rem;  /* Отступ между текстом и нижней границей */
+    text-align: center;
+    color: var(--accent);  /* Цвет текста из акцентной переменной */
+    margin-bottom: 1.5rem;  /* Отступ снизу для визуального разделения */
+    font-size: 2.0rem;  /* Размер шрифта для заголовка */
+    border-bottom: 2px solid var(--accent);  /* Подчеркивание акцентной линией */
+    padding-bottom: 0.5rem;  /* Отступ между текстом и нижней границей */
 }
 .article-meta {
   display: flex;  /* Гибкий контейнер для элементов в строку */
