@@ -16,6 +16,8 @@
     <li><a href="#storage">Слой работы с данными — Storage</a></li>
     <li><a href="#make">Собираем компоненты приложения воедино</a></li>
     <li><a href="#shutdown">Graceful shutdown — правильная остановка приложения</a></li>
+    <li><a href="#func_tests">Функциональные тесты</a></li>
+    <li><a href="#integration">Интеграция с внешним сервисом — URL Shortener (TODO)</a></li>
 </ol>
 </div>
 <h3 class="section-title" id="intro">Вступление</h3>
@@ -715,7 +717,7 @@ func main() {
     <li>direction — значение up или down. Файлы с параметром up в имени обновляют схему до новой версии, down — откатывают изменения.</li>
 </ul>
 <p>Создаём первую миграцию в папке ./migrations:</p>
-<pre><code class="lang-bash">-- migrations/1_init.up.sql
+<pre><code class="lang-sql">-- migrations/1_init.up.sql
 
 CREATE TABLE IF NOT EXISTS users
 (
@@ -733,7 +735,7 @@ CREATE TABLE IF NOT EXISTS apps
 );</code></pre>
 <p>Эта миграция создаёт все необходимые таблицы и индексы. Таблицы довольно простенькие, и выше мы уже обсуждали модели данных, поэтому тут всё должно быть понятно. Обратите внимание, что параметры email, name и secret должны быть уникальными и мы добавили для них соответствующий constraint.</p>
 <p>Обратная миграция:</p>
-<pre><code class="lang-bash">-- ./migrations/1_init.down.sql
+<pre><code class="lang-sql">-- ./migrations/1_init.down.sql
 
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS apps;</code></pre>
@@ -1059,3 +1061,522 @@ signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
     log.Info("Gracefully stopped")
 }</code></pre>
 <p><b>TODO: </b>самостоятельно написать аналогичный метод Stop() для sqlite-реализации Storage. Там это делается тоже одной строчкой: s.db.Close(). При этом, конечно же, придется добавить Storage в структуру App основного приложения (internal/app/app.go). При желании, можете обернуть хранилище в отдельное приложение StorageApp — это хороший подход.</p>
+<h3 class="section-title" id="func_tests">Функциональные тесты</h3>
+<p>Мы напишем функциональные тесты, которые будут тестировать наше приложение как чёрную коробку. Это значит, что мы будем честно поднимать приложение, которое не будет подозревать о том, что его тестируют, и будем честно отправлять в него сетевые запросы. Такие тесты позволяют тестировать полный весь флоу работы приложения, и при этом позволяют довольно гибко проверять практически любые необходимые кейсы. Также они удобно тем, что их можно легко запускать локально, в отличие от тех же интеграционных тестов. Тесты нужны не только для проверок корректности работы, они также служат удобным способом заставить приложение что-то сделать. Особенно, когда это сложный редкий кейс. Нам это может понадобиться во время разработки, дебага и т.п. Подобные тесты также порой называют изоляционными, т.к. в случае наличия зависимостей (т.е. других сервисов, с которыми нужно взаимодействовать), они заменяются сетевыми моками. Именно сетевыми, потому наше приложение всё ещё думает, что оно честно работает и честно взаимодействует с соседями. Ещё одно преимущество подобных тестов в нашем случае — в процессе их написания мы научимся писать gRPC-клиент для нашего сервиса.</p>
+<p>Функциональные тесты мы положим в отдельную папку — tests/. Cтруктура будет выглядеть так:</p>
+<pre><code class="lang-bash">./tests
+├── auth_register_login_test.go ... Тест-кейсы для проверки Login 
+├── some_other_case_test.go ....... Какие-то другие кейсы
+├── migrations .................... Миграции для тестов
+│   └── 1_init_apps.up.sql
+└── suite
+    └── suite.go .................. Подготовка всего необходимого для тестов</code></pre>
+<ul>
+    <li>В корне директории tests мы храним сами файлы тестов с конкретными кейсами (у них обязательно должен быть суффикс _test.go)</li>
+    <li>tests/migrations — дополнительные миграции, которые нужны только для тестов. Обычно я их использую для инициализации БД самыми необходимыми данными. Например, здесь мы напишем миграцию для добавления тестового приложения в таблицу apps.</li>
+    <li>tests/suite — здесь мы будем готовить всё, что необходимо каждому тесту. Например, соединение с БД, создание gRPC-клиента и др.</li>
+</ul>
+<p><b>Миграции для тестов</b></p>
+<p>Начнём с самого простого — с миграций, нам понадобится всего одна:</p>
+<pre><code class="lang-sql">-- tests/migrations/1_init_apps.up.sql
+
+INSERT INTO apps (id, name, secret)  
+VALUES (1, 'test', 'test-secret') 
+ON CONFLICT DO NOTHING;</code></pre>
+<p>Обратите внимание, на строчку ON CONFLICT DO NOTHING — если такая запись уже есть, миграция просто ничего не сделает. Также держим в голове, что указанные id и secret нам скоро понадобятся в тестах. Обратную миграцию писать не будем, т.к. в тестовой базе это не нужно.</p>
+<p>Выполнять миграции из этой папки будем той же утилитой, но с другими параметрами:</p>
+<pre><code class="lang-go">go run ./cmd/migrator \
+    --storage-path=./storage/sso.db \
+    --migrations-path=./tests/migrations \
+    --migrations-table=migrations_test</code></pre>
+<p>То есть, мы используем для них отдельную таблицу migrations_test, чтобы эти тестовые миграции были независимы от основных. Также указываем, соответственно, другой путь до файлов миграций.</p>
+<p><b>Suite — подготовка к тесту</b></p>
+<p>Теперь подготовим Suite. Он представляет из себя структуру, в которой содержится всё необходимое для теста:</p>
+<pre><code class="lang-go">// tests/suite/suite.go
+package suite
+
+import (
+	ssov1 "proto/gen/go/sso"
+)
+
+type Suite struct {
+	*testing.T                  // Потребуется для вызова методов *testing.T
+	Cfg        *config.Config   // Конфигурация приложения
+	AuthClient ssov1.AuthClient // Клиент для взаимодействия с gRPC-сервером Auth
+}</code></pre>
+<ul>
+    <li>*testing.T — объект для управлением тестом, подробнее можно почитать тут</li>
+    <li>Cfg — обычный объект конфига, тот же что используется при запуске приложения из cmd</li>
+    <li>AuthClient — gRPC-клиент нашего Auth-сервера, основной компонент Suit'а, с его помощью будем отправлять запросы в тестируемое приложение</li>
+</ul>
+<p>Теперь напишем для него конструктор:</p>
+<pre><code class="lang-go">package suite
+...
+// New creates new test suite.
+func New(t *testing.T) (context.Context, *Suite) {
+	t.Helper()   // Функция будет восприниматься как вспомогательная для тестов
+	t.Parallel() // Разрешаем параллельный запуск тестов
+
+	// Читаем конфиг из файла
+	cfg := config.MustLoad()
+
+	// Основной родительский контекст
+	ctx, cancelCtx := context.WithTimeout(context.Background(), cfg.GRPC.Timeout)
+
+	// Когда тесты пройдут, закрываем контекст
+	t.Cleanup(func() {
+		t.Helper()
+		cancelCtx()
+	})
+
+	// Адрес нашего gRPC-сервера grpcHost (???)
+	grpcAddress := net.JoinHostPort("", strconv.Itoa(cfg.GRPC.Port))
+
+	// Создаем клиент
+	cc, err := grpc.NewClient(
+		grpcAddress,
+		// context.Background(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
+	if err != nil {
+		t.Fatalf("grpc server connection failed: %v", err)
+	}
+
+	// gRPC-клиент сервера Auth
+	authClient := ssov1.NewAuthClient(cc)
+
+	return ctx, &Suite{
+		T:          t,
+		Cfg:        cfg,
+		AuthClient: authClient,
+	}
+}</code></pre>
+<p>t.Helper() — помечает функцию как вспомогательную, это нужно для формирования правильного вывода тестов, особенно при их падении. А именно, что-то сфэйлится внутри такого хелпера, в выводе будет указана родительская функция (но в трейсе текущая функция будет, конечно), что очень удобно при отладке. И вот тут мы можем снова прочувствовать крутость кодогенерации из Protobuf: всего одной строчкой мы создаём готовый клиент для нашего gRPC-сервера: authClient := ssov1.NewAuthClient(cc).  Методами этого клиенту будут методы сервиса, описанные в контракте, т.е.: authClient.Login() и authClient.Register().</p>
+<p><b>Тест-кейс HappyPath для метода Login()</b></p>
+<p>Что ж, у нас всё готово для написания первого тест-кейса. Начнём простенького Happy Path сценария авторизации (это когда у нас всё идет четко по плану). Сделаем базовые приседания и наметим план действий:</p>
+<pre><code class="lang-go">// tests/auth_register_login_test.go
+package tests
+
+const (
+    appID = 1                 // ID приложения, которое мы создали миграцией
+    appSecret = "test-secret" // Секретный ключ приложения
+)
+
+func TestRegisterLogin_Login_HappyPath(t *testing.T) {
+    ctx, st := suite.New(t) // Создаём Suite
+    // TODO: Подготовить данные для тестовых запросов (случайные)
+    // TODO: Сделать нужные запросы
+    // TODO: Проверить результаты
+}</code></pre>
+<p>В качестве данных нам понадобится логин и пароль, т.к. мы тестируем метод RPC-метод Login(). При этом нам обязательно надо генерировать их случайным образом - потому что мы не очищаем результаты предыдущих тестов, а пользователей с одинаковыми данными у нас быть не может. Это повышает качество тестов, т.к. мы не привязываемся к конкретным фиксированным данным, больше шансов поймать какой-нибудь редкий баг.</p>
+<p>Почему не очищаем БД после тестов - таким образом мы также тестируем (пусть и не гарантированно), что приложение корректно себя ведёт при любых состояниях БД — когда там пусто, когда данных много, когда среди данных есть сломанные и т.п. Лишним это точно не будет. Кроме того, всегда удобно иметь под рукой не пустую БД, которая живет своей жизнь и постепенно пополняется данными. Но например в GitHub Actions (или, к примеру, в пайплайне GitLab), конечно же, будет каждый раз подниматься свежая БД, поэтому там придется каждый раз запускать миграции.</p>
+<p>Для генерации случайных данных я использую библиотеку brianvoe/gofakeit — очень крутая штука, может сгенерировать огромное количество различных видов данных. Давайте установим её:</p>
+<pre><code class="lang-bash">go get github.com/brianvoe/gofakeit/v6</code></pre>
+<p>Теперь можем сгенерировать случайные email и пароль (напомню, что email служит у нас логином):</p>
+<pre><code class="lang-go">const passDefaultLen = 10
+email := gofakeit.Email()
+pass := gofakeit.Password(true, true, true, true, false, passLen)
+// или например, чтобы причесать красивее
+pass := randomFakePassword()
+func randomFakePassword() string {
+    return gofakeit.Password(true, true, true, true, false, passDefaultLen)
+}</code></pre>
+<p>Теперь можем добавить всё это в тест и выполнить RPC-запросы:</p>
+<pre><code class="lang-go">// tests/auth_register_login_test.go
+package tests
+
+import (
+    ssov1 "proto/gen/go/sso"
+)
+
+const (
+    appID  = 1
+    appKey = "test-secret"
+    passDefaultLen = 10
+)
+
+func TestRegisterLogin_Login_HappyPath(t *testing.T) {
+    ctx, st := suite.New(t)
+
+    email := gofakeit.Email()
+    pass := randomFakePassword()
+
+    // Сначала зарегистрируем нового пользователя, которого будем логинить
+    respReg, err := st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+        Email:    email,
+        Password: pass,
+    })
+    // Это вспомогательный запрос, поэтому делаем лишь минимальные проверки
+    require.NoError(t, err)
+    assert.NotEmpty(t, respReg.GetUserId())
+
+    // А это основная проверка
+    respLogin, err := st.AuthClient.Login(ctx, &ssov1.LoginRequest{
+        Email:    email,
+        Password: pass,
+        AppId:    appID,
+    })
+    require.NoError(t, err)
+
+    // Тщательно проверяем результаты:
+    // TODO: Доставём из ответа токен авторизации и проверяем его содержимое
+}</code></pre>
+<p>Наши тесты не используют заранее подготовленные данные (кроме приложения, но мы пока и не планируем делать интерфейс для работы с ними), мы честно имитируем поведение пользователя — он зарегистрировался и пытается залогиниться. Приложение не знает, что это лишь тест, для него это вполне реальные запросы.</p>
+<p>В этом тесте мы проверяем работу метода Login(), а самое важное в нём — это токен, который приходит с ответом от Auth-сервера. Это значит, что нам необходимо выполнить те же действия, которые будет совершать клиентское приложение:</p>
+<ul>
+    <li>jwt.Parse() — парсинг и валидация с использованием секретного ключа приложения</li>
+    <li>Проверка всех необходимых полей, которые пришли вместе с токеном: uid, email, app_id</li>
+</ul>
+<p>Добавим эти проверки в наш тест:</p>
+<pre><code class="lang-go">
+...
+// Получаем токен из ответа
+token := respLogin.GetToken()
+require.NotEmpty(t, token) // Проверяем, что он не пустой
+
+// Отмечаем время, в которое бы выполнен логин.
+// Это понадобится для проверки TTL токена
+loginTime := time.Now()
+
+// Парсим и валидируем токен
+tokenParsed, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
+    return []byte(appSecret), nil
+})
+// Если ключ окажется невалидным, мы получим соответствующую ошибку
+require.NoError(t, err)
+
+// Преобразуем к типу jwt.MapClaims, в котором мы сохраняли данные
+claims, ok := tokenParsed.Claims.(jwt.MapClaims)
+require.True(t, ok)
+
+// Проверяем содержимое токена
+assert.Equal(t, respReg.GetUserId(), int64(claims["uid"].(float64)))
+assert.Equal(t, email, claims["email"].(string))
+assert.Equal(t, appID, int(claims["app_id"].(float64)))
+
+const deltaSeconds = 1
+
+// Проверяем, что TTL токена примерно соответствует нашим ожиданиям.
+assert.InDelta(t, loginTime.Add(st.Cfg.TokenTTL).Unix(), claims["exp"].(float64), deltaSeconds)
+....</code></pre>
+<p>Время, которое мы отмечаем и сохраняем в переменную loginTime может быть немного неточным, т.к. точное время определяем сервер Auth, а для наших тестов он, как мы помним, черная коробка. То есть, может быть лаг между моментом обработки запроса сервером и получением нами ответа. Для тестов нас это устроит, но нам придется использовать функцию assert.InDelta для проверки значения exp (expiration time). А именно, мы берём сохраненный выше loginTime, добавляем к нему st.Cfg.TokenTTL, преобразуем это в UnixTimestamp (в котором мы изначально сохраняли), и проверяем, что поле exp соответствует этому значению с точностью до одной секунды.</p>
+<p><b>Запуск тестов</b></p>
+<p>Если у вас свежая чистая БД, то первым делом прогоняем основные миграци:</p>
+<pre><code class="lang-go">go run ./cmd/migrator \
+    --storage-path=./storage/sso.db \
+    --migrations-path=./migrations</code></pre>
+<p>Затем тестовые миграции:</p>
+<pre><code class="lang-go">go run ./cmd/migrator \
+    --storage-path=./storage/sso.db \
+    --migrations-path=./tests/migrations \
+    --migrations-table=migrations_test</code></pre>
+<p>Теперь запускаем приложение:</p>
+<pre><code class="lang-go">go run ./cmd/sso --config=./config/local_tests_config.yaml</code></pre>
+<p>Лучше использовать для тестов отдельный конфиг-файл, поэтому здесь указано соответствующее имя: local_tests_config.yaml. Но делать так не обязательно.</p>
+<p>И наконец можем запустить сами тесты, указав где они находятся (не забыть проверить, что в БД добавился App с id = 1):</p>
+<pre><code class="lang-go">go test ./tests -count=1 -v</code></pre>
+<p>Параметр -count=1 — стандартный способ запустить тесты с игнорированием кэша, а -v добавить больше подробностей в вывод теста.</p>
+<p>Кроме того, для корректной работы тестов необходимо корректно загружать конфиг. Для этого изменить подгрузку в config.go:</p>
+<pre><code class="lang-go">// internal/config/config.go
+...
+func MustLoad() *Config {
+	configPath := fetchConfigPath()
+	if configPath == "" {
+		panic("config path is empty")
+	}
+	return MustLoadPath(configPath)
+}
+
+func MustLoadPath(configPath string) *Config {
+	if _, err := os.Stat(configPath); os.IsNotExist(err) {
+		panic("config file does not exist: " + configPath)
+	}
+	var cfg Config
+	if err := cleanenv.ReadConfig(configPath, &cfg); err != nil {
+		panic("cannot read config: " + err.Error())
+	}
+	return &cfg
+}
+...</code></pre>
+<p>Также поправим suite.go:</p>
+<pre><code class="lang-go">// tests/suite/suite.go
+const (
+	grpcHost = "localhost"
+)
+
+func New(t *testing.T) (context.Context, *Suite) {
+	...
+	cfg := config.MustLoadPath(configPath())
+	ctx, cancelCtx := context.WithTimeout(context.Background(), cfg.GRPC.Timeout)
+	t.Cleanup(func() {
+		t.Helper()
+		cancelCtx()
+	})
+	cc, err := grpc.NewClient(
+		grpcAddress(cfg),
+		// context.Background(),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
+    ...
+}
+
+func configPath() string {
+	const key = "CONFIG_PATH"
+	if v := os.Getenv(key); v != "" {
+		return v
+	}
+	return "../config/local_tests.yaml"
+}
+
+func grpcAddress(cfg *config.Config) string {
+	return net.JoinHostPort(grpcHost, strconv.Itoa(cfg.GRPC.Port))
+}
+</code></pre>
+<p>Теперь тесты должны корректно отрабатывать.</p>
+<p><b>Негативные кейсы</b></p>
+<p>Обычно с тестах самыми полезными являются негативные кейсы. То есть, мы пытаемся сломать наше приложение, и проверяем что оно ведёт себя так, как мы ожидаем. Покажем пару примеров. Что пользователь может сделать не так? Например, он может попытаться зарегистрироваться несколько раз с одинаковым логином. Наше приложение не должно такое позволять, и должно отвечать правильной ошибкой. И уж тем более, оно не должно падать с паникой, например. Тест может выглядеть, например, так:</p>
+<pre><code class="lang-go">func TestRegisterLogin_DuplicatedRegistration(t *testing.T) {
+    ctx, st := suite.New(t)
+
+    email := gofakeit.Email()
+    pass := randomFakePassword()
+
+    // Первая попытка должна быть успешной
+    respReg, err := st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+        Email:    email,
+        Password: pass,
+    })
+    require.NoError(t, err)
+    require.NotEmpty(t, respReg.GetUserId())
+
+    // Вторая попытка - фэил
+    respReg, err = st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+        Email:    email,
+        Password: pass,
+    })
+    require.Error(t, err)
+    assert.Empty(t, respReg.GetUserId())
+    assert.ErrorContains(t, err, "user already exists")
+}</code></pre>
+<p>Также пользователь может присылать неверные данные на вход. Вариаций подобных кейсов довольно много, а проверки примерно одинаковые, поэтому мы напишем табличные тесты. Начнём с регистрации:</p>
+<pre><code class="lang-go">func TestRegister_FailCases(t *testing.T) {
+    ctx, st := suite.New(t)
+
+    tests := []struct {
+        name        string
+        email       string
+        password    string
+        expectedErr string
+    }{
+        {
+            name:        "Register with Empty Password",
+            email:       gofakeit.Email(),
+            password:    "",
+            expectedErr: "password is required",
+        },
+        {
+            name:        "Register with Empty Email",
+            email:       "",
+            password:    randomFakePassword(),
+            expectedErr: "email is required",
+        },
+        {
+            name:        "Register with Both Empty",
+            email:       "",
+            password:    "",
+            expectedErr: "email is required",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            _, err := st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+                Email:    tt.email,
+                Password: tt.password,
+            })
+            require.Error(t, err)
+            require.Contains(t, err.Error(), tt.expectedErr)
+
+        })
+    }
+}</code></pre>
+<p>И аналогично для логина:</p>
+<pre><code class="lang-go">func TestLogin_FailCases(t *testing.T) {
+    ctx, st := suite.New(t)
+
+    tests := []struct {
+        name        string
+        email       string
+        password    string
+        appID       int32
+        expectedErr string
+    }{
+        {
+            name:        "Login with Empty Password",
+            email:       gofakeit.Email(),
+            password:    "",
+            appID:       appID,
+            expectedErr: "password is required",
+        },
+        {
+            name:        "Login with Empty Email",
+            email:       "",
+            password:    randomFakePassword(),
+            appID:       appID,
+            expectedErr: "email is required",
+        },
+        {
+            name:        "Login with Both Empty Email and Password",
+            email:       "",
+            password:    "",
+            appID:       appID,
+            expectedErr: "email is required",
+        },
+        {
+            name:        "Login with Non-Matching Password",
+            email:       gofakeit.Email(),
+            password:    randomFakePassword(),
+            appID:       appID,
+            expectedErr: "invalid email or password",
+        },
+        {
+            name:        "Login without AppID",
+            email:       gofakeit.Email(),
+            password:    randomFakePassword(),
+            appID:       emptyAppID,
+            expectedErr: "app_id is required",
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            _, err := st.AuthClient.Register(ctx, &ssov1.RegisterRequest{
+                Email:    gofakeit.Email(),
+                Password: randomFakePassword(),
+            })
+            require.NoError(t, err)
+
+            _, err = st.AuthClient.Login(ctx, &ssov1.LoginRequest{
+                Email:    tt.email,
+                Password: tt.password,
+                AppId:    tt.appID,
+            })
+            require.Error(t, err)
+            require.Contains(t, err.Error(), tt.expectedErr)
+        })
+    }
+}</code></pre>
+<h3 class="section-title" id="integration">Интеграция с внешним сервисом — URL Shortener</h3>
+<p>Чаще всего gRPC используют для взаимодействия между сервисами, поэтому мы не можем не затронуть подключение нашего SSO к кому-нибудь внешнему сервису. Делается это довольно просто, поэтому в качестве такого сервиса можете взять любой пет-проект или набросать что-то на коленке. Мы же будем работать на примере интеграции в URL Shortener, статья о котором есть рядом на сайте.</p>
+<p>Итак, для начала нам потребуется ещё одна ручка. Дело в том, что существующие методы (Login / RegisterNewUser) внешнему сервису не сильно нужны при нашей текущей схеме. Напомню, что пользователь (или его клиентское приложение) самостоятельно идёт в SSO за токеном, и с этим токеном уже идет в URL Shortener, который пока просто проверяет содержимое токена, без каких-либо запросов в SSO со своей стороны.</p>
+<p><b>gRPC-метод: IsAdmin()</b></p>
+<p>Для того, чтобы не переусложнять статью, добавим простейшую, но при этом очень полезную, новую ручку: sso.IsAdmin(userID). Она будет сообщать, является ли текущий пользователь админом. Shortener же с её помощью будет решать — позволять ли пользователю редактировать чужие записи. На какие упрощения мы здесь пойдем:</p>
+<ul>
+    <li>Ручка не будем защищена: то есть, любой желающий сможет узнать, кто является админом.</li>
+    <li>Пользователь будет админом сразу во всех сервисах: не будем пока заморачиваться со сложной системой ролей</li>
+    <li>Отправлять вместо userID весь JWT-токен пользователя: это усложнит любопытным лицам получение информации — им нужно будет украсть настоящий подписанный JWT-токен, а не просто отправить любой userID. Это не самый лучший вариант, но зато он самый простой.</li>
+</ul>
+<p>В техническом плане решение тоже будет упрощённое: мы просто добавим колонку is_admin в уже существующей таблице users. Это не очень хорошо, т.к. данные стоит нормализовать — а именно, вынести роли / права в отдельную таблицу. Представим, что у нас миллион пользователей, а админов всего 10 — придётся хранить миллион значений is_admin, хотя могли бы сделать всего 10 записей в отдельной табличке. Совет - сразу переделать на нормализованную таблицу.</p>
+<p>Первым делом необходимо добавить новый метод в контракт. Открываем наш sso.proto и добавляем:</p>
+<pre><code class="lang-proto">service Auth {
+    // ...
+    // IsAdmin checks whether a user is an admin.
+    rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
+}
+
+message IsAdminRequest {
+    int64 user_id = 1; // User ID to validate.
+}
+
+message IsAdminResponse {
+    bool is_admin = 1;  // Indicates whether the user is an admin.
+}</code></pre>
+<p>Теперь, нам нужно:</p>
+<ul>
+    <li>Написать миграцию для добавления колонки is_admin</li>
+    <li>Добавить метод IsAdmin() в репозиторий</li>
+    <li>Добавить метод IsAdmin() в сервис Auth (внутренний)</li>
+    <li>Добавить gRPC-метод IsAdmin()</li>
+</ul>
+<p>Что поделать, таковы реалии современного сервисостроения :) Это еще не самое страшное, порой приходится конвертировать модель между каждым слоем. От части, поэтому будем использовать int64 для работы с userID вместо кастомного типа (хотя, последнее было бы лучше).</p>
+<p>Идём по порядку, начиная с миграции:</p>
+<pre><code class="lang-sql">-- migrations/2_add_is_admin_column_to_users_tbl.up.sql
+ALTER TABLE users
+    ADD COLUMN is_admin BOOLEAN NOT NULL DEFAULT FALSE;</code></pre>
+<p>И обратная:</p>
+<pre><code class="lang-sql">-- migrations/2_add_is_admin_column_to_users_tbl.down.sql
+ALTER TABLE users DROP COLUMN is_admin;</code></pre>
+<p>Запускаем мигратор:</p>
+<pre><code class="lang-bash">go run ./cmd/migrator \
+    --storage-path=./storage/sso.db \
+    --migrations-path=./migrations</code></pre>
+<p>Теперь метод для репозитория:</p>
+<pre><code class="lang-go">// internal/storage/sqlite/sqlite.go
+
+func (s *Storage) IsAdmin(ctx context.Context, userID int64) (bool, error) {
+    const op = "storage.sqlite.IsAdmin"
+
+    stmt, err := s.db.Prepare("SELECT is_admin FROM users WHERE id = ?")
+    if err != nil {
+        return false, fmt.Errorf("%s: %w", op, err)
+    }
+    row := stmt.QueryRowContext(ctx, userID)
+    var isAdmin bool
+    err = row.Scan(&isAdmin)
+    if err != nil {
+        if errors.Is(err, sql.ErrNoRows) {
+            return false, fmt.Errorf("%s: %w", op, storage.ErrUserNotFound)
+        }
+        return false, fmt.Errorf("%s: %w", op, err)
+    }
+    return isAdmin, nil
+}</code></pre>
+<p>Метод для сервиса Auth (не забываем добавить новый метод в интерфейс UserProvider):</p>
+<pre><code class="lang-go">// internal/services/auth/auth.go
+
+type UserProvider interface {
+    // ...
+    IsAdmin(ctx context.Context, userID int64) (bool, error)
+}
+
+// IsAdmin checks if user is admin.
+func (a *Auth) IsAdmin(ctx context.Context, userID int64) (bool, error) {
+    const op = "Auth.IsAdmin"
+
+    log := a.log.With(
+        slog.String("op", op),
+        slog.Int64("user_id", userID),
+    )
+    log.Info("checking if user is admin")
+    isAdmin, err := a.usrProvider.IsAdmin(ctx, userID)
+    if err != nil {
+        return false, fmt.Errorf("%s: %w", op, err)
+    }
+    log.Info("checked if user is admin", slog.Bool("is_admin", isAdmin))
+    return isAdmin, nil
+}</code></pre>
+<p>И наконец метод для сервера (не забыв добавить новый метод в интерфейс Auth):</p>
+<pre><code class="lang-go">// internal/grpc/auth/server.go
+
+type Auth interface {
+    // ...
+    IsAdmin(ctx context.Context, userID int64) (bool, error)
+}
+
+func (s *serverAPI) IsAdmin(
+    ctx context.Context,
+    in *ssov1.IsAdminRequest,
+) (*ssov1.IsAdminResponse, error) {
+    if in.UserId == 0 {
+        return nil, status.Error(codes.InvalidArgument, "user_id is required")
+    }
+    isAdmin, err := s.auth.IsAdmin(ctx, in.GetUserId())
+    if err != nil {
+        if errors.Is(err, storage.ErrUserNotFound) {
+            return nil, status.Error(codes.NotFound, "user not found")
+        }
+        return nil, status.Error(codes.Internal, "failed to check admin status")
+    }
+    return &ssov1.IsAdminResponse{IsAdmin: isAdmin}, nil
+}</code></pre>
+<p><b>TODO</b></p>
