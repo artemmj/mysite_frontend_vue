@@ -80,7 +80,7 @@ syntax = "proto3";
 package auth;
 
 // Настройки для генерации Go кода.
-option go_package = "proto";
+option go_package = "proto.sso";
 
 // Auth is service for managing permissions and roles.
 service Auth {
@@ -426,6 +426,8 @@ type User struct {
 <p>Теперь можем описать интерфейс хранилища:</p>
 <pre><code class="lang-go">// internal/services/auth/auth.go
 package auth
+
+import "proto_sso/internal/domain/models"
 
 type UserSaver interface {
     SaveUser(
@@ -879,6 +881,10 @@ func InterceptorLogger(l *slog.Logger) logging.Logger {
 <pre><code class="lang-go">// internal/app/grpc/app.go
 package grpcapp
 
+import (
+    authgrpc "proto_sso/internal/grpc/auth"
+)
+
 type App struct {
 	log        *slog.Logger
 	gRPCServer *grpc.Server
@@ -952,20 +958,14 @@ func (a *App) Run() error {
 		return fmt.Errorf("%s: %w", op, err)
 	}
 	return nil
-}
-
-// Stop stops gRPC server.
-func (a *App) Stop() {
-	const op = "grpcapp.Stop"
-
-	a.log.With(slog.String("op", op)).
-		Info("stopping gRPC server", slog.Int("port", a.port))
-	// Используем встроенный в gRPCServer механизм graceful shutdown
-	a.gRPCServer.GracefulStop()
 }</code></pre>
 <p>Можем смело использовать MustRun(), в котором будем падать с паникой, если случилась какая-то ошибка. Теперь можем создать grpcApp внутри основного приложения:</p>
 <pre><code class="lang-go">// internal/app/app.go
 package app
+
+import (
+    grpcapp "proto_sso/internal/app/grpc"
+)
 
 type App struct {
     GRPCServer *grpcapp.App
@@ -992,14 +992,7 @@ func New(
 <p>А именно, трижды передаваемый storage. Увы, таковы издержки минималистичных интерфейсов. Но подумайте о том, что не во всех случаях реализациями этих интерфейсов может быть storage, это даёт нам больше гибкости.</p>
 <p>Теперь можем создать и запустить приложение в cmd/sso. В итоге, наш main.go будет выглядеть следующим образом:</p>
 <pre><code class="lang-go">// cmd/sso/main.go
-package main
-
-const (
-    envLocal = "local"
-    envDev   = "dev"
-    envProd  = "prod"
-)
-
+...
 func main() {
     cfg := config.MustLoad()
     log := setupLogger(cfg.Env)
