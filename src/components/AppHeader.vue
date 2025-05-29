@@ -3,6 +3,8 @@
         <div class="header__left">
             <div class="logo"><a href="/">fullstackdevblog.ru</a></div>
         </div>
+        <!-- <div class="nav"><a href="/">Заметки</a></div>
+        <div class="nav"><a href="/">Статьи</a></div> -->
         <div class="header__right">
             <div class="about"><a href="/about"><img src="./about.png"></a></div>
         </div>
@@ -51,6 +53,12 @@ header {
     border-bottom: solid;
     font-size: 1.4rem;                   /* Размер шрифта */
     font-weight: bold;                  /* Жирное начертание */
+    color: black;                     /* Акцентный цвет */
+    text-decoration: none;              /* Убрать подчеркивание */
+    color: #004998;
+}
+.nav a {
+    font-size: 1rem;                   /* Размер шрифта */
     color: black;                     /* Акцентный цвет */
     text-decoration: none;              /* Убрать подчеркивание */
     color: #004998;
