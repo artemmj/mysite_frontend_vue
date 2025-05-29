@@ -64,17 +64,17 @@ export default {
 
 <style lang="scss" scoped>
 .posts-grid {
-  margin-top: 20px;
-  display: grid;                                                /* CSS Grid раскладка */
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));  /* Адаптивные колонки */
-  gap: 1rem;                                                     /* Расстояние между карточками */
+    margin-top: 20px;
+    display: grid;                                                /* CSS Grid раскладка */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));  /* Адаптивные колонки */
+    gap: 0.8rem;                                                     /* Расстояние между карточками */
 }
 .filters {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-  margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 .filter-btn {
     padding: 8px 16px;
@@ -85,47 +85,41 @@ export default {
     transition: all 0.3s ease;
 }
 .short-content {
-  color: black;
-  font-size: 0.8rem;
+    color: black;
+    font-size: 0.8rem;
 }
 .post-card {
-  background: var(--secondary);                    /* Фон карточки */
-  border-radius: 15px;                             /* Закругленные углы */
-  border: 0.01rem solid gray;
-  margin-bottom: 10px;
-  padding: 20px;                                   /* Внутренние отступы */
-  cursor: pointer;                                 /* Курсор-указатель */
-  transform: translateY(0);                        /* Начальное положение для анимации */
-  animation: card-entrance 0.5s ease-out forwards; /* Анимация появления */
-  opacity: 0;                                      /* Начальная прозрачность для анимации */
-}
-.post-card.hidden {
-  opacity: 0;
-  max-height: 0;
-  padding: 0;
-  margin: 0;
-  display: none;
+    background: var(--secondary);                    /* Фон карточки */
+    border-radius: 15px;                             /* Закругленные углы */
+    border: 0.01rem solid gray;
+    margin-bottom: 10px;
+    padding: 20px;                                   /* Внутренние отступы */
+    cursor: pointer;                                 /* Курсор-указатель */
+    transform: translateY(0);                        /* Начальное положение для анимации */
+    animation: card-entrance 0.3s ease-out forwards; /* Анимация появления */
+    opacity: 0;                                      /* Начальная прозрачность для анимации */
 }
 .post-card:hover {
-  transform: translateX(-10px);       /* Поднятие карточки */
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Тень при наведении */
+    transform: translateX(-10px);       /* Поднятие карточки */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Тень при наведении */
 }
 .post-card h2 {
-  font-size: 1.1rem;
-  color: var(--accent);              /* Акцентный цвет */
-  margin-bottom: 2px;                /* Отступ снизу */
+    border-bottom: 0.01rem solid gray;
+    font-size: 1.1rem;
+    color: var(--accent);              /* Акцентный цвет */
+    margin-bottom: 2px;                /* Отступ снизу */
 }
 .post-card a {
   text-decoration: none;
 }
 .post-date {
-  font-size: 0.7rem;      /* Размер шрифта */
+  font-size: 0.8rem;      /* Размер шрифта */
   color: var(--text);   /* Цвет из переменных */
   opacity: 0.7;         /* Полупрозрачность */
   margin-bottom: 3px;
 }
 .post-tags {
-  font-size: 0.7rem;      /* Размер шрифта */
+  font-size: 0.8rem;      /* Размер шрифта */
   color: var(--text);   /* Цвет из переменных */
   opacity: 0.7;         /* Полупрозрачность */
   margin-bottom: 3px;

@@ -13,9 +13,17 @@ import ArticleList from '../components/ArticleList.vue';
 // Моковые данные (можно заменить на запрос к API)
 const articles = ref([
 {
+    id: 16,
+    filename: "go_grpc_diceroll.html",
+    title: "Go. Статья. Проект gRPC API (игра \"Подбрасывание кубика\")",
+    date: "29 Мая 2025",
+    tags: "Go, gRPC",
+    short_content: "В работе...",
+},
+{
     id: 15,
     filename: "go_grpc.html",
-    title: "Go. Статья. gRPC приложение",
+    title: "Go. Статья. Проект gRPC API (SSO Auth)",
     date: "25 Мая 2025",
     tags: "Go, gRPC",
     short_content: "Описание и генерация контракта, конфигурация, gRPC-сервер, сервисный слой Auth, Storage, Gracefull Shutdown, функциональные тесты (TODO: интеграция)",
@@ -27,22 +35,6 @@ const articles = ref([
     date: "23 Мая 2025",
     tags: "Go",
     short_content: "Вступление, Hello World, аргументы командной строки, примеры программ, задания, некоторые мелочи",
-},
-{
-    id: 13,
-    filename: "go_io.html",
-    title: "Go. Потоки и файлы (by metanit.com)",
-    date: "19 Мая 2025",
-    tags: "Go",
-    short_content: "Операции ввода-вывода. Reader и Writer. Работа с  файлами. Стандартные потоки ввода-вывода и io.Copy. Форматированный вывод. Форматируемый ввод. Чтение с консоли. Буферизированный ввод-вывод",
-},
-{
-    id: 12,
-    filename: "go_async.html",
-    title: "Go. Параллельное программирование (by metanit.com)",
-    date: "18 Мая 2025",
-    tags: "Go",
-    short_content: "Горутины. Каналы. Синхронизация. Передача потоков данных. Мьютексы. WaitGroup",
 },
 {
     id: 11,
@@ -67,6 +59,22 @@ const articles = ref([
     date: "6 Мая 2025",
     tags: "Vue 3, JavaScript",
     short_content: "Структура компонента, data, работа с атрибутами, v-bind, методы, обработчики событий, v-on, data внутри методов, вычисляемые свойства, модификаторы событий, показ по условию, v-if, v-else, v-show, v-for, перебор массивов, стилизация",
+},
+{
+    id: 13,
+    filename: "go_io.html",
+    title: "Go. Потоки и файлы (by metanit.com)",
+    date: "19 Мая 2025",
+    tags: "Go",
+    short_content: "Операции ввода-вывода. Reader и Writer. Работа с  файлами. Стандартные потоки ввода-вывода и io.Copy. Форматированный вывод. Форматируемый ввод. Чтение с консоли. Буферизированный ввод-вывод",
+},
+{
+    id: 12,
+    filename: "go_async.html",
+    title: "Go. Параллельное программирование (by metanit.com)",
+    date: "18 Мая 2025",
+    tags: "Go",
+    short_content: "Горутины. Каналы. Синхронизация. Передача потоков данных. Мьютексы. WaitGroup",
 },
 {
     id: 8,
