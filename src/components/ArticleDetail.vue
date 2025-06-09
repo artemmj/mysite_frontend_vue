@@ -60,6 +60,9 @@ watch(articleContent, async () => {
 }
 .article-container b {
     background-color: rgb(240, 240, 240);
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
 }
 .article-container ul {
     margin-left: 50px;
