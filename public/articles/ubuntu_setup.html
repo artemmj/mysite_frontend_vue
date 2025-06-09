@@ -1,19 +1,8 @@
-<h3 class="article-title">Настройка сервера Linux (Ubuntu)</h3>
+<h1 class="article-title">Настройка сервера Linux (Ubuntu)</h1>
 <div class="article-meta">
   <span>🗓 15 Марта 2025</span>
   <span>🏷️ Linux Ubuntu, DevOps, Docker, Nginx</span>
 </div>
-<div class="list-headings">
-  <ol>
-    <li><a href="#intro">Установка пакетов</a></li>
-    <li><a href="#ssh_fail2ban">Настройка SSH и fail2ban</a></li>
-    <li><a href="#oh-my">Oh-my-ZSH</a></li>
-    <li><a href="#docker">Docker</a></li>
-    <li><a href="#nginx">Nginx</a></li>
-  </ol>
-</div>
-<h3 class="section-title" id="intro">Установка пакетов</h3>
-<p>Пакеты могут меняться, удаляться</p>
 <pre><code class="language-bash">sudo apt-get install -y vim mosh tmux htop git curl wget unzip zip gcc \
 build-essential make ssh apt-transport-https ca-certificates software-properties-common zsh tree \
 redis-server nginx zlib1g-dev libbz2-dev libreadline-dev llvm libncurses-dev xz-utils tk-dev \
@@ -42,20 +31,14 @@ bantime = 1h</code></pre>
 chsh -s $(which zsh)
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"</code></pre>
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions \
+    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
+    "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"</code></pre>
 <p>Добавить <b>zsh-syntax-highlighting zsh-autosuggestions docker docker-compose</b> в ~/.zshrc в plugins</p>
 <p>Добавить <b>powerlevel10k/powerlevel10k</b> в ~/.zshrc <b>ZSH_THEME</b></p>
-<p>Алиасы можно описывать прямо в <b>.zshrc</b>:</p>
-<pre><code class="lang-bash">alias gs='git status'
-alias ll='ls -alF'
-alias ..='cd ..'</code></pre>
-<h3 class="section-title" id="docker">Docker</h3>
-<pre><code class="lang-bash">sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose</code></pre>
 <h3 class="section-title" id="nginx">Nginx</h3>
 <pre><code class="lang-bash">sudo apt install ufw
 sudo nano /etc/ufw/applications.d/nginx.ini</code></pre>
@@ -73,7 +56,6 @@ ports=443/tcp
 title=Web Server (HTTP,HTTPS)
 description=Enable NGINX HTTP and HTTPS traffic
 ports=80,443/tcp</code></pre>
-</div>
 <pre><code class="lang-bash">sudo ufw enable
 sudo ufw allow 'Nginx Full'
 sudo ufw allow 'OpenSSH'
