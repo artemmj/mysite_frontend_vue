@@ -13,6 +13,14 @@ import ArticleList from '../components/ArticleList.vue';
 // Моковые данные (можно заменить на запрос к API)
 const articles = ref([
 {
+    id: 10,
+    filename: "grok_algos.html",
+    title: "Грокаем алгоритмы",
+    date: "10 июня 2025",
+    tags: "Python, Go",
+    short_content: "Грокаем алгоритмы",
+},
+{
     id: 9,
     filename: "go_grpc_diceroll.html",
     title: "Go. Статья. Проект gRPC API (игра \"Подбрасывание кубика\")",
